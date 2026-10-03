@@ -1,0 +1,20 @@
+# Run from the repo root:  docker compose -f docker/docker-compose.yml up --build
+services:
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      PAYWATCH_MODELS_DIR: /app/models/compact
+    restart: unless-stopped
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    working_dir: /          # artifact paths in the store are relative ("mlflow/artifacts")
+    command: mlflow ui --host 0.0.0.0 --port 5000 --backend-store-uri sqlite:////mlflow/mlflow.db
+    ports:
+      - "5000:5000"
+    volumes:
+      - ../mlflow:/mlflow

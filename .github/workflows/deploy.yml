@@ -1,0 +1,47 @@
+name: ci-deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - name: Syntax check
+        run: python -m compileall -q src
+      - name: Parity + API tests (models/compact must be committed)
+        run: python -m pytest -q tests
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -f docker/Dockerfile -t paywatch-api .
+      - name: Smoke test the container
+        run: |
+          docker run -d --name api -p 8000:8000 paywatch-api
+          for i in $(seq 1 30); do curl -sf http://localhost:8000/health && exit 0; sleep 2; done
+          docker logs api
+          exit 1
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then echo "RENDER_DEPLOY_HOOK_URL not set; skipping deploy"; exit 0; fi
+          curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
