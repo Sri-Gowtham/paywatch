@@ -1,0 +1,13 @@
+{
+  "id": "srigowthamm/paywatch-pipeline",
+  "title": "paywatch-pipeline",
+  "code_file": "pipeline.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "dataset_sources": ["srigowthamm/paywatch-src"],
+  "competition_sources": ["ieee-fraud-detection"],
+  "kernel_sources": []
+}

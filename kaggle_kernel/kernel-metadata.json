@@ -1,0 +1,13 @@
+{
+  "id": "srigowthamm/paywatch-train-xgb",
+  "title": "paywatch-train-xgb",
+  "code_file": "train_xgb.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": false,
+  "dataset_sources": ["srigowthamm/paywatch-processed-features"],
+  "competition_sources": [],
+  "kernel_sources": []
+}
