@@ -1,0 +1,6 @@
+# RAG knowledge-base build (src/rag/build_index.py, runs on Kaggle). Retrieval and answers use only the standard library.
+pypdf>=4
+beautifulsoup4>=4.12
+requests>=2.31
+# Optional: dense-retriever evaluation  -> sentence-transformers
+# Optional: LLM-composed answers        -> anthropic
