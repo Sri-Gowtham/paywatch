@@ -13,7 +13,7 @@ from collections import deque
 import numpy as np
 import pandas as pd
 
-from upi_fingerprint import make_card_key, make_uid
+from upi_fingerprint import key_text, make_card_key, make_uid
 
 PRIOR_RATE = 0.035
 PRIOR_WEIGHT = 20.0
@@ -37,8 +37,8 @@ def _entity_keys(df: pd.DataFrame) -> dict:
         "remail": col("R_emaildomain"),
         "browser": col("id_31"),
         "os": col("id_30"),
-        "cardaddr": (pd.Series(card) + "_" + df["addr1"].astype(str)).to_numpy(),
-        "prodemail": (df["ProductCD"].astype(str) + "_" + df["P_emaildomain"].astype(str)).to_numpy(),
+        "cardaddr": (pd.Series(card) + "_" + key_text(df["addr1"])).to_numpy(),
+        "prodemail": (key_text(df["ProductCD"]) + "_" + key_text(df["P_emaildomain"])).to_numpy(),
     }
 
 

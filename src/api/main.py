@@ -17,6 +17,9 @@ def create_app(models_dir: str = None) -> FastAPI:
     app = FastAPI(title="PayWatch", version="1.0.0",
                   description="UPI-style transaction fraud scoring with calibrated tiers and SHAP reasons")
     predictor = Predictor(models_dir or os.environ.get("PAYWATCH_MODELS_DIR", "models/compact"))
+    warm = os.environ.get("PAYWATCH_WARM_STATE")
+    if warm and os.path.exists(warm):
+        predictor.load_state(warm)
     app.state.predictor = predictor
 
     @app.get("/health")

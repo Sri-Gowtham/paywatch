@@ -15,10 +15,16 @@ import numpy as np
 import pandas as pd
 
 
+def key_text(series: pd.Series) -> pd.Series:
+    """astype(str) that renders missing values as 'nan' on every pandas version.
+    (pandas 3 keeps them missing, which would silently turn any key with a missing part into NaN.)"""
+    return series.astype(object).where(series.notna(), "nan").astype(str)
+
+
 def make_card_key(df: pd.DataFrame) -> np.ndarray:
     return (
-        df["card1"].astype(str) + "_" + df["card2"].astype(str) + "_"
-        + df["card3"].astype(str) + "_" + df["card5"].astype(str)
+        key_text(df["card1"]) + "_" + key_text(df["card2"]) + "_"
+        + key_text(df["card3"]) + "_" + key_text(df["card5"])
     ).to_numpy()
 
 
@@ -26,9 +32,9 @@ def make_uid(df: pd.DataFrame) -> np.ndarray:
     start_day = np.floor(df["TransactionDT"] / 86400.0 - df["D1"])
     start_day = start_day.fillna(-1).astype(int).astype(str)
     return (
-        df["card1"].astype(str) + "_" + df["card2"].astype(str) + "_"
-        + df["card3"].astype(str) + "_" + df["card5"].astype(str) + "_"
-        + df["addr1"].astype(str) + "_" + start_day
+        key_text(df["card1"]) + "_" + key_text(df["card2"]) + "_"
+        + key_text(df["card3"]) + "_" + key_text(df["card5"]) + "_"
+        + key_text(df["addr1"]) + "_" + start_day
     ).to_numpy()
 
 

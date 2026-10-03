@@ -150,7 +150,8 @@ class Predictor:
             })
         return reasons
 
-    def predict(self, tx_id: str, fields: dict, explain: bool = True, commit: bool = True, top_k: int = 5) -> dict:
+    def predict(self, tx_id: str, fields: dict, explain: bool = True, commit: bool = True, top_k: int = 5,
+                include_vector: bool = False) -> dict:
         for req in ("TransactionDT", "TransactionAmt"):
             if is_missing(fields.get(req)):
                 raise PredictionError(f"missing required field '{req}'")
@@ -165,7 +166,7 @@ class Predictor:
             reasons = self.explain(vec, top_k) if explain else []
             if commit:
                 self.history.register(tx_id, keys)
-        return {
+        result = {
             "transaction_id": tx_id, "score": score, "calibrated_probability": p, "action": self.action_for(p),
             "reasons": reasons,
             "flags": {
@@ -177,7 +178,26 @@ class Predictor:
             "model_version": self.model_version,
             "latency_ms": (time.perf_counter() - t0) * 1000.0,
         }
+        if include_vector:
+            result["_vector"] = vec
+        return result
 
     def feedback(self, tx_id: str, is_fraud: bool) -> bool:
         with self.lock:
             return self.history.record_label(tx_id, is_fraud)
+
+    def reset_state(self) -> None:
+        with self.lock:
+            self.behavior = UserBehaviorState()
+            self.history = EntityHistoryStore()
+
+    def load_state(self, path: str) -> dict:
+        """Warm start from a snapshot written by snapshot.save_state (replaces current state)."""
+        from .snapshot import import_state, load_state
+
+        obj = load_state(path)
+        self.reset_state()
+        with self.lock:
+            import_state(obj, self.behavior, self.history)
+        return {"users": len(obj["users"]), "entity_keys": {k: len(v) for k, v in obj["entity_tables"].items()},
+                "pending_labels": len(obj["pending"])}
