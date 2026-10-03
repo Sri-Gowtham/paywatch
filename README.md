@@ -67,6 +67,10 @@ Pre-registered test (`src/models/high_precision_study.py`, results in `results/h
 - **Decision explanations** (`src/rag/explainer.py`): a fixed template over the API response (action, calibrated probability, the top SHAP reasons, history flags) plus up to three on-topic RBI passages (a passage must contain the key term for the action, e.g. "authentication" for a challenge). Nothing is generated freely; the template states that attributions are not proof of intent.
 - Dashboard: fifth tab "Analyst assistant" (question box with citations, and an explanation of the last transaction scored in the first tab). Limits: 18 questions is a small, hand-made evaluation; extractive answers can quote the right passage but not the exact sentence (the citation always shows the source); ChromaDB was not used because 445 passages do not need a vector database.
 
+## Exploratory data analysis
+
+`notebooks/01_eda.ipynb` (generated and executed on Kaggle by `src/models/eda_notebook.py`, so every number and plot is computed): 590,540 transactions over 182 days, 3.5% fraud; weekly fraud rate swings between 1.9% and 5.1% (time-ordered splits are required); credit cards (6.7% fraud) and mobile devices (10.2%) are riskier than debit (2.4%) and rows without identity data (2.1% vs 7.9% with it); only 24% of rows carry identity information and 214 of 438 columns are more than half missing; 98% of fraud sits on a card composite that had an earlier transaction and 81% follows an earlier fraud on the same card by at least 7 days, which is what motivated the lagged entity-history features.
+
 ## Adversarial stress test
 
 Black-box evasion test (`src/models/stress_test.py`, results in `results/stress_test.json`): an attacker who can probe the scorer 1, 5 or 20 times and change only fields they control (amount, payee e-mail domain, device/browser, product and card type, plus the state those drive) tries to push the 1,500 test-period frauds that the model currently flags below the alert tiers. Each move copies a legitimate donor row's values for the affected features.
@@ -85,7 +89,9 @@ With all moves and 20 probes, 68.7% fall below CHALLENGE and 92.0% below HARD_BL
 
 **The roadmap's "two layers are necessary" claim is not supported.** An Isolation Forest second layer at 1% false-positive rate flagged 0.0% of the model-flagged frauds, 0.0% of the attacked frauds and 0.0% of those that evaded; an OR rule with the model leaves recall unchanged and raises the false-positive rate from 1.9% to 2.9%.
 
-Limits: random-search attacker in feature space (no gradient attack, no real attacker data); it cannot directly alter the opaque Vesta `V`/`C`/`D` features; the 31% of fraud the model already misses is not included in the targets.
+**Adversarial training against the fresh-identity weakness** (`src/models/adversarial_training.py`, results in `results/adv_training.json`). Pre-registered criterion: fresh-identity evasion at 1 probe below 20% with test PR-AUC loss of at most 0.01 and recall@1%FPR loss of at most 0.02. Adding rotated copies of every training fraud met it: evasion fell from 32.9% to 0.0% (all moves combined, 20 probes: 69.5% to 0.4%) while test PR-AUC moved 0.675 to 0.679, recall@1%FPR 0.617 to 0.616 and the precision of flagged alerts rose by 1.1 points. Limits: the defence is specific to the trained transformation (payee e-mail rotation still evades 26% of flagged fraud at 20 probes, baseline 30%) and recall on genuinely first-time fraud did not improve (0.570 vs 0.569); the production models in `models/compact/` do not include this training yet.
+
+Limits of the stress test: random-search attacker in feature space (no gradient attack, no real attacker data); it cannot directly alter the opaque Vesta `V`/`C`/`D` features; the 31% of fraud the model already misses is not included in the targets.
 
 ## Limitations (read before quoting the numbers)
 
@@ -105,8 +111,8 @@ Isolation Forest second layer and score fusion (alone PR-AUC 0.097; validation g
 
 Done: scaffold, data, feature engineering, UPI fingerprint (causal proxy), XGBoost, SHAP, compact serving model, calibration + tiers, MLflow + registry, FastAPI, production simulation, drift detection, Streamlit dashboard (the threshold-tuning tab covers the calibration dashboard).
 Also done: adversarial stress test, RAG ingestion and query (BM25), retrieval-grounded explanations. The LLM explanation step is optional and only template mode has run against real data (done differently).
-Written but not yet seen passing on GitHub: Dockerfile, GitHub Actions CI/CD. The first CI run failed on a pandas 3 incompatibility in the feature code; it is fixed in the working tree (42 of 42 tests pass in a CI-style environment on Kaggle) but not pushed.
-Rejected on evidence: Isolation Forest, score fusion. Skipped: EDA notebook.
+Written but not yet seen passing on GitHub: Dockerfile, GitHub Actions CI/CD. The first CI run failed on a pandas 3 incompatibility in the feature code; it is fixed and committed locally (42 of 42 tests pass in a CI-style environment on Kaggle, and a stand-in for the image's runtime passes: with only `requirements-api.txt` installed and every other package hidden, the API starts with the image's startup command and serves `/health` and `/predict`) but not pushed.
+Rejected on evidence: Isolation Forest, score fusion. The EDA notebook is done (`notebooks/01_eda.ipynb`).
 
 ## Kaggle setup
 
