@@ -174,3 +174,7 @@ mlruns/
 # downloaded kernel outputs (large / regenerable)
 kaggle_kernel*/output/
 kaggle_upload/
+
+# MLflow registry store is tracked (small); rest of mlflow/ stays ignored
+!mlflow/mlflow.db
+!mlflow/artifacts/
