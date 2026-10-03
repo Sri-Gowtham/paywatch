@@ -1,0 +1,1043 @@
+{
+  "full_model": {
+    "val_pr_auc_mean": 0.7307159145353671,
+    "test_pr_auc_mean": 0.6801883012557969,
+    "test_pr_auc_std": 0.001754240845385557,
+    "n_features": 452
+  },
+  "shap_top40": [
+    {
+      "feature": "h7_uid_fraud_rate",
+      "mean_abs_shap": 1.580635905265808,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "h7_uid_n",
+      "mean_abs_shap": 0.23637647926807404,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "h7_card_fraud_rate",
+      "mean_abs_shap": 0.21168090403079987,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "TransactionAmt",
+      "mean_abs_shap": 0.20875076949596405,
+      "family": "transaction_core"
+    },
+    {
+      "feature": "C13",
+      "mean_abs_shap": 0.19001805782318115,
+      "family": "counts_C"
+    },
+    {
+      "feature": "D1",
+      "mean_abs_shap": 0.15796996653079987,
+      "family": "time_deltas_D"
+    },
+    {
+      "feature": "C5",
+      "mean_abs_shap": 0.15516097843647003,
+      "family": "counts_C"
+    },
+    {
+      "feature": "C1",
+      "mean_abs_shap": 0.15083231031894684,
+      "family": "counts_C"
+    },
+    {
+      "feature": "uid_secs_since_prev_tx",
+      "mean_abs_shap": 0.1504628211259842,
+      "family": "upi_behavior"
+    },
+    {
+      "feature": "C14",
+      "mean_abs_shap": 0.14556297659873962,
+      "family": "counts_C"
+    },
+    {
+      "feature": "V258",
+      "mean_abs_shap": 0.12842385470867157,
+      "family": "vesta_V"
+    },
+    {
+      "feature": "h7_addr_n",
+      "mean_abs_shap": 0.12744782865047455,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "card6",
+      "mean_abs_shap": 0.12615013122558594,
+      "family": "card_address_email"
+    },
+    {
+      "feature": "card1_freq",
+      "mean_abs_shap": 0.12472517043352127,
+      "family": "frequency_encoding"
+    },
+    {
+      "feature": "D10",
+      "mean_abs_shap": 0.12035322189331055,
+      "family": "time_deltas_D"
+    },
+    {
+      "feature": "h7_addr_fraud_n",
+      "mean_abs_shap": 0.10715076327323914,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "h7_email_fraud_rate",
+      "mean_abs_shap": 0.10690975934267044,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "D3",
+      "mean_abs_shap": 0.10623487085103989,
+      "family": "time_deltas_D"
+    },
+    {
+      "feature": "V70",
+      "mean_abs_shap": 0.09765997529029846,
+      "family": "vesta_V"
+    },
+    {
+      "feature": "D4",
+      "mean_abs_shap": 0.09154834598302841,
+      "family": "time_deltas_D"
+    },
+    {
+      "feature": "C11",
+      "mean_abs_shap": 0.09145459532737732,
+      "family": "counts_C"
+    },
+    {
+      "feature": "card1",
+      "mean_abs_shap": 0.08733776211738586,
+      "family": "card_address_email"
+    },
+    {
+      "feature": "D15",
+      "mean_abs_shap": 0.08646440505981445,
+      "family": "time_deltas_D"
+    },
+    {
+      "feature": "card2",
+      "mean_abs_shap": 0.08309533447027206,
+      "family": "card_address_email"
+    },
+    {
+      "feature": "h7_card_n",
+      "mean_abs_shap": 0.08235721290111542,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "h7_uid_fraud_n",
+      "mean_abs_shap": 0.08172312378883362,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "h7_addr_fraud_rate",
+      "mean_abs_shap": 0.08066938072443008,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "card2_freq",
+      "mean_abs_shap": 0.0700150728225708,
+      "family": "frequency_encoding"
+    },
+    {
+      "feature": "M5",
+      "mean_abs_shap": 0.06265151500701904,
+      "family": "match_flags_M"
+    },
+    {
+      "feature": "C2",
+      "mean_abs_shap": 0.060904134064912796,
+      "family": "counts_C"
+    },
+    {
+      "feature": "M9",
+      "mean_abs_shap": 0.05772673711180687,
+      "family": "match_flags_M"
+    },
+    {
+      "feature": "M3",
+      "mean_abs_shap": 0.05679259076714516,
+      "family": "match_flags_M"
+    },
+    {
+      "feature": "M6",
+      "mean_abs_shap": 0.05604283884167671,
+      "family": "match_flags_M"
+    },
+    {
+      "feature": "h7_email_n",
+      "mean_abs_shap": 0.055683333426713943,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "V307",
+      "mean_abs_shap": 0.05493800342082977,
+      "family": "vesta_V"
+    },
+    {
+      "feature": "h7_card_fraud_n",
+      "mean_abs_shap": 0.05493601784110069,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "addr1",
+      "mean_abs_shap": 0.05353144183754921,
+      "family": "card_address_email"
+    },
+    {
+      "feature": "h7_email_fraud_n",
+      "mean_abs_shap": 0.0530831404030323,
+      "family": "entity_fraud_history"
+    },
+    {
+      "feature": "card5",
+      "mean_abs_shap": 0.050803154706954956,
+      "family": "card_address_email"
+    },
+    {
+      "feature": "addr1_freq",
+      "mean_abs_shap": 0.049087297171354294,
+      "family": "frequency_encoding"
+    }
+  ],
+  "shap_by_family_share": {
+    "entity_fraud_history": 0.36014432319493,
+    "vesta_V": 0.1673672697194178,
+    "counts_C": 0.11993990354724417,
+    "time_deltas_D": 0.09664051212333645,
+    "card_address_email": 0.06006288480636517,
+    "frequency_encoding": 0.04497587600134198,
+    "upi_behavior": 0.03997480760311798,
+    "match_flags_M": 0.03852398980394176,
+    "transaction_core": 0.03697968836140804,
+    "identity_device": 0.035390744838896655
+  },
+  "k_sweep": {
+    "30": {
+      "val_mean": 0.685528462146121,
+      "val_std": 0.0030982074173550055,
+      "test_mean": 0.6178579388610831,
+      "test_std": 0.0012802598608721463,
+      "best_iters": [
+        205,
+        173,
+        233
+      ]
+    },
+    "50": {
+      "val_mean": 0.7004518130020231,
+      "val_std": 0.0031792180600120424,
+      "test_mean": 0.6369713605654055,
+      "test_std": 0.0010011122365498905,
+      "best_iters": [
+        645,
+        150,
+        199
+      ]
+    },
+    "80": {
+      "val_mean": 0.715868117769786,
+      "val_std": 0.0018641848616000349,
+      "test_mean": 0.6528514254247322,
+      "test_std": 0.0019386409979400942,
+      "best_iters": [
+        201,
+        274,
+        255
+      ]
+    },
+    "120": {
+      "val_mean": 0.7210752114691997,
+      "val_std": 0.0025924042279496166,
+      "test_mean": 0.6655309566388736,
+      "test_std": 0.0008585890605491545,
+      "best_iters": [
+        195,
+        171,
+        427
+      ]
+    },
+    "200": {
+      "val_mean": 0.7277300616390313,
+      "val_std": 0.0034294486109158477,
+      "test_mean": 0.6696230054892721,
+      "test_std": 0.00043155371692598645,
+      "best_iters": [
+        430,
+        517,
+        248
+      ]
+    }
+  },
+  "full_reference_val_mean": 0.7307159145353671,
+  "chosen_K": 120,
+  "compact_features": [
+    "h7_uid_fraud_rate",
+    "h7_uid_n",
+    "h7_card_fraud_rate",
+    "TransactionAmt",
+    "C13",
+    "D1",
+    "C5",
+    "C1",
+    "uid_secs_since_prev_tx",
+    "C14",
+    "V258",
+    "h7_addr_n",
+    "card6",
+    "card1_freq",
+    "D10",
+    "h7_addr_fraud_n",
+    "h7_email_fraud_rate",
+    "D3",
+    "V70",
+    "D4",
+    "C11",
+    "card1",
+    "D15",
+    "card2",
+    "h7_card_n",
+    "h7_uid_fraud_n",
+    "h7_addr_fraud_rate",
+    "card2_freq",
+    "M5",
+    "C2",
+    "M9",
+    "M3",
+    "M6",
+    "h7_email_n",
+    "V307",
+    "h7_card_fraud_n",
+    "addr1",
+    "h7_email_fraud_n",
+    "card5",
+    "addr1_freq",
+    "V91",
+    "D11",
+    "C6",
+    "ProductCD",
+    "V283",
+    "M4",
+    "V312",
+    "dist1",
+    "id_01",
+    "card5_freq",
+    "C9",
+    "P_emaildomain_freq",
+    "D5",
+    "D8",
+    "V308",
+    "D2",
+    "amount_vs_7day_avg_ratio",
+    "uid_amt_mean",
+    "P_emaildomain",
+    "R_emaildomain",
+    "id_02",
+    "C10",
+    "D14",
+    "R_emaildomain_freq",
+    "merchant_category_entropy",
+    "id_19",
+    "V90",
+    "uid_amt_zscore",
+    "h7_device_fraud_rate",
+    "V282",
+    "V82",
+    "hour_deviation_from_user_mean",
+    "id_06",
+    "V69",
+    "id_17",
+    "V317",
+    "V281",
+    "V314",
+    "h7_device_n",
+    "V83",
+    "C8",
+    "uid_amt_std",
+    "id_20",
+    "card3_freq",
+    "id_30",
+    "V285",
+    "card4",
+    "V316",
+    "is_new_merchant",
+    "DeviceInfo",
+    "V53",
+    "V315",
+    "V62",
+    "V310",
+    "id_31",
+    "V294",
+    "V3",
+    "V128",
+    "id_05",
+    "V99",
+    "V30",
+    "C4",
+    "V313",
+    "uid_prior_tx_count",
+    "V187",
+    "V2",
+    "h7_device_fraud_n",
+    "days_since_last_large_txn",
+    "D12",
+    "V130",
+    "V61",
+    "V311",
+    "V87",
+    "V201",
+    "DeviceType",
+    "V309",
+    "V257",
+    "V5",
+    "V49",
+    "V54"
+  ],
+  "serving_requirements": {
+    "entity_fraud_history_state": {
+      "count": 15,
+      "features": [
+        "h7_uid_fraud_rate",
+        "h7_uid_n",
+        "h7_card_fraud_rate",
+        "h7_addr_n",
+        "h7_addr_fraud_n",
+        "h7_email_fraud_rate",
+        "h7_card_n",
+        "h7_uid_fraud_n",
+        "h7_addr_fraud_rate",
+        "h7_email_n",
+        "h7_card_fraud_n",
+        "h7_email_fraud_n",
+        "h7_device_fraud_rate",
+        "h7_device_n",
+        "h7_device_fraud_n"
+      ]
+    },
+    "raw_request_field": {
+      "count": 77,
+      "features": [
+        "TransactionAmt",
+        "C13",
+        "C5",
+        "C1",
+        "C14",
+        "V258",
+        "card6",
+        "V70",
+        "C11",
+        "card1",
+        "card2",
+        "M5",
+        "C2",
+        "M9",
+        "M3",
+        "M6",
+        "V307",
+        "addr1",
+        "card5",
+        "V91",
+        "C6",
+        "ProductCD",
+        "V283",
+        "M4",
+        "V312",
+        "dist1",
+        "id_01",
+        "C9",
+        "V308",
+        "P_emaildomain",
+        "R_emaildomain",
+        "id_02",
+        "C10",
+        "id_19",
+        "V90",
+        "V282",
+        "V82",
+        "id_06",
+        "V69",
+        "id_17",
+        "V317",
+        "V281",
+        "V314",
+        "V83",
+        "C8",
+        "id_20",
+        "id_30",
+        "V285",
+        "card4",
+        "V316",
+        "DeviceInfo",
+        "V53",
+        "V315",
+        "V62",
+        "V310",
+        "id_31",
+        "V294",
+        "V3",
+        "V128",
+        "id_05",
+        "V99",
+        "V30",
+        "C4",
+        "V313",
+        "V187",
+        "V2",
+        "V130",
+        "V61",
+        "V311",
+        "V87",
+        "V201",
+        "DeviceType",
+        "V309",
+        "V257",
+        "V5",
+        "V49",
+        "V54"
+      ]
+    },
+    "needs_transaction_time": {
+      "count": 11,
+      "features": [
+        "D1",
+        "D10",
+        "D3",
+        "D4",
+        "D15",
+        "D11",
+        "D5",
+        "D8",
+        "D2",
+        "D14",
+        "D12"
+      ]
+    },
+    "user_behavior_state": {
+      "count": 10,
+      "features": [
+        "uid_secs_since_prev_tx",
+        "amount_vs_7day_avg_ratio",
+        "uid_amt_mean",
+        "merchant_category_entropy",
+        "uid_amt_zscore",
+        "hour_deviation_from_user_mean",
+        "uid_amt_std",
+        "is_new_merchant",
+        "uid_prior_tx_count",
+        "days_since_last_large_txn"
+      ]
+    },
+    "frequency_lookup_table": {
+      "count": 7,
+      "features": [
+        "card1_freq",
+        "card2_freq",
+        "addr1_freq",
+        "card5_freq",
+        "P_emaildomain_freq",
+        "R_emaildomain_freq",
+        "card3_freq"
+      ]
+    }
+  },
+  "compact_family_counts": {
+    "card_address_email": 8,
+    "counts_C": 11,
+    "entity_fraud_history": 15,
+    "frequency_encoding": 7,
+    "identity_device": 11,
+    "match_flags_M": 5,
+    "time_deltas_D": 11,
+    "transaction_core": 3,
+    "upi_behavior": 10,
+    "vesta_V": 39
+  },
+  "compact_second_half": {
+    "train_only_3seed": {
+      "pr_auc": 0.6922409590461186,
+      "roc_auc": 0.9486295434651661,
+      "recall_at_fpr_0.1pct": 0.291402192729371,
+      "recall_at_fpr_1pct": 0.6191575302942873,
+      "recall_at_fpr_5pct": 0.7553375649163301,
+      "precision_top_1pct_alerts": 0.9321266968325792,
+      "amount_weighted_recall_at_fpr_1pct": 0.46215400099754333
+    },
+    "refit_train_plus_val_3seed": {
+      "pr_auc": 0.7044851812604702,
+      "roc_auc": 0.9483871398123471,
+      "recall_at_fpr_0.1pct": 0.3531448355452972,
+      "recall_at_fpr_1pct": 0.6220427005193306,
+      "recall_at_fpr_5pct": 0.7639930755914599,
+      "precision_top_1pct_alerts": 0.9705882352941176,
+      "amount_weighted_recall_at_fpr_1pct": 0.41649121046066284
+    }
+  },
+  "compact_full_test_refit": {
+    "pr_auc": 0.7061559118976807,
+    "roc_auc": 0.9483558205893847,
+    "recall_at_fpr_0.1pct": 0.3879338306843983,
+    "recall_at_fpr_1pct": 0.6373662017515407,
+    "recall_at_fpr_5pct": 0.7693804735647097,
+    "precision_top_1pct_alerts": 0.9683615819209039,
+    "amount_weighted_recall_at_fpr_1pct": 0.4644949734210968
+  },
+  "precision_target_tiers": {
+    "0.5": {
+      "calibrated_threshold": 0.10752688348293304,
+      "second_half_precision": 0.6006160164271047,
+      "second_half_recall": 0.6751298326601269,
+      "second_half_alert_rate": 0.04398184732789957
+    },
+    "0.7": {
+      "calibrated_threshold": 0.23255814611911774,
+      "second_half_precision": 0.7465802735781137,
+      "second_half_recall": 0.5983843046739757,
+      "second_half_alert_rate": 0.0313607730690208
+    },
+    "0.9": {
+      "calibrated_threshold": 0.7317073345184326,
+      "second_half_precision": 0.9025755879059351,
+      "second_half_recall": 0.46508944027697635,
+      "second_half_alert_rate": 0.020162109683682917
+    }
+  },
+  "explanation_examples": [
+    {
+      "kind": "true_positive",
+      "score": 0.9998452067375183,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "h7_uid_fraud_rate",
+          "value": 0.6887096762657166,
+          "shap": 4.706077575683594,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_fraud_n",
+          "value": 42.0,
+          "shap": 1.203935146331787,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "V307",
+          "value": 3033.0,
+          "shap": 0.4745055139064789,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "merchant_category_entropy",
+          "value": 0.612196147441864,
+          "shap": 0.3953925669193268,
+          "family": "upi_behavior"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.16801470518112183,
+          "shap": 0.385001003742218,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_n",
+          "value": 42.0,
+          "shap": -0.3335142135620117,
+          "family": "entity_fraud_history"
+        }
+      ]
+    },
+    {
+      "kind": "true_positive",
+      "score": 0.9998283386230469,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "h7_uid_fraud_rate",
+          "value": 0.6887096762657166,
+          "shap": 4.686197757720947,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_fraud_n",
+          "value": 42.0,
+          "shap": 1.194303274154663,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "V307",
+          "value": 2974.0,
+          "shap": 0.4773097634315491,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "merchant_category_entropy",
+          "value": 0.6193822026252747,
+          "shap": 0.39590609073638916,
+          "family": "upi_behavior"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.16801470518112183,
+          "shap": 0.37679579854011536,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_n",
+          "value": 42.0,
+          "shap": -0.34640347957611084,
+          "family": "entity_fraud_history"
+        }
+      ]
+    },
+    {
+      "kind": "true_positive",
+      "score": 0.9998005032539368,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "h7_uid_fraud_rate",
+          "value": 0.7119402885437012,
+          "shap": 4.8030686378479,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_fraud_n",
+          "value": 47.0,
+          "shap": 1.2768282890319824,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "V307",
+          "value": 2724.0,
+          "shap": 0.47437000274658203,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "merchant_category_entropy",
+          "value": 0.6051865816116333,
+          "shap": 0.4117279052734375,
+          "family": "upi_behavior"
+        },
+        {
+          "feature": "h7_uid_n",
+          "value": 47.0,
+          "shap": -0.35916587710380554,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.17915193736553192,
+          "shap": 0.3587573170661926,
+          "family": "entity_fraud_history"
+        }
+      ]
+    },
+    {
+      "kind": "true_positive",
+      "score": 0.9997923970222473,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "h7_uid_fraud_rate",
+          "value": 0.7493506669998169,
+          "shap": 4.9829301834106445,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_fraud_n",
+          "value": 57.0,
+          "shap": 1.311781644821167,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "V307",
+          "value": 1896.5,
+          "shap": 0.46260300278663635,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "merchant_category_entropy",
+          "value": 0.6098403334617615,
+          "shap": 0.4054657816886902,
+          "family": "upi_behavior"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.19331210851669312,
+          "shap": 0.36964064836502075,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_n",
+          "value": 57.0,
+          "shap": -0.3513912856578827,
+          "family": "entity_fraud_history"
+        }
+      ]
+    },
+    {
+      "kind": "true_positive",
+      "score": 0.9997856020927429,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "h7_uid_fraud_rate",
+          "value": 0.7493506669998169,
+          "shap": 5.122890472412109,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_fraud_n",
+          "value": 57.0,
+          "shap": 1.2932991981506348,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "merchant_category_entropy",
+          "value": 0.5858733057975769,
+          "shap": 0.4738015830516815,
+          "family": "upi_behavior"
+        },
+        {
+          "feature": "V307",
+          "value": 1881.0,
+          "shap": 0.45961809158325195,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.1926984190940857,
+          "shap": 0.3795314431190491,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_n",
+          "value": 57.0,
+          "shap": -0.35742202401161194,
+          "family": "entity_fraud_history"
+        }
+      ]
+    },
+    {
+      "kind": "false_positive",
+      "score": 0.9983158111572266,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "V258",
+          "value": 5.0,
+          "shap": 1.8899728059768677,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "C14",
+          "value": 0.0,
+          "shap": 0.6000035405158997,
+          "family": "counts_C"
+        },
+        {
+          "feature": "C1",
+          "value": 5.0,
+          "shap": 0.5616580843925476,
+          "family": "counts_C"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.17678898572921753,
+          "shap": 0.5388513207435608,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_fraud_rate",
+          "value": 0.03500000014901161,
+          "shap": 0.4305669963359833,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "V87",
+          "value": 5.0,
+          "shap": 0.32276254892349243,
+          "family": "vesta_V"
+        }
+      ]
+    },
+    {
+      "kind": "false_positive",
+      "score": 0.9982060790061951,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "V258",
+          "value": 6.0,
+          "shap": 1.8760544061660767,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "C14",
+          "value": 0.0,
+          "shap": 0.6002883315086365,
+          "family": "counts_C"
+        },
+        {
+          "feature": "V187",
+          "value": 3.0,
+          "shap": 0.5911913514137268,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "C1",
+          "value": 6.0,
+          "shap": 0.5862430334091187,
+          "family": "counts_C"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.24130146205425262,
+          "shap": 0.5379536151885986,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "V87",
+          "value": 6.0,
+          "shap": 0.42165204882621765,
+          "family": "vesta_V"
+        }
+      ]
+    },
+    {
+      "kind": "false_positive",
+      "score": 0.9970769882202148,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "V258",
+          "value": 8.0,
+          "shap": 1.8490451574325562,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "C1",
+          "value": 8.0,
+          "shap": 0.7798731923103333,
+          "family": "counts_C"
+        },
+        {
+          "feature": "C14",
+          "value": 0.0,
+          "shap": 0.5435661673545837,
+          "family": "counts_C"
+        },
+        {
+          "feature": "V187",
+          "value": 5.0,
+          "shap": 0.5200840830802917,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.17819549143314362,
+          "shap": 0.4652690887451172,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_fraud_rate",
+          "value": 0.03500000014901161,
+          "shap": 0.41163650155067444,
+          "family": "entity_fraud_history"
+        }
+      ]
+    },
+    {
+      "kind": "false_positive",
+      "score": 0.9970173239707947,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "C1",
+          "value": 9.0,
+          "shap": 1.3121256828308105,
+          "family": "counts_C"
+        },
+        {
+          "feature": "C11",
+          "value": 6.0,
+          "shap": 0.8116434216499329,
+          "family": "counts_C"
+        },
+        {
+          "feature": "V187",
+          "value": 3.0,
+          "shap": 0.5515137910842896,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "C13",
+          "value": 1.0,
+          "shap": 0.5228599309921265,
+          "family": "counts_C"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.18052959442138672,
+          "shap": 0.3760886788368225,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_device_fraud_rate",
+          "value": 0.00489510502666235,
+          "shap": -0.35179758071899414,
+          "family": "entity_fraud_history"
+        }
+      ]
+    },
+    {
+      "kind": "false_positive",
+      "score": 0.996826171875,
+      "calibrated_p": 1.0,
+      "top_contributions": [
+        {
+          "feature": "C1",
+          "value": 10.0,
+          "shap": 1.1045624017715454,
+          "family": "counts_C"
+        },
+        {
+          "feature": "C14",
+          "value": 0.0,
+          "shap": 0.6549325585365295,
+          "family": "counts_C"
+        },
+        {
+          "feature": "C13",
+          "value": 0.0,
+          "shap": 0.5639117956161499,
+          "family": "counts_C"
+        },
+        {
+          "feature": "V187",
+          "value": 3.0,
+          "shap": 0.5393219590187073,
+          "family": "vesta_V"
+        },
+        {
+          "feature": "h7_card_fraud_rate",
+          "value": 0.18771739304065704,
+          "shap": 0.44900622963905334,
+          "family": "entity_fraud_history"
+        },
+        {
+          "feature": "h7_uid_fraud_rate",
+          "value": 0.03500000014901161,
+          "shap": 0.3173024356365204,
+          "family": "entity_fraud_history"
+        }
+      ]
+    }
+  ]
+}

@@ -172,9 +172,11 @@ mlruns/
 !data/sim/*.parquet
 
 # downloaded kernel outputs (large / regenerable)
-kaggle_kernel*/output/
-kaggle_upload/
+**/output/
 
 # MLflow registry store is tracked (small); rest of mlflow/ stays ignored
 !mlflow/mlflow.db
 !mlflow/artifacts/
+
+# RAG knowledge base (public RBI text, built on Kaggle; not committed)
+data/rag/

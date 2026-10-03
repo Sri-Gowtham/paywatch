@@ -4,8 +4,9 @@
 data
 notebooks
 mlflow
-kaggle_kernel*
-kaggle_upload
+kaggle
+tools
+results
 tests
 **/__pycache__
 **/dataset-metadata.json

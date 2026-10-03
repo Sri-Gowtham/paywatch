@@ -1,14 +1,12 @@
-# Layer 01 — Data & feature engineering (local)
-pandas
-numpy
-scikit-learn
-imbalanced-learn
-pyarrow
-jupyter
-
-# Kaggle integration
-kaggle
-
-# Layer 02 — Model training / explainability (local use of outputs; training itself runs on Kaggle)
-xgboost
-shap
+# Everything, grouped by phase. Install only what you need:
+#   serving API only        pip install -r requirements-api.txt
+#   tests / CI              pip install -r requirements-dev.txt
+#   dashboard (local)       pip install -r requirements-monitor.txt
+#   training scripts        requirements-ml.txt   (Kaggle has these preinstalled)
+#   RAG index build         requirements-rag.txt
+-r requirements-api.txt
+-r requirements-ml.txt
+-r requirements-monitor.txt
+-r requirements-rag.txt
+-r requirements-dev.txt
+kaggle            # CLI used by tools/kaggle_tools.py (all heavy compute runs on Kaggle)

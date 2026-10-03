@@ -1,0 +1,10 @@
+# Training / evaluation / simulation scripts in src/models and src/monitor (run on Kaggle, where these are
+# preinstalled; listed for reproducibility). Imbalance is handled by scale_pos_weight, so no imbalanced-learn;
+# SHAP comes from XGBoost's pred_contribs, so no shap package.
+numpy
+pandas
+pyarrow           # parquet stream sample
+scikit-learn
+scipy             # Clopper-Pearson intervals
+xgboost>=2.0
+mlflow            # experiment store + registry (src/models/log_mlflow.py)

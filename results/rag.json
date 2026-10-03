@@ -1,0 +1,197 @@
+{
+ "sources": [
+  {
+   "id": "free_ai_2025",
+   "ok": true,
+   "bytes": 2807420,
+   "pages": 101,
+   "chunks": 242,
+   "chars": 219283
+  },
+  {
+   "id": "digital_payment_security_2021",
+   "ok": true,
+   "bytes": 193665,
+   "pages": 1,
+   "chunks": 50,
+   "chars": 51684
+  },
+  {
+   "id": "limiting_liability_2017",
+   "ok": true,
+   "bytes": 82093,
+   "pages": 1,
+   "chunks": 19,
+   "chars": 18282
+  },
+  {
+   "id": "fraud_risk_mgmt_md_2024",
+   "ok": true,
+   "bytes": 233254,
+   "pages": 1,
+   "chunks": 53,
+   "chars": 49618
+  },
+  {
+   "id": "fraud_risk_mgmt_faq_2025",
+   "ok": true,
+   "bytes": 194060,
+   "pages": 2,
+   "chunks": 5,
+   "chars": 4420
+  },
+  {
+   "id": "payments_vision_2025",
+   "ok": true,
+   "bytes": 390788,
+   "pages": 30,
+   "chunks": 76,
+   "chars": 58412
+  }
+ ],
+ "n_chunks": 445,
+ "questions": 18,
+ "retrieval": {
+  "bm25": {
+   "phrase_hit@1": 0.6111111111111112,
+   "phrase_hit@3": 0.9444444444444444,
+   "phrase_hit@5": 1.0,
+   "source_hit@1": 0.8333333333333334,
+   "source_hit@3": 1.0,
+   "source_hit@5": 1.0,
+   "misses_at_5": []
+  },
+  "dense": {
+   "phrase_hit@1": 0.6111111111111112,
+   "phrase_hit@3": 0.7777777777777778,
+   "phrase_hit@5": 0.8888888888888888,
+   "source_hit@1": 0.9444444444444444,
+   "source_hit@3": 1.0,
+   "source_hit@5": 1.0,
+   "misses_at_5": [
+    "Who has the burden of proving customer liability in unauthorised electronic banking transactions?",
+    "What does the RBI AI framework say about explainability of AI models?"
+   ]
+  },
+  "hybrid": {
+   "phrase_hit@1": 0.6666666666666666,
+   "phrase_hit@3": 0.9444444444444444,
+   "phrase_hit@5": 1.0,
+   "source_hit@1": 0.8888888888888888,
+   "source_hit@3": 1.0,
+   "source_hit@5": 1.0,
+   "misses_at_5": []
+  }
+ },
+ "extractive_answers": {
+  "answerable_questions": 18,
+  "abstained": 0,
+  "answer_contains_key_phrase": 14,
+  "answer_hit_rate_of_answered": 0.7777777777777778
+ },
+ "off_topic_refusals": {
+  "questions": 4,
+  "refused": 4
+ },
+ "qa_demo": [
+  {
+   "answer": "On being notified by the customer, the bank shall credit (shadow reversal) the amount involved in the unauthorised electronic transaction to the customer’s account within 10 working days from the date of such notification by the customer (without waiting for settlement of insurance claim, if any). [3] On receipt of report of an unauthorised transaction from the customer, banks must take immediate steps to prevent further unauthorised transactions in the account. [1] A customer shall be liable for the loss occurring due to unauthorised transactions in the following cases: In cases where the loss is due to negligence by a customer, such as where he has shared the payment credentials, the customer will bear the entire loss until he reports the unauthorised transaction to the bank. [4]",
+   "citations": [
+    {
+     "n": 1,
+     "title": "Customer Protection: Limiting Liability of Customers in Unauthorised Electronic Banking Transactions (RBI, 6 Jul 2017)",
+     "url": "https://www.rbi.org.in/commonman/english/scripts/Notification.aspx?Id=2336",
+     "page": 1,
+     "score": 24.238,
+     "excerpt": "banks may not offer facility of electronic transactions, other than ATM cash withdrawals, to customers who do not provide mobile numbers to the bank. On receipt of report of an unauthorised transaction from the customer, banks must take immediate steps to prevent further unauthorised transactions in"
+    },
+    {
+     "n": 2,
+     "title": "Customer Protection: Limiting Liability of Customers in Unauthorised Electronic Banking Transactions (RBI, 6 Jul 2017)",
+     "url": "https://www.rbi.org.in/commonman/english/scripts/Notification.aspx?Id=2336",
+     "page": 1,
+     "score": 22.044,
+     "excerpt": "lay their approved policy in public domain for wider dissemination. The existing customers must also be individually informed about the bank’s policy. 8. Overall liability of the customer in third party breaches, as detailed in  paragraph 6 (ii)  and  paragraph 7 (ii)  above, where the deficiency li"
+    },
+    {
+     "n": 3,
+     "title": "Customer Protection: Limiting Liability of Customers in Unauthorised Electronic Banking Transactions (RBI, 6 Jul 2017)",
+     "url": "https://www.rbi.org.in/commonman/english/scripts/Notification.aspx?Id=2336",
+     "page": 1,
+     "score": 21.231,
+     "excerpt": "the home branch of the customer excluding the date of receiving the communication. Reversal Timeline for Zero Liability/ Limited Liability of customer 9. On being notified by the customer, the bank shall credit (shadow reversal) the amount involved in the unauthorised electronic transaction to the c"
+    },
+    {
+     "n": 4,
+     "title": "Customer Protection: Limiting Liability of Customers in Unauthorised Electronic Banking Transactions (RBI, 6 Jul 2017)",
+     "url": "https://www.rbi.org.in/commonman/english/scripts/Notification.aspx?Id=2336",
+     "page": 1,
+     "score": 19.941,
+     "excerpt": "ion. (b) Limited Liability of a Customer 7. A customer shall be liable for the loss occurring due to unauthorised transactions in the following cases: In cases where the loss is due to negligence by a customer, such as where he has shared the payment credentials, the customer will bear the entire lo"
+    }
+   ],
+   "mode": "extractive"
+  },
+  {
+   "answer": "known failure modes of AI systems, such as bias, lack of explainability, privacy [1] 6 Understandable by Design: Ensure explainability for trust [3]",
+   "citations": [
+    {
+     "n": 1,
+     "title": "FREE-AI Committee Report: Framework for Responsible and Ethical Enablement of AI (RBI, Aug 2025)",
+     "url": "https://rbidocs.rbi.org.in/rdocs/PublicationReport/Pdfs/FREEAIR130820250A24FF2D4578453F824C72ED9F5D5851.PDF",
+     "page": 70,
+     "score": 8.661,
+     "excerpt": "and continuous model performance monitoring. An AI model should be able to declare  itself “unavailable” when it fails and trigger backup processes. Institutions should also  conduct regular BCP drills in relation to AI-specific failures, simulating scenarios such  as data drift and concept drift an"
+    },
+    {
+     "n": 2,
+     "title": "FREE-AI Committee Report: Framework for Responsible and Ethical Enablement of AI (RBI, Aug 2025)",
+     "url": "https://rbidocs.rbi.org.in/rdocs/PublicationReport/Pdfs/FREEAIR130820250A24FF2D4578453F824C72ED9F5D5851.PDF",
+     "page": 29,
+     "score": 8.257,
+     "excerpt": "20 with regard to AI adoption, risk mitigation, and alignment with organisational values  typically rests with the Board at the institutional level. Various policy frameworks  around the world, such as the Bank of England’s discussion papers on AI, require  boards to define principles for responsibl"
+    },
+    {
+     "n": 3,
+     "title": "FREE-AI Committee Report: Framework for Responsible and Ethical Enablement of AI (RBI, Aug 2025)",
+     "url": "https://rbidocs.rbi.org.in/rdocs/PublicationReport/Pdfs/FREEAIR130820250A24FF2D4578453F824C72ED9F5D5851.PDF",
+     "page": 77,
+     "score": 8.141,
+     "excerpt": "68 Summary of Sutras and Recommendations  Summary of the 7 Sutras  Sl. No. Description  1  Trust is the Foundation: Trust is non -negotiable and should remain  uncompromised  2  People First: AI should augment human decision -making but defer to  human judgment and citizen interest  3 Innovation ove"
+    },
+    {
+     "n": 4,
+     "title": "FREE-AI Committee Report: Framework for Responsible and Ethical Enablement of AI (RBI, Aug 2025)",
+     "url": "https://rbidocs.rbi.org.in/rdocs/PublicationReport/Pdfs/FREEAIR130820250A24FF2D4578453F824C72ED9F5D5851.PDF",
+     "page": 46,
+     "score": 7.53,
+     "excerpt": "hould not accentuate exclusion and inequity. AI should be leveraged to address  financial inclusion and access to financial services for all. Sutra 5: Accountability  • Accountability rests with the entities deploying AI  Entities that deploy AI should be responsible and remain fully accountable for"
+    }
+   ],
+   "mode": "extractive"
+  }
+ ],
+ "explain_demo": {
+  "explanation": "This transaction was held for additional customer authentication (calibrated fraud probability 31%).\nStrongest factors in the model's score (attributions, not proof of intent):\n- this user had a 69% fraud rate in earlier labeled transactions (raises the score)\n- seconds since this user's previous transaction = 41 (raises the score)\nContext: a previously confirmed fraud is linked to this user.",
+  "template_explanation": "This transaction was held for additional customer authentication (calibrated fraud probability 31%).\nStrongest factors in the model's score (attributions, not proof of intent):\n- this user had a 69% fraud rate in earlier labeled transactions (raises the score)\n- seconds since this user's previous transaction = 41 (raises the score)\nContext: a previously confirmed fraud is linked to this user.",
+  "regulatory_context": [
+   {
+    "n": 1,
+    "title": "Payments Vision 2025 (RBI, Department of Payment and Settlement Systems)",
+    "url": "https://rbidocs.rbi.org.in/rdocs/PublicationReport/Pdfs/PAYMENTSVISION2025844D11300C884DC4ACB8E56B7348F4D4.PDF",
+    "page": 6,
+    "score": 17.085,
+    "excerpt": "...-mandates for recurring  transactions using cards / PPIs / UPI, relaxation of Additional Factor of  Authentication ( AFA) requirements for small value card present transactions ,  increase in limits for contactless transactions, setting up a 24x7 helpline for digital  payment services, etc. (Conveni"
+   },
+   {
+    "n": 2,
+    "title": "FREE-AI Committee Report: Framework for Responsible and Ethical Enablement of AI (RBI, Aug 2025)",
+    "url": "https://rbidocs.rbi.org.in/rdocs/PublicationReport/Pdfs/FREEAIR130820250A24FF2D4578453F824C72ED9F5D5851.PDF",
+    "page": 70,
+    "score": 9.745,
+    "excerpt": "... arise across use cases, often reflecting  known failure modes of AI systems, such as bias, lack of explainability, privacy  breaches, or unintended actions. For instance, AI models used for credit, loan, or  insurance decisions may exhibit bias against specific demographic groups;"
+   }
+  ],
+  "mode": "template"
+ }
+}

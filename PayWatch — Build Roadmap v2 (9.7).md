@@ -28,4 +28,4 @@ Stack
 
 XGBoost · FastAPI · Docker · MLflow · Evidently · RAG
 
-BUILD PROGRESS 10 / 26 checklist steps (9 done, 1 done differently); 2 rejected on evidence, 1 skipped, 13 pending (2026-10-03)
+BUILD PROGRESS 21 / 26 checklist steps (19 done, 2 done differently: SMOTE replaced, LLM explanation optional/template); 2 written, not yet seen passing on GitHub (Docker, CI/CD), 2 rejected on evidence, 1 skipped; 0 pending (2026-10-03)

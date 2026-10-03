@@ -1,0 +1,30 @@
+{
+  "features": {
+    "id": "srigowthamm/paywatch-src",
+    "path": "src/features"
+  },
+  "api": {
+    "id": "srigowthamm/paywatch-api",
+    "path": "src/api"
+  },
+  "monitor": {
+    "id": "srigowthamm/paywatch-monitor",
+    "path": "src/monitor"
+  },
+  "models-src": {
+    "id": "srigowthamm/paywatch-models-src",
+    "path": "src/models"
+  },
+  "rag-src": {
+    "id": "srigowthamm/paywatch-rag-src",
+    "path": "src/rag"
+  },
+  "tests": {
+    "id": "srigowthamm/paywatch-tests",
+    "path": "tests"
+  },
+  "models": {
+    "id": "srigowthamm/paywatch-models",
+    "path": "models/compact"
+  }
+}

@@ -1,0 +1,124 @@
+{
+ "T0_day": 152.22083333333333,
+ "stream_rows": 20000,
+ "levels": {
+  "A_full": {
+   "window_days": null,
+   "min_entity_n": 1,
+   "gz_bytes": 7381142,
+   "users": 195426,
+   "entity_keys": {
+    "card": 13825,
+    "uid": 189526,
+    "addr": 330,
+    "email": 59,
+    "device": 1652
+   },
+   "replay": {
+    "pr_auc": 0.6896843542975221,
+    "roc_auc": 0.9431634679966275,
+    "recall_at_fpr_1pct": 0.6192528735632183,
+    "new_user_rate": 0.43215,
+    "uid_has_labeled_history_rate": 0.46035
+   }
+  },
+  "B_active30d": {
+   "window_days": 30,
+   "min_entity_n": 1,
+   "gz_bytes": 3279593,
+   "users": 44969,
+   "entity_keys": {
+    "card": 13825,
+    "uid": 189526,
+    "addr": 330,
+    "email": 59,
+    "device": 1652
+   },
+   "replay": {
+    "pr_auc": 0.6844019973043372,
+    "roc_auc": 0.9429008817182788,
+    "recall_at_fpr_1pct": 0.6192528735632183,
+    "new_user_rate": 0.5174,
+    "uid_has_labeled_history_rate": 0.46035
+   }
+  },
+  "C_active30d_min2": {
+   "window_days": 30,
+   "min_entity_n": 2,
+   "gz_bytes": 2460490,
+   "users": 44969,
+   "entity_keys": {
+    "card": 10075,
+    "uid": 81064,
+    "addr": 206,
+    "email": 59,
+    "device": 1243
+   },
+   "replay": {
+    "pr_auc": 0.6828805438391589,
+    "roc_auc": 0.940055155027128,
+    "recall_at_fpr_1pct": 0.6206896551724138,
+    "new_user_rate": 0.5174,
+    "uid_has_labeled_history_rate": 0.4116
+   }
+  },
+  "D_active14d_min3": {
+   "window_days": 14,
+   "min_entity_n": 3,
+   "gz_bytes": 1547631,
+   "users": 23634,
+   "entity_keys": {
+    "card": 8353,
+    "uid": 50607,
+    "addr": 171,
+    "email": 59,
+    "device": 1054
+   },
+   "replay": {
+    "pr_auc": 0.6803656915647208,
+    "roc_auc": 0.9377113045476848,
+    "recall_at_fpr_1pct": 0.617816091954023,
+    "new_user_rate": 0.5908,
+    "uid_has_labeled_history_rate": 0.37575
+   }
+  }
+ },
+ "replay": {
+  "cold": {
+   "pr_auc": 0.5482718718855671,
+   "roc_auc": 0.8889437928414573,
+   "recall_at_fpr_1pct": 0.47413793103448276,
+   "new_user_rate": 0.76495,
+   "uid_has_labeled_history_rate": 0.091
+  },
+  "A_full": {
+   "pr_auc": 0.6896843542975221,
+   "roc_auc": 0.9431634679966275,
+   "recall_at_fpr_1pct": 0.6192528735632183,
+   "new_user_rate": 0.43215,
+   "uid_has_labeled_history_rate": 0.46035
+  },
+  "B_active30d": {
+   "pr_auc": 0.6844019973043372,
+   "roc_auc": 0.9429008817182788,
+   "recall_at_fpr_1pct": 0.6192528735632183,
+   "new_user_rate": 0.5174,
+   "uid_has_labeled_history_rate": 0.46035
+  },
+  "C_active30d_min2": {
+   "pr_auc": 0.6828805438391589,
+   "roc_auc": 0.940055155027128,
+   "recall_at_fpr_1pct": 0.6206896551724138,
+   "new_user_rate": 0.5174,
+   "uid_has_labeled_history_rate": 0.4116
+  },
+  "D_active14d_min3": {
+   "pr_auc": 0.6803656915647208,
+   "roc_auc": 0.9377113045476848,
+   "recall_at_fpr_1pct": 0.617816091954023,
+   "new_user_rate": 0.5908,
+   "uid_has_labeled_history_rate": 0.37575
+  }
+ },
+ "chosen_level": "A_full"
+}

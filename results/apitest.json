@@ -1,0 +1,170 @@
+{
+ "pytest": {
+  "returncode": 0,
+  "tail": [
+   "............                                                             [100%]",
+   "12 passed in 7.67s"
+  ]
+ },
+ "stream_replay": {
+  "requests": 20000,
+  "errors": 0,
+  "wall_seconds": 759.5282978089999,
+  "throughput_rps_with_feedback": 26.33213279570189,
+  "pr_auc": 0.5482718718855671,
+  "roc_auc": 0.8889437928414573,
+  "fraud_rate": 0.0348,
+  "tiers_cumulative": {
+   "SOFT_FLAG": {
+    "alert_rate": 0.04675,
+    "precision": 0.41711229946524064,
+    "recall": 0.5603448275862069
+   },
+   "CHALLENGE": {
+    "alert_rate": 0.0261,
+    "precision": 0.632183908045977,
+    "recall": 0.47413793103448276
+   },
+   "HARD_BLOCK": {
+    "alert_rate": 0.01335,
+    "precision": 0.8838951310861424,
+    "recall": 0.3390804597701149
+   }
+  },
+  "flag_rates": {
+   "new_user": 0.76495,
+   "uid_has_labeled_history": 0.091,
+   "uid_has_prior_fraud": 0.00315
+  },
+  "latency_server_ms": {
+   "p50": 3.245499000001928,
+   "p95": 3.8988264000153094,
+   "p99": 4.504774380096694
+  },
+  "latency_client_ms_incl_testclient_overhead": {
+   "p50": 21.27345299999206,
+   "p95": 36.341497499944346,
+   "p99": 39.4004517000519
+  }
+ },
+ "latency_with_explanations_ms": {
+  "p50": 24.41527550001865,
+  "p95": 26.16211955000267,
+  "p99": 27.681441690128842
+ },
+ "model_info": {
+  "model_version": "paywatch-compact-120f-3seeds",
+  "n_features": 120,
+  "n_models": 3,
+  "required_fields": [
+   "C1",
+   "C10",
+   "C11",
+   "C13",
+   "C14",
+   "C2",
+   "C4",
+   "C5",
+   "C6",
+   "C8",
+   "C9",
+   "D1",
+   "D10",
+   "D11",
+   "D12",
+   "D14",
+   "D15",
+   "D2",
+   "D3",
+   "D4",
+   "D5",
+   "D8",
+   "DeviceInfo",
+   "DeviceType",
+   "M3",
+   "M4",
+   "M5",
+   "M6",
+   "M9",
+   "P_emaildomain",
+   "ProductCD",
+   "R_emaildomain",
+   "TransactionAmt",
+   "TransactionDT",
+   "V128",
+   "V130",
+   "V187",
+   "V2",
+   "V201",
+   "V257",
+   "V258",
+   "V281",
+   "V282",
+   "V283",
+   "V285",
+   "V294",
+   "V3",
+   "V30",
+   "V307",
+   "V308",
+   "V309",
+   "V310",
+   "V311",
+   "V312",
+   "V313",
+   "V314",
+   "V315",
+   "V316",
+   "V317",
+   "V49",
+   "V5",
+   "V53",
+   "V54",
+   "V61",
+   "V62",
+   "V69",
+   "V70",
+   "V82",
+   "V83",
+   "V87",
+   "V90",
+   "V91",
+   "V99",
+   "addr1",
+   "card1",
+   "card2",
+   "card3",
+   "card4",
+   "card5",
+   "card6",
+   "dist1",
+   "id_01",
+   "id_02",
+   "id_05",
+   "id_06",
+   "id_17",
+   "id_19",
+   "id_20",
+   "id_30",
+   "id_31"
+  ],
+  "tier_thresholds_calibrated": {
+   "0.9": 0.7317073345184326,
+   "0.7": 0.23255814611911774,
+   "0.5": 0.10752688348293304
+  },
+  "users_tracked": 15299,
+  "pending_labels": 4023
+ },
+ "models_dir_files": {
+  "categories.json": 46323,
+  "feature_meta.json": 10520,
+  "freq_tables.json": 455170,
+  "isotonic.json": 4145,
+  "parity_fixture.json": 738472,
+  "serving_spec.json": 5603,
+  "xgb_seed1.json": 9463319,
+  "xgb_seed2.json": 9259222,
+  "xgb_seed42.json": 9372358
+ }
+}

@@ -1,0 +1,368 @@
+{
+  "legacy_baseline": {
+    "script": "src/models/archive/train_xgb_optuna.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-train-xgb",
+      "title": "paywatch-train-xgb",
+      "code_file": "train_xgb_optuna.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": true,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-processed-features"
+      ],
+      "competition_sources": [],
+      "kernel_sources": []
+    }
+  },
+  "fusion_experiment": {
+    "script": "src/models/archive/train_fusion.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-fusion",
+      "title": "paywatch-fusion",
+      "code_file": "train_fusion.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": true,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-processed-features"
+      ],
+      "competition_sources": [],
+      "kernel_sources": []
+    }
+  },
+  "pipeline": {
+    "script": "src/models/train_pipeline.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-pipeline",
+      "title": "paywatch-pipeline",
+      "code_file": "train_pipeline.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": true,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": []
+    }
+  },
+  "shap_compact": {
+    "script": "src/models/shap_compact.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-b2",
+      "title": "paywatch-b2",
+      "code_file": "shap_compact.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": true,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": []
+    }
+  },
+  "verify": {
+    "script": "src/models/verify_artifacts.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-verify",
+      "title": "paywatch-verify",
+      "code_file": "verify_artifacts.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-pipeline",
+        "srigowthamm/paywatch-b2"
+      ]
+    }
+  },
+  "assets": {
+    "script": "src/models/export_assets.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-assets",
+      "title": "paywatch-assets",
+      "code_file": "export_assets.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2"
+      ]
+    }
+  },
+  "warmstate": {
+    "script": "src/models/build_warm_state.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-warmstate",
+      "title": "paywatch-warmstate",
+      "code_file": "build_warm_state.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-api",
+        "srigowthamm/paywatch-models"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-assets"
+      ]
+    }
+  },
+  "hp": {
+    "script": "src/models/high_precision_study.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-hp",
+      "title": "paywatch-hp",
+      "code_file": "high_precision_study.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2",
+        "srigowthamm/paywatch-assets"
+      ]
+    }
+  },
+  "stress": {
+    "script": "src/models/stress_test.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-stress",
+      "title": "paywatch-stress",
+      "code_file": "stress_test.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-models-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2",
+        "srigowthamm/paywatch-assets"
+      ]
+    }
+  },
+  "mlflow": {
+    "script": "src/models/log_mlflow.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-mlflow",
+      "title": "paywatch-mlflow",
+      "code_file": "log_mlflow.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": true,
+      "dataset_sources": [
+        "srigowthamm/paywatch-models-src"
+      ],
+      "competition_sources": [],
+      "kernel_sources": [
+        "srigowthamm/paywatch-pipeline",
+        "srigowthamm/paywatch-b2",
+        "srigowthamm/paywatch-verify",
+        "srigowthamm/paywatch-apitest",
+        "srigowthamm/paywatch-assets"
+      ]
+    }
+  },
+  "sim": {
+    "script": "src/monitor/run_simulation.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-sim",
+      "title": "paywatch-sim",
+      "code_file": "run_simulation.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-api",
+        "srigowthamm/paywatch-models",
+        "srigowthamm/paywatch-monitor"
+      ],
+      "competition_sources": [],
+      "kernel_sources": [
+        "srigowthamm/paywatch-assets",
+        "srigowthamm/paywatch-warmstate"
+      ]
+    }
+  },
+  "rag": {
+    "script": "src/rag/build_index.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-rag",
+      "title": "paywatch-rag",
+      "code_file": "build_index.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": true,
+      "dataset_sources": [
+        "srigowthamm/paywatch-rag-src"
+      ],
+      "competition_sources": [],
+      "kernel_sources": []
+    }
+  },
+  "apitest": {
+    "script": "tests/kaggle/api_replay.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-apitest",
+      "title": "paywatch-apitest",
+      "code_file": "api_replay.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": true,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-api",
+        "srigowthamm/paywatch-tests"
+      ],
+      "competition_sources": [],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2",
+        "srigowthamm/paywatch-assets"
+      ]
+    }
+  },
+  "dashtest": {
+    "script": "tests/kaggle/dashboard_check.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-dashtest",
+      "title": "paywatch-dashtest",
+      "code_file": "dashboard_check.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": true,
+      "dataset_sources": [
+        "srigowthamm/paywatch-api",
+        "srigowthamm/paywatch-models",
+        "srigowthamm/paywatch-monitor",
+        "srigowthamm/paywatch-rag-src"
+      ],
+      "competition_sources": [],
+      "kernel_sources": [
+        "srigowthamm/paywatch-rag",
+        "srigowthamm/paywatch-sim"
+      ]
+    }
+  },
+  "ci": {
+    "script": "tests/kaggle/ci_repro.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-ci",
+      "title": "paywatch-ci",
+      "code_file": "ci_repro.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": true,
+      "dataset_sources": [
+        "srigowthamm/paywatch-api",
+        "srigowthamm/paywatch-monitor",
+        "srigowthamm/paywatch-rag-src",
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-tests"
+      ],
+      "competition_sources": [],
+      "kernel_sources": []
+    }
+  },
+  "eda": {
+    "script": "src/models/eda_notebook.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-eda",
+      "title": "paywatch-eda",
+      "code_file": "eda_notebook.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": true,
+      "dataset_sources": [],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": []
+    }
+  },
+  "adv_training": {
+    "script": "src/models/adversarial_training.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-adv-training",
+      "title": "paywatch-adv-training",
+      "code_file": "adversarial_training.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": true,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-models-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2"
+      ]
+    }
+  }
+}

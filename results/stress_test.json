@@ -1,0 +1,194 @@
+{
+ "targets": 1500,
+ "thresholds": {
+  "soft": 0.10752688348293304,
+  "challenge": 0.23255814611911774,
+  "block": 0.7317073345184326
+ },
+ "baseline_flagged_share_of_all_fraud": 0.6879662666234188,
+ "attacks": {
+  "amount_mimic": {
+   "budget_1": {
+    "below_soft": 0.042,
+    "below_challenge": 0.118,
+    "below_block": 0.284,
+    "mean_score": 0.7252154412229881
+   },
+   "budget_5": {
+    "below_soft": 0.07133333333333333,
+    "below_challenge": 0.14333333333333334,
+    "below_block": 0.31666666666666665,
+    "mean_score": 0.6948893962125048
+   },
+   "budget_20": {
+    "below_soft": 0.08533333333333333,
+    "below_challenge": 0.16866666666666666,
+    "below_block": 0.358,
+    "mean_score": 0.6688749788835789
+   }
+  },
+  "email_rotation": {
+   "budget_1": {
+    "below_soft": 0.06133333333333333,
+    "below_challenge": 0.15733333333333333,
+    "below_block": 0.4,
+    "mean_score": 0.6536700043727172
+   },
+   "budget_5": {
+    "below_soft": 0.13733333333333334,
+    "below_challenge": 0.26666666666666666,
+    "below_block": 0.5346666666666666,
+    "mean_score": 0.5362258279778821
+   },
+   "budget_20": {
+    "below_soft": 0.20666666666666667,
+    "below_challenge": 0.34,
+    "below_block": 0.6313333333333333,
+    "mean_score": 0.4534378436763597
+   }
+  },
+  "device_rotation": {
+   "budget_1": {
+    "below_soft": 0.012666666666666666,
+    "below_challenge": 0.09266666666666666,
+    "below_block": 0.2906666666666667,
+    "mean_score": 0.725040410586366
+   },
+   "budget_5": {
+    "below_soft": 0.044,
+    "below_challenge": 0.12533333333333332,
+    "below_block": 0.3253333333333333,
+    "mean_score": 0.7012023351036077
+   },
+   "budget_20": {
+    "below_soft": 0.094,
+    "below_challenge": 0.17133333333333334,
+    "below_block": 0.358,
+    "mean_score": 0.670669419092919
+   }
+  },
+  "behavior_mimic": {
+   "budget_1": {
+    "below_soft": 0.014666666666666666,
+    "below_challenge": 0.10866666666666666,
+    "below_block": 0.29733333333333334,
+    "mean_score": 0.7205732721595314
+   },
+   "budget_5": {
+    "below_soft": 0.034,
+    "below_challenge": 0.12533333333333332,
+    "below_block": 0.3486666666666667,
+    "mean_score": 0.6794908015480515
+   },
+   "budget_20": {
+    "below_soft": 0.052,
+    "below_challenge": 0.14466666666666667,
+    "below_block": 0.39066666666666666,
+    "mean_score": 0.6362341769147931
+   }
+  },
+  "identity_rotation": {
+   "budget_1": {
+    "below_soft": 0.31666666666666665,
+    "below_challenge": 0.43,
+    "below_block": 0.6206666666666667,
+    "mean_score": 0.42892643083765614
+   },
+   "budget_5": {
+    "below_soft": 0.364,
+    "below_challenge": 0.4633333333333333,
+    "below_block": 0.6406666666666667,
+    "mean_score": 0.40129881109834936
+   },
+   "budget_20": {
+    "below_soft": 0.406,
+    "below_challenge": 0.49666666666666665,
+    "below_block": 0.67,
+    "mean_score": 0.3716427469002659
+   }
+  },
+  "product_card_swap": {
+   "budget_1": {
+    "below_soft": 0.035333333333333335,
+    "below_challenge": 0.12133333333333333,
+    "below_block": 0.31933333333333336,
+    "mean_score": 0.7061698208770707
+   },
+   "budget_5": {
+    "below_soft": 0.051333333333333335,
+    "below_challenge": 0.14,
+    "below_block": 0.336,
+    "mean_score": 0.6927816747570417
+   },
+   "budget_20": {
+    "below_soft": 0.059333333333333335,
+    "below_challenge": 0.14333333333333334,
+    "below_block": 0.338,
+    "mean_score": 0.6880485960841055
+   }
+  },
+  "identity+amount": {
+   "budget_1": {
+    "below_soft": 0.3373333333333333,
+    "below_challenge": 0.434,
+    "below_block": 0.6,
+    "mean_score": 0.4361592501154684
+   },
+   "budget_5": {
+    "below_soft": 0.398,
+    "below_challenge": 0.4806666666666667,
+    "below_block": 0.644,
+    "mean_score": 0.3891863527143819
+   },
+   "budget_20": {
+    "below_soft": 0.438,
+    "below_challenge": 0.5166666666666667,
+    "below_block": 0.696,
+    "mean_score": 0.34758860467052516
+   }
+  },
+  "all_moves": {
+   "budget_1": {
+    "below_soft": 0.42933333333333334,
+    "below_challenge": 0.532,
+    "below_block": 0.7193333333333334,
+    "mean_score": 0.3360057072040147
+   },
+   "budget_5": {
+    "below_soft": 0.5273333333333333,
+    "below_challenge": 0.618,
+    "below_block": 0.852,
+    "mean_score": 0.24152135756447676
+   },
+   "budget_20": {
+    "below_soft": 0.584,
+    "below_challenge": 0.6873333333333334,
+    "below_block": 0.92,
+    "mean_score": 0.18391589850633291
+   }
+  }
+ },
+ "baseline_targets": {
+  "mean_score": 0.7322326288597472,
+  "challenge_or_block_share": 0.9013333333333333,
+  "block_share": 0.7086666666666667
+ },
+ "isolation_forest": {
+  "if_threshold_at_1pct_fpr": 0.6820704506302288,
+  "if_flags_original_flagged_frauds": 0.0,
+  "if_flags_all_moves_attacked_frauds": 0.0,
+  "evaded_frauds_(single_draw_all_moves)": 647,
+  "if_flags_among_evaded": 0.0,
+  "base_rate_of_if_flag_on_legit": 0.01,
+  "full_test_no_attack": {
+   "model_alone": {
+    "recall": 0.6879662666234188,
+    "fpr": 0.01917003906524129
+   },
+   "model_or_if": {
+    "recall": 0.6879662666234188,
+    "fpr": 0.02932232332920068
+   }
+  }
+ }
+}

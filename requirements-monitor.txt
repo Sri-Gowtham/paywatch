@@ -1,0 +1,6 @@
+# Streamlit dashboard (the one thing that runs locally): streamlit run src/monitor/dashboard.py
+streamlit>=1.35
+altair>=5
+numpy
+pandas
+# Optional: set ANTHROPIC_API_KEY and `pip install anthropic` for LLM-composed assistant answers

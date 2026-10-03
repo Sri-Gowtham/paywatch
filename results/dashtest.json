@@ -1,0 +1,69 @@
+{
+ "checks": {
+  "renders without exception": {
+   "pass": true,
+   "detail": "[]"
+  },
+  "five tabs": {
+   "pass": true,
+   "detail": "5"
+  },
+  "title present": {
+   "pass": true,
+   "detail": ""
+  },
+  "threshold slider changes precision": {
+   "pass": true,
+   "detail": "74.1% -> 90.0%"
+  },
+  "no exception after slider": {
+   "pass": true,
+   "detail": "[]"
+  },
+  "control scenario renders": {
+   "pass": true,
+   "detail": "[]"
+  },
+  "cost input rerun ok": {
+   "pass": true,
+   "detail": "[]"
+  },
+  "live scoring shows metrics": {
+   "pass": true,
+   "detail": "[]"
+  },
+  "assistant answers with a citation": {
+   "pass": true,
+   "detail": "Pick the calibrated-probability cut-off and see the business trade-off on the replayed stream. At 0.60: cost 1,954,690 per 1,000 (19.5 missed fraud, 2.2 false alerts). Cheapest threshold: **0.02** (co"
+  },
+  "assistant refuses off-topic question": {
+   "pass": true,
+   "detail": "Pick the calibrated-probability cut-off and see the business trade-off on the replayed stream. At 0.60: cost 1,954,690 per 1,000 (19.5 missed fraud, 2.2 false alerts). Cheapest threshold: **0.02** (co"
+  },
+  "explanation of the last scored transaction": {
+   "pass": true,
+   "detail": "[\"This transaction was allowed without friction (calibrated fraud probability 9%).\\nStrongest factors in the model's score (attributions, not proof of intent):\\n- C14 = missing (raises the score)\\n- D1 = 153.611 (lowers the score)\\n- C13 = missing (raises the score)\\n- C6 = missing (lowers the score)\\nContext: no earlier transactions have been seen for this user, so there is no behavioural baseline.\"]"
+  },
+  "explanation shows RBI context": {
+   "pass": true,
+   "detail": ""
+  },
+  "API down handled gracefully": {
+   "pass": true,
+   "detail": "[]"
+  }
+ },
+ "all_pass": true,
+ "alert_metrics": {
+  "control": {
+   "WARN alerts": "0",
+   "CRITICAL alerts": "0",
+   "Alerts on/before drift day": "n/a"
+  },
+  "drift": {
+   "WARN alerts": "3",
+   "CRITICAL alerts": "12",
+   "Alerts on/before drift day": "0"
+  }
+ }
+}
