@@ -1,0 +1,13 @@
+.git
+.github
+.claude
+data
+notebooks
+mlflow
+kaggle_kernel*
+kaggle_upload
+tests
+**/__pycache__
+**/dataset-metadata.json
+*.md
+models/compact/parity_fixture.json

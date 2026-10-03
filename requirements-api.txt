@@ -1,0 +1,6 @@
+# Serving image: numpy + xgboost + fastapi only (no pandas / sklearn / shap)
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2.5
+numpy>=1.26
+xgboost>=2.0

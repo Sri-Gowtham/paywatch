@@ -141,3 +141,36 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Kaggle credentials (never commit API tokens)
+kaggle.json
+.kaggle/
+
+# PayWatch data & model artifacts (download locally, never commit)
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/backup/
+data/raw/backup/*
+!data/raw/backup/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+*.pkl
+*.parquet
+mlflow/*
+!mlflow/.gitkeep
+mlruns/
+
+# small simulation stream is tracked
+!data/sim/
+!data/sim/*.parquet
+
+# downloaded kernel outputs (large / regenerable)
+kaggle_kernel*/output/
+kaggle_upload/

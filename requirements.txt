@@ -1,0 +1,14 @@
+# Layer 01 — Data & feature engineering (local)
+pandas
+numpy
+scikit-learn
+imbalanced-learn
+pyarrow
+jupyter
+
+# Kaggle integration
+kaggle
+
+# Layer 02 — Model training / explainability (local use of outputs; training itself runs on Kaggle)
+xgboost
+shap
