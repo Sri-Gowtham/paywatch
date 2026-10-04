@@ -48,8 +48,12 @@ features_dir = os.path.dirname(find("/kaggle/input/**/upi_fingerprint.py")[0])
 
 for p in find("/kaggle/input/**/prod_compact/xgb_seed*.json") + find("/kaggle/input/**/prod_compact/serving_spec.json"):
     shutil.copy(p, MODELS)
-for name in ("categories.json", "freq_tables.json", "isotonic.json", "feature_meta.json", "parity_fixture.json"):
+for name in ("categories.json", "freq_tables.json", "isotonic.json", "feature_meta.json"):
     shutil.copy(find(f"/kaggle/input/**/{name}")[0], MODELS)
+# the repo ships a SYNTHETIC fixture (paywatch-synthfix); the raw-row one from the assets kernel is not used
+fixtures = find("/kaggle/input/**/paywatch-synthfix/parity_fixture.json") or find("/kaggle/input/**/parity_fixture.json")
+assert "synthfix" in fixtures[0], f"synthetic fixture not found among {fixtures}"
+shutil.copy(fixtures[0], f"{MODELS}/parity_fixture.json")
 stream_path = find("/kaggle/input/**/stream_sample.parquet")[0]
 log(f"assembled: {sorted(os.listdir(MODELS))}")
 

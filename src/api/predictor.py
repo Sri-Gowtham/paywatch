@@ -12,6 +12,7 @@ import os
 import re
 import threading
 import time
+from collections import OrderedDict
 from typing import Any, Dict, List, Optional
 
 import numpy as np
@@ -57,6 +58,27 @@ def _describe(feature: str, value: Optional[float]) -> str:
     return names.get(feature, f"{feature} = {v}")
 
 
+REQUIRED_NUMERIC = ("TransactionDT", "TransactionAmt")
+OPTIONAL_NUMERIC = ("D1", "card1", "card2", "card3", "card5", "addr1")
+
+
+def coerce_numeric_fields(fields: dict) -> dict:
+    """Copy of `fields` with the numerics the state code relies on converted to float; anything that cannot be
+    converted is a client error (422), never an internal error."""
+    out = dict(fields)
+    for name in REQUIRED_NUMERIC + OPTIONAL_NUMERIC:
+        v = out.get(name)
+        if is_missing(v):
+            if name in REQUIRED_NUMERIC:
+                raise PredictionError(f"missing required field '{name}'")
+            continue
+        try:
+            out[name] = float(v)
+        except (TypeError, ValueError):
+            raise PredictionError(f"field '{name}' must be numeric, got {v!r}")
+    return out
+
+
 class Predictor:
     def __init__(self, models_dir: str):
         load = lambda n: json.load(open(os.path.join(models_dir, n)))  # noqa: E731
@@ -85,6 +107,8 @@ class Predictor:
         self.behavior = UserBehaviorState()
         self.history = EntityHistoryStore()
         self.lock = threading.Lock()
+        self._responses: "OrderedDict[str, dict]" = OrderedDict()      # idempotent retries (committed predictions only)
+        self._max_cached = 20_000
 
     # ------------------------------------------------------------------ encoding
     def _encode(self, col: str, v: Any) -> float:
@@ -152,34 +176,41 @@ class Predictor:
 
     def predict(self, tx_id: str, fields: dict, explain: bool = True, commit: bool = True, top_k: int = 5,
                 include_vector: bool = False) -> dict:
-        for req in ("TransactionDT", "TransactionAmt"):
-            if is_missing(fields.get(req)):
-                raise PredictionError(f"missing required field '{req}'")
+        fields = coerce_numeric_fields(fields)
         t0 = time.perf_counter()
         with self.lock:
+            if commit and not include_vector and tx_id in self._responses:
+                cached = dict(self._responses[tx_id])               # a retry must not count the transaction twice
+                cached["latency_ms"] = (time.perf_counter() - t0) * 1000.0
+                return cached
             keys = entity_keys(fields)
-            behavior = self.behavior.observe(fields, keys["uid"], commit=commit)
+            behavior = self.behavior.observe(fields, keys["uid"], commit=False)
             entity = self.history.features(keys)
             vec = self.build_vector(fields, behavior, entity)
             score = self._score(vec)
             p = self.calibrate(score)
             reasons = self.explain(vec, top_k) if explain else []
-            if commit:
+            if commit:                                              # only after the request is known to be valid
+                self.behavior.observe(fields, keys["uid"], commit=True)
                 self.history.register(tx_id, keys)
-        result = {
-            "transaction_id": tx_id, "score": score, "calibrated_probability": p, "action": self.action_for(p),
-            "reasons": reasons,
-            "flags": {
-                "new_user": behavior["uid_prior_tx_count"] == 0,
-                "uid_has_labeled_history": entity["h7_uid_n"] > 0,
-                "uid_has_prior_fraud": entity["h7_uid_fraud_n"] > 0,
-                "weak_identity": behavior["uid_is_strong"] == 0,
-            },
-            "model_version": self.model_version,
-            "latency_ms": (time.perf_counter() - t0) * 1000.0,
-        }
+            result = {
+                "transaction_id": tx_id, "score": score, "calibrated_probability": p, "action": self.action_for(p),
+                "reasons": reasons,
+                "flags": {
+                    "new_user": behavior["uid_prior_tx_count"] == 0,
+                    "uid_has_labeled_history": entity["h7_uid_n"] > 0,
+                    "uid_has_prior_fraud": entity["h7_uid_fraud_n"] > 0,
+                    "weak_identity": behavior["uid_is_strong"] == 0,
+                },
+                "model_version": self.model_version,
+                "latency_ms": (time.perf_counter() - t0) * 1000.0,
+            }
+            if commit and not include_vector:
+                self._responses[tx_id] = result
+                while len(self._responses) > self._max_cached:
+                    self._responses.popitem(last=False)
         if include_vector:
-            result["_vector"] = vec
+            result = {**result, "_vector": vec}
         return result
 
     def feedback(self, tx_id: str, is_fraud: bool) -> bool:
@@ -190,14 +221,18 @@ class Predictor:
         with self.lock:
             self.behavior = UserBehaviorState()
             self.history = EntityHistoryStore()
+            self._responses.clear()
 
     def load_state(self, path: str) -> dict:
-        """Warm start from a snapshot written by snapshot.save_state (replaces current state)."""
+        """Warm start from a snapshot written by snapshot.save_state. The snapshot is validated and loaded into fresh
+        objects first, so a bad file leaves the live state untouched; the swap itself is atomic."""
         from .snapshot import import_state, load_state
 
         obj = load_state(path)
-        self.reset_state()
+        behavior, history = UserBehaviorState(), EntityHistoryStore()
+        import_state(obj, behavior, history)
         with self.lock:
-            import_state(obj, self.behavior, self.history)
+            self.behavior, self.history = behavior, history
+            self._responses.clear()
         return {"users": len(obj["users"]), "entity_keys": {k: len(v) for k, v in obj["entity_tables"].items()},
                 "pending_labels": len(obj["pending"])}

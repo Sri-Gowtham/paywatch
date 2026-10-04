@@ -56,7 +56,7 @@
       {
        "feature": "card6",
        "psi": 0.1372935076078968,
-       "ks": 0.005896237156704259
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -96,12 +96,12 @@
       {
        "feature": "V70",
        "psi": 0.17648095257545457,
-       "ks": 0.10444129694648374
+       "ks": 0.12591582983658337
       },
       {
        "feature": "V69",
        "psi": 0.17453371106806298,
-       "ks": 0.10187719438238119
+       "ks": 0.12591582983658337
       },
       {
        "feature": "id_30",
@@ -122,10 +122,10 @@
      "rows": 707,
      "psi_mean": 0.15714976951809492,
      "psi_max": 0.6941976509099315,
-     "n_joint_significant": 12,
+     "n_joint_significant": 21,
      "n_joint_severe": 0,
-     "share_joint_significant": 0.14285714285714285,
-     "n_ks_significant": 13,
+     "share_joint_significant": 0.25,
+     "n_ks_significant": 22,
      "score_psi": 0.11219619810267623,
      "flag_rate": 0.02263083451202263,
      "challenge_or_block_rate": 0.015558698727015558,
@@ -151,22 +151,22 @@
       {
        "feature": "id_01",
        "psi": 0.3735969592302767,
-       "ks": 0.13234583568613523
+       "ks": 0.22180596687803367
       },
       {
        "feature": "id_30",
        "psi": 0.37305835625342565,
-       "ks": 0.15993028388477898
+       "ks": 0.19256691704370166
       }
      ],
      "alerts": [
       {
        "day": 13.0,
-       "severity": "WARN",
+       "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 12.0,
-       "threshold": 5,
-       "message": "12 input features drifted: V258, ProductCD, C9, R_emaildomain"
+       "value": 21.0,
+       "threshold": 3,
+       "message": "21 input features drifted (0 severely): V258, M6, ProductCD, id_01"
       },
       {
        "day": 13.0,
@@ -180,7 +180,7 @@
        "message": "flag rate is 0.59x the baseline"
       }
      ],
-     "retrain_recommended": false
+     "retrain_recommended": true
     },
     {
      "day": 14,
@@ -211,7 +211,7 @@
       {
        "feature": "card4",
        "psi": 0.1494088760230334,
-       "ks": 0.016535352643274572
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -301,7 +301,7 @@
       {
        "feature": "card6",
        "psi": 0.13835145262243492,
-       "ks": 0.014719079874074142
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card5",
@@ -391,7 +391,7 @@
       {
        "feature": "card6",
        "psi": 0.13968160514551717,
-       "ks": 0.02043531038641691
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -401,7 +401,7 @@
       {
        "feature": "card5",
        "psi": 0.050452127753929925,
-       "ks": 0.02106939215664455
+       "ks": 0.023475600482616675
       }
      ],
      "alerts": [],
@@ -431,12 +431,12 @@
       {
        "feature": "card4",
        "psi": 0.13791466551747242,
-       "ks": 0.010140892558074988
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
        "psi": 0.13756282243848536,
-       "ks": 0.00898232132305668
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -457,10 +457,10 @@
      "rows": 709,
      "psi_mean": 0.2975582102528874,
      "psi_max": 0.8344081905177196,
-     "n_joint_significant": 41,
+     "n_joint_significant": 52,
      "n_joint_severe": 7,
-     "share_joint_significant": 0.4880952380952381,
-     "n_ks_significant": 43,
+     "share_joint_significant": 0.6190476190476191,
+     "n_ks_significant": 57,
      "score_psi": 0.3912195369719125,
      "flag_rate": 0.02538787023977433,
      "challenge_or_block_rate": 0.018335684062059238,
@@ -499,9 +499,9 @@
        "day": 20.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 41.0,
+       "value": 52.0,
        "threshold": 3,
-       "message": "41 input features drifted (7 severely): C13, C1, C14, card6"
+       "message": "52 input features drifted (7 severely): C13, C1, C14, card6"
       },
       {
        "day": 20.0,
@@ -554,7 +554,7 @@
       {
        "feature": "card4",
        "psi": 0.15124565558254835,
-       "ks": 0.023563928715589766
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -639,12 +639,12 @@
       {
        "feature": "card4",
        "psi": 0.1380536429353569,
-       "ks": 0.01505697570005382
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
        "psi": 0.13731312475479257,
-       "ks": 0.006172319989015629
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card5",
@@ -689,12 +689,12 @@
       {
        "feature": "card4",
        "psi": 0.1489443606452346,
-       "ks": 0.016994442624910972
+       "ks": 0.024845633637165538
       },
       {
        "feature": "id_02",
        "psi": 0.07321187391953936,
-       "ks": 0.08235434367955619
+       "ks": 0.08772750601218904
       },
       {
        "feature": "card2",
@@ -746,7 +746,7 @@
       {
        "feature": "card6",
        "psi": 0.1371227079512912,
-       "ks": 0.0024241431203626262
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2_freq",
@@ -791,7 +791,7 @@
       {
        "feature": "card6",
        "psi": 0.14014053854383937,
-       "ks": 0.023029467125817077
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -831,12 +831,12 @@
       {
        "feature": "card4",
        "psi": 0.13899993014986234,
-       "ks": 0.00606628785861104
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
        "psi": 0.1371539497048688,
-       "ks": 0.0033377334984928675
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -881,7 +881,7 @@
       {
        "feature": "card6",
        "psi": 0.13782777496153845,
-       "ks": 0.011231576055639292
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card5",
@@ -971,7 +971,7 @@
       {
        "feature": "card4",
        "psi": 0.14440482890582104,
-       "ks": 0.020484428933467413
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
@@ -1021,7 +1021,7 @@
       {
        "feature": "card6",
        "psi": 0.1377850326221073,
-       "ks": 0.010694517517545243
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -1036,11 +1036,11 @@
    "alerts": [
     {
      "day": 13.0,
-     "severity": "WARN",
+     "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 12.0,
-     "threshold": 5,
-     "message": "12 input features drifted: V258, ProductCD, C9, R_emaildomain"
+     "value": 21.0,
+     "threshold": 3,
+     "message": "21 input features drifted (0 severely): V258, M6, ProductCD, id_01"
     },
     {
      "day": 13.0,
@@ -1057,9 +1057,9 @@
      "day": 20.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 41.0,
+     "value": 52.0,
      "threshold": 3,
-     "message": "41 input features drifted (7 severely): C13, C1, C14, card6"
+     "message": "52 input features drifted (7 severely): C13, C1, C14, card6"
     },
     {
      "day": 20.0,
@@ -1093,15 +1093,14 @@
     }
    ],
    "first_alert_day": {
-    "feature_drift:WARN": 13.0,
+    "feature_drift:CRITICAL": 13.0,
     "alert_rate:WARN": 13.0,
-    "feature_drift:CRITICAL": 20.0,
     "score_drift:CRITICAL": 20.0
    },
    "alerts_before_drift_day": null,
    "alert_counts": {
-    "WARN": 4,
-    "CRITICAL": 2
+    "WARN": 3,
+    "CRITICAL": 3
    },
    "final_window_distributions": [
     {
@@ -1298,12 +1297,12 @@
       {
        "feature": "card4",
        "psi": 0.14174792616318033,
-       "ks": 0.02397073441217129
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
        "psi": 0.13960245171764646,
-       "ks": 0.020866072820284826
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -1343,7 +1342,7 @@
       {
        "feature": "card4",
        "psi": 0.15212642709392654,
-       "ks": 0.022834822897887852
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
@@ -1353,12 +1352,12 @@
       {
        "feature": "id_02",
        "psi": 0.09417841713268688,
-       "ks": 0.06574680696181588
+       "ks": 0.11983509406926707
       },
       {
        "feature": "id_20",
        "psi": 0.09375390753963278,
-       "ks": 0.03099716828478971
+       "ks": 0.12077889270347153
       }
      ],
      "alerts": [],
@@ -1388,22 +1387,22 @@
       {
        "feature": "id_30",
        "psi": 0.2560375029816605,
-       "ks": 0.10824623733802452
+       "ks": 0.1612238131284469
       },
       {
        "feature": "R_emaildomain",
        "psi": 0.24322075378731592,
-       "ks": 0.16032518359575687
+       "ks": 0.19251556622448784
       },
       {
        "feature": "id_20",
        "psi": 0.24080098424451488,
-       "ks": 0.1233974358974359
+       "ks": 0.18626114793700044
       },
       {
        "feature": "id_19",
        "psi": 0.23901817110854234,
-       "ks": 0.16253795955288497
+       "ks": 0.18657997960549777
       }
      ],
      "alerts": [],
@@ -1438,7 +1437,7 @@
       {
        "feature": "id_01",
        "psi": 0.16808644115720445,
-       "ks": 0.08983837011629697
+       "ks": 0.13894896720223704
       },
       {
        "feature": "id_02",
@@ -1483,7 +1482,7 @@
       {
        "feature": "card4",
        "psi": 0.14710879025061982,
-       "ks": 0.015498266244534875
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -1618,7 +1617,7 @@
       {
        "feature": "card6",
        "psi": 0.1378182389980196,
-       "ks": 0.011158301701248569
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -1658,12 +1657,12 @@
       {
        "feature": "card4",
        "psi": 0.1400592140122257,
-       "ks": 0.011893831137725575
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
        "psi": 0.13744507604880454,
-       "ks": 0.007677297610868161
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -1673,7 +1672,7 @@
       {
        "feature": "card5",
        "psi": 0.06197218441366062,
-       "ks": 0.02005079666828169
+       "ks": 0.02453126670971468
       }
      ],
      "alerts": [],
@@ -1877,7 +1876,7 @@
       {
        "feature": "card4",
        "psi": 0.13990465602500562,
-       "ks": 0.014364219055050587
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -1922,7 +1921,7 @@
       {
        "feature": "card4",
        "psi": 0.14060662888649164,
-       "ks": 0.010380215363174627
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -2012,7 +2011,7 @@
       {
        "feature": "card6",
        "psi": 0.13783609740902059,
-       "ks": 0.011295147913844727
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2_freq",
@@ -2057,7 +2056,7 @@
       {
        "feature": "card6",
        "psi": 0.13816362823734596,
-       "ks": 0.013568521031207592
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -2097,12 +2096,12 @@
       {
        "feature": "card4",
        "psi": 0.139619979567723,
-       "ks": 0.023247399366802313
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
        "psi": 0.13742047512431307,
-       "ks": 0.007507914970601548
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card5",
@@ -2237,7 +2236,7 @@
       {
        "feature": "card6",
        "psi": 0.138443710538517,
-       "ks": 0.015253524500332405
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -2496,7 +2495,7 @@
       {
        "feature": "card5",
        "psi": 0.0538354997816465,
-       "ks": 0.01938522592131886
+       "ks": 0.02387205098534965
       },
       {
        "feature": "card2",
@@ -2531,7 +2530,7 @@
       {
        "feature": "card4",
        "psi": 0.1466684340549215,
-       "ks": 0.022573998693401653
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
@@ -2571,7 +2570,7 @@
       {
        "feature": "id_31",
        "psi": 0.48045741056624924,
-       "ks": 0.145962865120006
+       "ks": 0.15062966491091223
       },
       {
        "feature": "card6",
@@ -2581,17 +2580,17 @@
       {
        "feature": "id_20",
        "psi": 0.15721543074615843,
-       "ks": 0.07140105433901056
+       "ks": 0.1526878830820383
       },
       {
        "feature": "id_19",
        "psi": 0.1540285144044559,
-       "ks": 0.11464793709691667
+       "ks": 0.15271698207626372
       },
       {
        "feature": "R_emaildomain",
        "psi": 0.15374016997215117,
-       "ks": 0.10092895610136987
+       "ks": 0.15708922691644522
       }
      ],
      "alerts": [],
@@ -2616,7 +2615,7 @@
       {
        "feature": "id_31",
        "psi": 0.47239675532566167,
-       "ks": 0.13613428557925666
+       "ks": 0.13831878528521613
       },
       {
        "feature": "card6",
@@ -2626,17 +2625,17 @@
       {
        "feature": "id_30",
        "psi": 0.15054033630979152,
-       "ks": 0.0904398322400258
+       "ks": 0.11586761630467768
       },
       {
        "feature": "card4",
        "psi": 0.14813873812490871,
-       "ks": 0.01614622215683176
+       "ks": 0.024845633637165538
       },
       {
        "feature": "id_01",
        "psi": 0.14559782555432652,
-       "ks": 0.06226727882127531
+       "ks": 0.14180420594462528
       }
      ],
      "alerts": [],
@@ -2671,7 +2670,7 @@
       {
        "feature": "card4",
        "psi": 0.14312761062067067,
-       "ks": 0.011334351322247697
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -2716,7 +2715,7 @@
       {
        "feature": "card4",
        "psi": 0.14329505694532638,
-       "ks": 0.022011829381232362
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -2806,7 +2805,7 @@
       {
        "feature": "card6",
        "psi": 0.1379776093612273,
-       "ks": 0.01232735757537684
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -2846,12 +2845,12 @@
       {
        "feature": "card4",
        "psi": 0.1406523755847058,
-       "ks": 0.017903775234034136
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
        "psi": 0.13774178654955777,
-       "ks": 0.010552979393536527
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -3031,7 +3030,7 @@
       {
        "feature": "card4",
        "psi": 0.1428484168451791,
-       "ks": 0.01747539359479655
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -3076,7 +3075,7 @@
       {
        "feature": "card4",
        "psi": 0.1417778066702462,
-       "ks": 0.00906505628250066
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -3116,12 +3115,12 @@
       {
        "feature": "card4",
        "psi": 0.14069689789813486,
-       "ks": 0.017264974498928554
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
        "psi": 0.13927019596709803,
-       "ks": 0.01941647424758186
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -3211,7 +3210,7 @@
       {
        "feature": "card6",
        "psi": 0.13756775950960115,
-       "ks": 0.009029225638253674
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2_freq",
@@ -3256,7 +3255,7 @@
       {
        "feature": "card6",
        "psi": 0.13803915754054943,
-       "ks": 0.012750981083232887
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -3301,7 +3300,7 @@
       {
        "feature": "card6",
        "psi": 0.13950125221214832,
-       "ks": 0.020434938009984138
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -3391,7 +3390,7 @@
       {
        "feature": "card6",
        "psi": 0.14052613670814765,
-       "ks": 0.024468052992482198
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -3611,7 +3610,7 @@
       {
        "feature": "card6",
        "psi": 0.1372935076078968,
-       "ks": 0.005896237156704259
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -3651,12 +3650,12 @@
       {
        "feature": "V70",
        "psi": 0.17648095257545457,
-       "ks": 0.10444129694648374
+       "ks": 0.12591582983658337
       },
       {
        "feature": "V69",
        "psi": 0.17453371106806298,
-       "ks": 0.10187719438238119
+       "ks": 0.12591582983658337
       },
       {
        "feature": "id_30",
@@ -3677,10 +3676,10 @@
      "rows": 707,
      "psi_mean": 0.15714976951809492,
      "psi_max": 0.6941976509099315,
-     "n_joint_significant": 12,
+     "n_joint_significant": 21,
      "n_joint_severe": 0,
-     "share_joint_significant": 0.14285714285714285,
-     "n_ks_significant": 13,
+     "share_joint_significant": 0.25,
+     "n_ks_significant": 22,
      "score_psi": 0.11219619810267623,
      "flag_rate": 0.02263083451202263,
      "challenge_or_block_rate": 0.015558698727015558,
@@ -3706,22 +3705,22 @@
       {
        "feature": "id_01",
        "psi": 0.3735969592302767,
-       "ks": 0.13234583568613523
+       "ks": 0.22180596687803367
       },
       {
        "feature": "id_30",
        "psi": 0.37305835625342565,
-       "ks": 0.15993028388477898
+       "ks": 0.19256691704370166
       }
      ],
      "alerts": [
       {
        "day": 13.0,
-       "severity": "WARN",
+       "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 12.0,
-       "threshold": 5,
-       "message": "12 input features drifted: V258, ProductCD, C9, R_emaildomain"
+       "value": 21.0,
+       "threshold": 3,
+       "message": "21 input features drifted (0 severely): V258, M6, ProductCD, id_01"
       },
       {
        "day": 13.0,
@@ -3735,7 +3734,7 @@
        "message": "flag rate is 0.59x the baseline"
       }
      ],
-     "retrain_recommended": false
+     "retrain_recommended": true
     },
     {
      "day": 14,
@@ -3766,7 +3765,7 @@
       {
        "feature": "card4",
        "psi": 0.1494088760230334,
-       "ks": 0.016535352643274572
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -3832,10 +3831,10 @@
      "rows": 676,
      "psi_mean": 0.1843468332994694,
      "psi_max": 5.6374796591569085,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.030306818345071644,
      "flag_rate": 0.04585798816568047,
      "challenge_or_block_rate": 0.03106508875739645,
@@ -3866,7 +3865,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.2910749542967844,
-       "ks": 0.04782540696234705
+       "ks": 0.24006078963896801
       }
      ],
      "alerts": [
@@ -3874,9 +3873,9 @@
        "day": 16.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -3886,10 +3885,10 @@
      "rows": 687,
      "psi_mean": 0.20037007216941266,
      "psi_max": 5.679458148543685,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.08273187916249004,
      "flag_rate": 0.05822416302765648,
      "challenge_or_block_rate": 0.03784570596797671,
@@ -3920,7 +3919,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.4172633635107581,
-       "ks": 0.04425081448014023
+       "ks": 0.2929190275828627
       }
      ],
      "alerts": [
@@ -3928,9 +3927,9 @@
        "day": 17.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 5,
-       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
       },
       {
        "day": 17.0,
@@ -3951,10 +3950,10 @@
      "rows": 696,
      "psi_mean": 0.1946251465229676,
      "psi_max": 5.654653404780629,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.06031088209269342,
      "flag_rate": 0.03879310344827586,
      "challenge_or_block_rate": 0.02586206896551724,
@@ -3993,9 +3992,9 @@
        "day": 18.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -4005,10 +4004,10 @@
      "rows": 533,
      "psi_mean": 0.19135571813628494,
      "psi_max": 5.646154848257177,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.05140212913882112,
      "flag_rate": 0.03564727954971857,
      "challenge_or_block_rate": 0.0225140712945591,
@@ -4047,9 +4046,9 @@
        "day": 19.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 5,
-       "message": "5 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": false
@@ -4059,10 +4058,10 @@
      "rows": 709,
      "psi_mean": 0.4613840810526901,
      "psi_max": 5.688353276607712,
-     "n_joint_significant": 42,
-     "n_joint_severe": 11,
-     "share_joint_significant": 0.5,
-     "n_ks_significant": 43,
+     "n_joint_significant": 53,
+     "n_joint_severe": 12,
+     "share_joint_significant": 0.6309523809523809,
+     "n_ks_significant": 57,
      "score_psi": 0.35472139663894153,
      "flag_rate": 0.02538787023977433,
      "challenge_or_block_rate": 0.018335684062059238,
@@ -4101,9 +4100,9 @@
        "day": 20.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 42.0,
+       "value": 53.0,
        "threshold": 3,
-       "message": "42 input features drifted (11 severely): TransactionAmt, C13, C1, C14"
+       "message": "53 input features drifted (12 severely): TransactionAmt, C13, C1, C14"
       },
       {
        "day": 20.0,
@@ -4132,10 +4131,10 @@
      "rows": 651,
      "psi_mean": 0.1924938843604804,
      "psi_max": 5.623020729694464,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.039499084227213994,
      "flag_rate": 0.03533026113671275,
      "challenge_or_block_rate": 0.021505376344086023,
@@ -4166,7 +4165,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.46371007731704184,
-       "ks": 0.056332832511652775
+       "ks": 0.3086489425943666
       }
      ],
      "alerts": [
@@ -4174,9 +4173,9 @@
        "day": 21.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -4186,10 +4185,10 @@
      "rows": 613,
      "psi_mean": 0.1914845941973653,
      "psi_max": 5.619340040504209,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.023350374976574422,
      "flag_rate": 0.06199021207177814,
      "challenge_or_block_rate": 0.040783034257748776,
@@ -4220,7 +4219,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3690796199503316,
-       "ks": 0.03496055202755588
+       "ks": 0.27079527036717443
       }
      ],
      "alerts": [
@@ -4228,9 +4227,9 @@
        "day": 22.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       },
       {
        "day": 22.0,
@@ -4251,10 +4250,10 @@
      "rows": 661,
      "psi_mean": 0.1998569062358097,
      "psi_max": 5.643946458827806,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.020902191643337228,
      "flag_rate": 0.03328290468986384,
      "challenge_or_block_rate": 0.028744326777609682,
@@ -4285,7 +4284,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.4179569695272518,
-       "ks": 0.05103055733527502
+       "ks": 0.2890631081629902
       }
      ],
      "alerts": [
@@ -4293,9 +4292,9 @@
        "day": 23.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -4305,10 +4304,10 @@
      "rows": 609,
      "psi_mean": 0.20150688643623,
      "psi_max": 5.643656347802057,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.037338287666656034,
      "flag_rate": 0.07389162561576355,
      "challenge_or_block_rate": 0.054187192118226604,
@@ -4347,9 +4346,9 @@
        "day": 24.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       },
       {
        "day": 24.0,
@@ -4370,10 +4369,10 @@
      "rows": 668,
      "psi_mean": 0.1924230147591365,
      "psi_max": 5.632291235187744,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 4,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.03519607544047751,
      "flag_rate": 0.03293413173652695,
      "challenge_or_block_rate": 0.023952095808383235,
@@ -4404,7 +4403,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.405159087507978,
-       "ks": 0.030906303978364663
+       "ks": 0.28857618488398096
       }
      ],
      "alerts": [
@@ -4412,9 +4411,9 @@
        "day": 25.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -4424,10 +4423,10 @@
      "rows": 505,
      "psi_mean": 0.1937013933352779,
      "psi_max": 5.658084308130385,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 7,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 8,
      "score_psi": 0.03177875993895106,
      "flag_rate": 0.05742574257425743,
      "challenge_or_block_rate": 0.033663366336633666,
@@ -4466,9 +4465,9 @@
        "day": 26.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 5,
-       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
       },
       {
        "day": 26.0,
@@ -4489,10 +4488,10 @@
      "rows": 467,
      "psi_mean": 0.19413180117415804,
      "psi_max": 5.626628349650869,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 7,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 8,
      "score_psi": 0.03148005001881173,
      "flag_rate": 0.042826552462526764,
      "challenge_or_block_rate": 0.029978586723768737,
@@ -4523,7 +4522,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.38412865749135383,
-       "ks": 0.03735002467295886
+       "ks": 0.27012807040629816
       }
      ],
      "alerts": [
@@ -4531,9 +4530,9 @@
        "day": 27.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 5,
-       "message": "5 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": false
@@ -4543,10 +4542,10 @@
      "rows": 523,
      "psi_mean": 0.19291892752896606,
      "psi_max": 5.618780408116341,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 7,
      "score_psi": 0.01662885652399873,
      "flag_rate": 0.0497131931166348,
      "challenge_or_block_rate": 0.040152963671128104,
@@ -4577,7 +4576,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.35164526596529233,
-       "ks": 0.027096185469996037
+       "ks": 0.2690922082865067
       }
      ],
      "alerts": [
@@ -4585,9 +4584,9 @@
        "day": 28.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -4597,10 +4596,10 @@
      "rows": 612,
      "psi_mean": 0.19228838972133536,
      "psi_max": 5.6288313673580745,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.020755328598367907,
      "flag_rate": 0.04411764705882353,
      "challenge_or_block_rate": 0.032679738562091505,
@@ -4639,9 +4638,9 @@
        "day": 29.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -4651,10 +4650,10 @@
      "rows": 631,
      "psi_mean": 0.18963535569245027,
      "psi_max": 5.645878869687578,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.020514733770472228,
      "flag_rate": 0.04120443740095087,
      "challenge_or_block_rate": 0.028526148969889066,
@@ -4693,9 +4692,9 @@
        "day": 30.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 5,
-       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": false
@@ -4705,10 +4704,10 @@
      "rows": 490,
      "psi_mean": 0.20886344722399364,
      "psi_max": 5.658461618781473,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 4,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.02049213187944749,
      "flag_rate": 0.024489795918367346,
      "challenge_or_block_rate": 0.02040816326530612,
@@ -4739,7 +4738,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3605723551071298,
-       "ks": 0.0732810823444422
+       "ks": 0.25892324586406157
       }
      ],
      "alerts": [
@@ -4747,9 +4746,9 @@
        "day": 31.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
       },
       {
        "day": 31.0,
@@ -4769,11 +4768,11 @@
    "alerts": [
     {
      "day": 13.0,
-     "severity": "WARN",
+     "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 12.0,
-     "threshold": 5,
-     "message": "12 input features drifted: V258, ProductCD, C9, R_emaildomain"
+     "value": 21.0,
+     "threshold": 3,
+     "message": "21 input features drifted (0 severely): V258, M6, ProductCD, id_01"
     },
     {
      "day": 13.0,
@@ -4790,17 +4789,17 @@
      "day": 16.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 17.0,
      "severity": "WARN",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 5,
-     "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
     },
     {
      "day": 17.0,
@@ -4817,25 +4816,25 @@
      "day": 18.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 19.0,
      "severity": "WARN",
      "signal": "feature_drift",
-     "value": 5.0,
+     "value": 6.0,
      "threshold": 5,
-     "message": "5 input features drifted: TransactionAmt, C13, C1, C14"
+     "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
     },
     {
      "day": 20.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 42.0,
+     "value": 53.0,
      "threshold": 3,
-     "message": "42 input features drifted (11 severely): TransactionAmt, C13, C1, C14"
+     "message": "53 input features drifted (12 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 20.0,
@@ -4860,17 +4859,17 @@
      "day": 21.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 22.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 22.0,
@@ -4887,17 +4886,17 @@
      "day": 23.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 5.0,
+     "value": 6.0,
      "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 24.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 5.0,
+     "value": 6.0,
      "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 24.0,
@@ -4914,17 +4913,17 @@
      "day": 25.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 26.0,
      "severity": "WARN",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 5,
-     "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
     },
     {
      "day": 26.0,
@@ -4941,41 +4940,41 @@
      "day": 27.0,
      "severity": "WARN",
      "signal": "feature_drift",
-     "value": 5.0,
-     "threshold": 5,
-     "message": "5 input features drifted: TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 28.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 5.0,
-     "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 29.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 5.0,
-     "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 30.0,
-     "severity": "WARN",
-     "signal": "feature_drift",
      "value": 6.0,
      "threshold": 5,
      "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
     },
     {
+     "day": 28.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 6.0,
+     "threshold": 3,
+     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 29.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 6.0,
+     "threshold": 3,
+     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 30.0,
+     "severity": "WARN",
+     "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 5,
+     "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
+    },
+    {
      "day": 31.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 5.0,
+     "value": 6.0,
      "threshold": 3,
-     "message": "5 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
+     "message": "6 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 31.0,
@@ -4990,20 +4989,20 @@
     }
    ],
    "first_alert_day": {
-    "feature_drift:WARN": 13.0,
+    "feature_drift:CRITICAL": 13.0,
     "alert_rate:WARN": 13.0,
-    "feature_drift:CRITICAL": 16.0,
+    "feature_drift:WARN": 17.0,
     "score_drift:CRITICAL": 20.0
    },
    "alerts_before_drift_day": 2,
    "alert_counts": {
-    "WARN": 13,
-    "CRITICAL": 12
+    "WARN": 12,
+    "CRITICAL": 13
    },
    "detection_lag_days": {
-    "feature_drift:WARN": -2.0,
+    "feature_drift:CRITICAL": -2.0,
     "alert_rate:WARN": -2.0,
-    "feature_drift:CRITICAL": 1.0,
+    "feature_drift:WARN": 2.0,
     "score_drift:CRITICAL": 5.0
    },
    "final_window_distributions": [
@@ -5207,12 +5206,12 @@
       {
        "feature": "card4",
        "psi": 0.14174792616318033,
-       "ks": 0.02397073441217129
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
        "psi": 0.13960245171764646,
-       "ks": 0.020866072820284826
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -5252,7 +5251,7 @@
       {
        "feature": "card4",
        "psi": 0.15212642709392654,
-       "ks": 0.022834822897887852
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
@@ -5262,12 +5261,12 @@
       {
        "feature": "id_02",
        "psi": 0.09417841713268688,
-       "ks": 0.06574680696181588
+       "ks": 0.11983509406926707
       },
       {
        "feature": "id_20",
        "psi": 0.09375390753963278,
-       "ks": 0.03099716828478971
+       "ks": 0.12077889270347153
       }
      ],
      "alerts": [],
@@ -5297,22 +5296,22 @@
       {
        "feature": "id_30",
        "psi": 0.2560375029816605,
-       "ks": 0.10824623733802452
+       "ks": 0.1612238131284469
       },
       {
        "feature": "R_emaildomain",
        "psi": 0.24322075378731592,
-       "ks": 0.16032518359575687
+       "ks": 0.19251556622448784
       },
       {
        "feature": "id_20",
        "psi": 0.24080098424451488,
-       "ks": 0.1233974358974359
+       "ks": 0.18626114793700044
       },
       {
        "feature": "id_19",
        "psi": 0.23901817110854234,
-       "ks": 0.16253795955288497
+       "ks": 0.18657997960549777
       }
      ],
      "alerts": [],
@@ -5347,7 +5346,7 @@
       {
        "feature": "id_01",
        "psi": 0.16808644115720445,
-       "ks": 0.08983837011629697
+       "ks": 0.13894896720223704
       },
       {
        "feature": "id_02",
@@ -5392,7 +5391,7 @@
       {
        "feature": "card4",
        "psi": 0.14710879025061982,
-       "ks": 0.015498266244534875
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -5458,10 +5457,10 @@
      "rows": 1363,
      "psi_mean": 0.1878645138340249,
      "psi_max": 5.654671828460509,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.048600861846651806,
      "flag_rate": 0.052090975788701394,
      "challenge_or_block_rate": 0.034482758620689655,
@@ -5492,7 +5491,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.35094869605261203,
-       "ks": 0.04037401812132946
+       "ks": 0.26670320304135653
       }
      ],
      "alerts": [
@@ -5500,9 +5499,9 @@
        "day": 17.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 5,
-       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": false
@@ -5512,10 +5511,10 @@
      "rows": 1383,
      "psi_mean": 0.1936987926030943,
      "psi_max": 5.665421042523172,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.05012923371925627,
      "flag_rate": 0.04844540853217643,
      "challenge_or_block_rate": 0.03181489515545915,
@@ -5546,7 +5545,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.40459511399593767,
-       "ks": 0.045945058706022834
+       "ks": 0.29052564821328764
       }
      ],
      "alerts": [
@@ -5554,9 +5553,9 @@
        "day": 18.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -5566,10 +5565,10 @@
      "rows": 1229,
      "psi_mean": 0.19024988780273805,
      "psi_max": 5.648765947843578,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.04635114474485505,
      "flag_rate": 0.03742880390561432,
      "challenge_or_block_rate": 0.024410089503661515,
@@ -5600,7 +5599,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3615084940742209,
-       "ks": 0.02950360227255422
+       "ks": 0.27374863899934665
       }
      ],
      "alerts": [
@@ -5608,9 +5607,9 @@
        "day": 19.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 5,
-       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": false
@@ -5620,10 +5619,10 @@
      "rows": 1242,
      "psi_mean": 0.29187809886601024,
      "psi_max": 5.62398199628131,
-     "n_joint_significant": 11,
-     "n_joint_severe": 5,
-     "share_joint_significant": 0.13095238095238096,
-     "n_ks_significant": 12,
+     "n_joint_significant": 12,
+     "n_joint_severe": 6,
+     "share_joint_significant": 0.14285714285714285,
+     "n_ks_significant": 13,
      "score_psi": 0.15409910131663135,
      "flag_rate": 0.029790660225442835,
      "challenge_or_block_rate": 0.020128824476650563,
@@ -5654,7 +5653,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.5393365803593411,
-       "ks": 0.04067562048472928
+       "ks": 0.3365695700942367
       }
      ],
      "alerts": [
@@ -5662,9 +5661,9 @@
        "day": 20.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 11.0,
+       "value": 12.0,
        "threshold": 3,
-       "message": "11 input features drifted (5 severely): TransactionAmt, C13, C1, C14"
+       "message": "12 input features drifted (6 severely): TransactionAmt, C13, C1, C14"
       },
       {
        "day": 20.0,
@@ -5682,10 +5681,10 @@
      "rows": 1360,
      "psi_mean": 0.28571005776875424,
      "psi_max": 5.627372432491972,
-     "n_joint_significant": 11,
-     "n_joint_severe": 5,
-     "share_joint_significant": 0.13095238095238096,
-     "n_ks_significant": 12,
+     "n_joint_significant": 12,
+     "n_joint_severe": 6,
+     "share_joint_significant": 0.14285714285714285,
+     "n_ks_significant": 13,
      "score_psi": 0.14079953242442117,
      "flag_rate": 0.030147058823529412,
      "challenge_or_block_rate": 0.019852941176470587,
@@ -5716,7 +5715,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.5951767021554766,
-       "ks": 0.06076545662512789
+       "ks": 0.35520175726862335
       }
      ],
      "alerts": [
@@ -5724,9 +5723,9 @@
        "day": 21.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 11.0,
+       "value": 12.0,
        "threshold": 3,
-       "message": "11 input features drifted (5 severely): TransactionAmt, C13, C1, C14"
+       "message": "12 input features drifted (6 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -5736,10 +5735,10 @@
      "rows": 1264,
      "psi_mean": 0.18850656014150535,
      "psi_max": 5.6204241453482515,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.021763563945227972,
      "flag_rate": 0.048259493670886076,
      "challenge_or_block_rate": 0.030854430379746837,
@@ -5770,7 +5769,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.41178048094477304,
-       "ks": 0.04138159822386833
+       "ks": 0.2902911094651982
       }
      ],
      "alerts": [
@@ -5778,9 +5777,9 @@
        "day": 22.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -5790,10 +5789,10 @@
      "rows": 1274,
      "psi_mean": 0.18780769021160162,
      "psi_max": 5.627848221625588,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.01574008519746001,
      "flag_rate": 0.04709576138147567,
      "challenge_or_block_rate": 0.03453689167974882,
@@ -5824,7 +5823,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.38368900588424915,
-       "ks": 0.021312507303806474
+       "ks": 0.28027332435699726
       }
      ],
      "alerts": [
@@ -5832,9 +5831,9 @@
        "day": 23.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -5844,10 +5843,10 @@
      "rows": 1270,
      "psi_mean": 0.186455810374944,
      "psi_max": 5.643797598139005,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.019608584223478043,
      "flag_rate": 0.05275590551181102,
      "challenge_or_block_rate": 0.04094488188976378,
@@ -5878,7 +5877,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3486739060116839,
-       "ks": 0.02077119134103872
+       "ks": 0.26756859376700226
       }
      ],
      "alerts": [
@@ -5886,9 +5885,9 @@
        "day": 24.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -5898,10 +5897,10 @@
      "rows": 1277,
      "psi_mean": 0.18944430809578336,
      "psi_max": 5.6356139428414425,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.02584400752681195,
      "flag_rate": 0.052466718872357085,
      "challenge_or_block_rate": 0.03837118245888802,
@@ -5932,7 +5931,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3487388402893592,
-       "ks": 0.03693594485236851
+       "ks": 0.2674317079803098
       }
      ],
      "alerts": [
@@ -5940,9 +5939,9 @@
        "day": 25.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -5952,10 +5951,10 @@
      "rows": 1173,
      "psi_mean": 0.19001420308903316,
      "psi_max": 5.641323100543413,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.021816135428446782,
      "flag_rate": 0.043478260869565216,
      "challenge_or_block_rate": 0.028132992327365727,
@@ -5986,7 +5985,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3631574654459646,
-       "ks": 0.02935144075217533
+       "ks": 0.2735308280273617
       }
      ],
      "alerts": [
@@ -5994,9 +5993,9 @@
        "day": 26.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -6006,10 +6005,10 @@
      "rows": 972,
      "psi_mean": 0.18866230914404206,
      "psi_max": 5.636707753113857,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 7,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 8,
      "score_psi": 0.020649888918912288,
      "flag_rate": 0.050411522633744855,
      "challenge_or_block_rate": 0.03189300411522634,
@@ -6040,7 +6039,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3399901903006681,
-       "ks": 0.02822118613599589
+       "ks": 0.26155615087791895
       }
      ],
      "alerts": [
@@ -6048,9 +6047,9 @@
        "day": 27.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 5,
-       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": false
@@ -6060,10 +6059,10 @@
      "rows": 990,
      "psi_mean": 0.18956896709661258,
      "psi_max": 5.6199241097528025,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 7,
      "score_psi": 0.013378546828509126,
      "flag_rate": 0.046464646464646465,
      "challenge_or_block_rate": 0.03535353535353535,
@@ -6094,7 +6093,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3592246792902959,
-       "ks": 0.023560510286174008
+       "ks": 0.2695808422359437
       }
      ],
      "alerts": [
@@ -6102,9 +6101,9 @@
        "day": 28.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 5,
-       "message": "5 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": false
@@ -6114,10 +6113,10 @@
      "rows": 1135,
      "psi_mean": 0.1871744972397619,
      "psi_max": 5.622782866756644,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.014747725053897785,
      "flag_rate": 0.04669603524229075,
      "challenge_or_block_rate": 0.03612334801762115,
@@ -6148,7 +6147,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3321672239995344,
-       "ks": 0.015601871014739421
+       "ks": 0.2616023791914014
       }
      ],
      "alerts": [
@@ -6156,9 +6155,9 @@
        "day": 29.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -6168,10 +6167,10 @@
      "rows": 1243,
      "psi_mean": 0.18771326643979355,
      "psi_max": 5.634205597652247,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.017790324691298542,
      "flag_rate": 0.042638777152051485,
      "challenge_or_block_rate": 0.030571198712791632,
@@ -6210,9 +6209,9 @@
        "day": 30.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -6222,10 +6221,10 @@
      "rows": 1121,
      "psi_mean": 0.19153561938475577,
      "psi_max": 5.650743931558337,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.009525656129049848,
      "flag_rate": 0.03389830508474576,
      "challenge_or_block_rate": 0.024977698483496878,
@@ -6256,7 +6255,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.31423898539131556,
-       "ks": 0.05191702491044503
+       "ks": 0.24756676750108395
       }
      ],
      "alerts": [
@@ -6264,9 +6263,9 @@
        "day": 31.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -6277,33 +6276,33 @@
      "day": 17.0,
      "severity": "WARN",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 5,
-     "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
     },
     {
      "day": 18.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 19.0,
      "severity": "WARN",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 5,
-     "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
     },
     {
      "day": 20.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 11.0,
+     "value": 12.0,
      "threshold": 3,
-     "message": "11 input features drifted (5 severely): TransactionAmt, C13, C1, C14"
+     "message": "12 input features drifted (6 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 20.0,
@@ -6317,44 +6316,36 @@
      "day": 21.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 11.0,
+     "value": 12.0,
      "threshold": 3,
-     "message": "11 input features drifted (5 severely): TransactionAmt, C13, C1, C14"
+     "message": "12 input features drifted (6 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 22.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 23.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 24.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 5.0,
+     "value": 6.0,
      "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 25.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 5.0,
-     "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 26.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
      "value": 6.0,
@@ -6362,7 +6353,23 @@
      "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
+     "day": 26.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 3,
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
      "day": 27.0,
+     "severity": "WARN",
+     "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 5,
+     "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 28.0,
      "severity": "WARN",
      "signal": "feature_drift",
      "value": 6.0,
@@ -6370,36 +6377,28 @@
      "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
     },
     {
-     "day": 28.0,
-     "severity": "WARN",
-     "signal": "feature_drift",
-     "value": 5.0,
-     "threshold": 5,
-     "message": "5 input features drifted: TransactionAmt, C13, C1, C14"
-    },
-    {
      "day": 29.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 5.0,
+     "value": 6.0,
      "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 30.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 31.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     }
    ],
    "first_alert_day": {
@@ -6628,7 +6627,7 @@
       {
        "feature": "card5",
        "psi": 0.0538354997816465,
-       "ks": 0.01938522592131886
+       "ks": 0.02387205098534965
       },
       {
        "feature": "card2",
@@ -6663,7 +6662,7 @@
       {
        "feature": "card4",
        "psi": 0.1466684340549215,
-       "ks": 0.022573998693401653
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card6",
@@ -6703,7 +6702,7 @@
       {
        "feature": "id_31",
        "psi": 0.48045741056624924,
-       "ks": 0.145962865120006
+       "ks": 0.15062966491091223
       },
       {
        "feature": "card6",
@@ -6713,17 +6712,17 @@
       {
        "feature": "id_20",
        "psi": 0.15721543074615843,
-       "ks": 0.07140105433901056
+       "ks": 0.1526878830820383
       },
       {
        "feature": "id_19",
        "psi": 0.1540285144044559,
-       "ks": 0.11464793709691667
+       "ks": 0.15271698207626372
       },
       {
        "feature": "R_emaildomain",
        "psi": 0.15374016997215117,
-       "ks": 0.10092895610136987
+       "ks": 0.15708922691644522
       }
      ],
      "alerts": [],
@@ -6748,7 +6747,7 @@
       {
        "feature": "id_31",
        "psi": 0.47239675532566167,
-       "ks": 0.13613428557925666
+       "ks": 0.13831878528521613
       },
       {
        "feature": "card6",
@@ -6758,17 +6757,17 @@
       {
        "feature": "id_30",
        "psi": 0.15054033630979152,
-       "ks": 0.0904398322400258
+       "ks": 0.11586761630467768
       },
       {
        "feature": "card4",
        "psi": 0.14813873812490871,
-       "ks": 0.01614622215683176
+       "ks": 0.024845633637165538
       },
       {
        "feature": "id_01",
        "psi": 0.14559782555432652,
-       "ks": 0.06226727882127531
+       "ks": 0.14180420594462528
       }
      ],
      "alerts": [],
@@ -6803,7 +6802,7 @@
       {
        "feature": "card4",
        "psi": 0.14312761062067067,
-       "ks": 0.011334351322247697
+       "ks": 0.024845633637165538
       },
       {
        "feature": "card2",
@@ -6858,7 +6857,7 @@
       {
        "feature": "card4",
        "psi": 0.14329505694532638,
-       "ks": 0.022011829381232362
+       "ks": 0.024845633637165538
       }
      ],
      "alerts": [],
@@ -6923,10 +6922,10 @@
      "rows": 2059,
      "psi_mean": 0.18807681557425907,
      "psi_max": 5.653679759082283,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.04160792559479923,
      "flag_rate": 0.047595920349684316,
      "challenge_or_block_rate": 0.03156872268091306,
@@ -6957,7 +6956,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.36480528076861435,
-       "ks": 0.04235177868180451
+       "ks": 0.27395729250846
       }
      ],
      "alerts": [
@@ -6965,9 +6964,9 @@
        "day": 18.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -6977,10 +6976,10 @@
      "rows": 1916,
      "psi_mean": 0.1907702526178787,
      "psi_max": 5.658024169420683,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.045319781975036985,
      "flag_rate": 0.04488517745302714,
      "challenge_or_block_rate": 0.029227557411273485,
@@ -7011,7 +7010,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.37958985001939216,
-       "ks": 0.03428987063366984
+       "ks": 0.280622363924647
       }
      ],
      "alerts": [
@@ -7019,9 +7018,9 @@
        "day": 19.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 5,
-       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": false
@@ -7031,10 +7030,10 @@
      "rows": 1938,
      "psi_mean": 0.2361038139234687,
      "psi_max": 5.6141243396001554,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 4,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 11,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 12,
      "score_psi": 0.07618115442378076,
      "flag_rate": 0.033023735810113516,
      "challenge_or_block_rate": 0.02218782249742002,
@@ -7065,7 +7064,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.48128796657331036,
-       "ks": 0.03754964940565719
+       "ks": 0.31918524540071835
       }
      ],
      "alerts": [
@@ -7073,9 +7072,9 @@
        "day": 20.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7085,10 +7084,10 @@
      "rows": 1893,
      "psi_mean": 0.24144895200404257,
      "psi_max": 5.6165523909552295,
-     "n_joint_significant": 8,
-     "n_joint_severe": 3,
-     "share_joint_significant": 0.09523809523809523,
-     "n_ks_significant": 12,
+     "n_joint_significant": 9,
+     "n_joint_severe": 4,
+     "share_joint_significant": 0.10714285714285714,
+     "n_ks_significant": 13,
      "score_psi": 0.08954187567448918,
      "flag_rate": 0.03169572107765452,
      "challenge_or_block_rate": 0.020602218700475437,
@@ -7119,7 +7118,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.506895848980984,
-       "ks": 0.0448530630266043
+       "ks": 0.32696770612043036
       }
      ],
      "alerts": [
@@ -7127,9 +7126,9 @@
        "day": 21.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 8.0,
+       "value": 9.0,
        "threshold": 3,
-       "message": "8 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "9 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7139,10 +7138,10 @@
      "rows": 1973,
      "psi_mean": 0.24226169924344282,
      "psi_max": 5.619458158008315,
-     "n_joint_significant": 6,
-     "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 10,
+     "n_joint_significant": 7,
+     "n_joint_severe": 4,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 11,
      "score_psi": 0.07135270137762002,
      "flag_rate": 0.04004054738976178,
      "challenge_or_block_rate": 0.026355803345159655,
@@ -7173,7 +7172,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.5158056308198726,
-       "ks": 0.045999468947287125
+       "ks": 0.328977136655046
       }
      ],
      "alerts": [
@@ -7181,9 +7180,9 @@
        "day": 22.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7193,10 +7192,10 @@
      "rows": 1925,
      "psi_mean": 0.18682505538431707,
      "psi_max": 5.625776096485795,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.016551652969063222,
      "flag_rate": 0.043116883116883116,
      "challenge_or_block_rate": 0.03012987012987013,
@@ -7227,7 +7226,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.402731699271763,
-       "ks": 0.01773312357824197
+       "ks": 0.28986944252454394
       }
      ],
      "alerts": [
@@ -7235,9 +7234,9 @@
        "day": 23.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7247,10 +7246,10 @@
      "rows": 1883,
      "psi_mean": 0.1854351259733228,
      "psi_max": 5.632106363792211,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.01772824289586647,
      "flag_rate": 0.055762081784386616,
      "challenge_or_block_rate": 0.040892193308550186,
@@ -7281,7 +7280,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.35218576035852817,
-       "ks": 0.016021457139093864
+       "ks": 0.2686190200845304
       }
      ],
      "alerts": [
@@ -7289,9 +7288,9 @@
        "day": 24.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7301,10 +7300,10 @@
      "rows": 1938,
      "psi_mean": 0.1862560912687738,
      "psi_max": 5.637709608868128,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.020174745817254706,
      "flag_rate": 0.04592363261093911,
      "challenge_or_block_rate": 0.03508771929824561,
@@ -7335,7 +7334,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3662600159274933,
-       "ks": 0.022719538761856922
+       "ks": 0.2748096004058783
       }
      ],
      "alerts": [
@@ -7343,9 +7342,9 @@
        "day": 25.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7355,10 +7354,10 @@
      "rows": 1782,
      "psi_mean": 0.18785767565380324,
      "psi_max": 5.640185421089896,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.022350033709697657,
      "flag_rate": 0.05387205387205387,
      "challenge_or_block_rate": 0.037037037037037035,
@@ -7389,7 +7388,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.33967770673826136,
-       "ks": 0.0352345641783004
+       "ks": 0.2635202361753376
       }
      ],
      "alerts": [
@@ -7397,9 +7396,9 @@
        "day": 26.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7409,10 +7408,10 @@
      "rows": 1640,
      "psi_mean": 0.18796244247082713,
      "psi_max": 5.634526079950285,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.016855150305144073,
      "flag_rate": 0.043292682926829265,
      "challenge_or_block_rate": 0.028658536585365855,
@@ -7443,7 +7442,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3611403576729542,
-       "ks": 0.026673549113498507
+       "ks": 0.2725618720462418
       }
      ],
      "alerts": [
@@ -7451,9 +7450,9 @@
        "day": 27.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7463,10 +7462,10 @@
      "rows": 1495,
      "psi_mean": 0.18722098673083082,
      "psi_max": 5.624325119135766,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 2,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 7,
      "score_psi": 0.012182455854898265,
      "flag_rate": 0.05016722408026756,
      "challenge_or_block_rate": 0.034782608695652174,
@@ -7497,7 +7496,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.34310192391338395,
-       "ks": 0.025984891728153103
+       "ks": 0.26419251076065564
       }
      ],
      "alerts": [
@@ -7505,9 +7504,9 @@
        "day": 28.0,
        "severity": "WARN",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 5,
-       "message": "5 input features drifted: TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": false
@@ -7517,10 +7516,10 @@
      "rows": 1602,
      "psi_mean": 0.18525991288683122,
      "psi_max": 5.622196013830898,
-     "n_joint_significant": 5,
+     "n_joint_significant": 6,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.05952380952380952,
-     "n_ks_significant": 5,
+     "share_joint_significant": 0.07142857142857142,
+     "n_ks_significant": 6,
      "score_psi": 0.012363910664459991,
      "flag_rate": 0.04556803995006242,
      "challenge_or_block_rate": 0.03433208489388265,
@@ -7551,7 +7550,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3402160256748326,
-       "ks": 0.01791251793476023
+       "ks": 0.2640877086529224
       }
      ],
      "alerts": [
@@ -7559,9 +7558,9 @@
        "day": 29.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 5.0,
+       "value": 6.0,
        "threshold": 3,
-       "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7571,10 +7570,10 @@
      "rows": 1766,
      "psi_mean": 0.18563941102675305,
      "psi_max": 5.626898336198244,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.01378279413815893,
      "flag_rate": 0.04473386183465459,
      "challenge_or_block_rate": 0.033408833522083806,
@@ -7605,7 +7604,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.31409511696371184,
-       "ks": 0.016997134064137942
+       "ks": 0.2534363852081345
       }
      ],
      "alerts": [
@@ -7613,9 +7612,9 @@
        "day": 30.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7625,10 +7624,10 @@
      "rows": 1733,
      "psi_mean": 0.18900839462029118,
      "psi_max": 5.63875593023175,
-     "n_joint_significant": 6,
+     "n_joint_significant": 7,
      "n_joint_severe": 3,
-     "share_joint_significant": 0.07142857142857142,
-     "n_ks_significant": 6,
+     "share_joint_significant": 0.08333333333333333,
+     "n_ks_significant": 7,
      "score_psi": 0.009812095027579551,
      "flag_rate": 0.03750721292556261,
      "challenge_or_block_rate": 0.027697634160415464,
@@ -7659,7 +7658,7 @@
       {
        "feature": "P_emaildomain",
        "psi": 0.3113372628440886,
-       "ks": 0.030841742227638136
+       "ks": 0.25026302470693174
       }
      ],
      "alerts": [
@@ -7667,9 +7666,9 @@
        "day": 31.0,
        "severity": "CRITICAL",
        "signal": "feature_drift",
-       "value": 6.0,
+       "value": 7.0,
        "threshold": 3,
-       "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+       "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
       }
      ],
      "retrain_recommended": true
@@ -7688,12 +7687,84 @@
      "day": 18.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 3,
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 19.0,
+     "severity": "WARN",
+     "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 5,
+     "message": "7 input features drifted: TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 20.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 3,
+     "message": "7 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 21.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 9.0,
+     "threshold": 3,
+     "message": "9 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 22.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 3,
+     "message": "7 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 23.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 3,
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 24.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
      "value": 6.0,
      "threshold": 3,
      "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
-     "day": 19.0,
+     "day": 25.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 6.0,
+     "threshold": 3,
+     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 26.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 3,
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 27.0,
+     "severity": "CRITICAL",
+     "signal": "feature_drift",
+     "value": 7.0,
+     "threshold": 3,
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+    },
+    {
+     "day": 28.0,
      "severity": "WARN",
      "signal": "feature_drift",
      "value": 6.0,
@@ -7701,100 +7772,28 @@
      "message": "6 input features drifted: TransactionAmt, C13, C1, C14"
     },
     {
-     "day": 20.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 6.0,
-     "threshold": 3,
-     "message": "6 input features drifted (4 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 21.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 8.0,
-     "threshold": 3,
-     "message": "8 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 22.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 6.0,
-     "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 23.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 6.0,
-     "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 24.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 5.0,
-     "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 25.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 5.0,
-     "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 26.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 6.0,
-     "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 27.0,
-     "severity": "CRITICAL",
-     "signal": "feature_drift",
-     "value": 6.0,
-     "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
-    },
-    {
-     "day": 28.0,
-     "severity": "WARN",
-     "signal": "feature_drift",
-     "value": 5.0,
-     "threshold": 5,
-     "message": "5 input features drifted: TransactionAmt, C13, C1, C14"
-    },
-    {
      "day": 29.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 5.0,
+     "value": 6.0,
      "threshold": 3,
-     "message": "5 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 30.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     },
     {
      "day": 31.0,
      "severity": "CRITICAL",
      "signal": "feature_drift",
-     "value": 6.0,
+     "value": 7.0,
      "threshold": 3,
-     "message": "6 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
+     "message": "7 input features drifted (3 severely): TransactionAmt, C13, C1, C14"
     }
    ],
    "first_alert_day": {

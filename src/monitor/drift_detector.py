@@ -5,7 +5,8 @@ Evidently's column-order caching pitfall, and keeps the maths auditable. Convent
   PSI  < 0.1 stable, 0.1-0.2 moderate, > 0.2 significant (industry rule of thumb)
   KS   statistic D in [0, 1]; with thousands of rows p-values are always ~0, so the statistic itself
        is thresholded (default 0.2) instead of a p-value.
-Missing values (the model's -999 fill) are treated as their own bin for PSI and excluded from KS.
+Missing values (the model's -999 fill) are their own bin for PSI; for KS the distance is the larger of the KS on the
+present values and the change in missing share.
 """
 
 from typing import Dict, List, Optional, Sequence
@@ -69,7 +70,12 @@ class DriftDetector:
                  moderate: float = 0.1, top_n: int = 10, severe_psi: float = 0.5, severe_ks: float = 0.3) -> Dict:
         cur = np.asarray(current, dtype=float)
         psi = np.array([_psi(self.ref_props[j], self._column_props(j, cur[:, j])) for j in range(cur.shape[1])])
-        ks = np.array([ks_statistic(self.ref_sorted[j], cur[:, j][cur[:, j] != MISSING]) for j in range(cur.shape[1])])
+        ks_present = np.array([ks_statistic(self.ref_sorted[j], cur[:, j][cur[:, j] != MISSING]) for j in range(cur.shape[1])])
+        # 'missing' is its own category: a jump in the missing share is a distribution shift that KS on the present
+        # values cannot see (a field that disappears entirely would otherwise score KS = 0 and never alert)
+        miss_ref = np.array([self.ref_props[j][-1] for j in range(cur.shape[1])])
+        miss_shift = np.abs((cur == MISSING).mean(axis=0) - miss_ref)
+        ks = np.maximum(ks_present, miss_shift)
         order = np.argsort(-psi)[:top_n]
         joint = (psi > psi_threshold) & (ks > ks_threshold)      # PSI and KS must agree
         severe = (psi > severe_psi) & (ks > severe_ks)
@@ -87,6 +93,7 @@ class DriftDetector:
             "share_joint_significant": float(joint.mean()),
             "joint_features": [self.names[i] for i in np.where(joint)[0]],
             "ks_max": float(ks.max()),
+            "missing_shift_max": float(miss_shift.max()),
             "top_drifted": [{"feature": self.names[i], "psi": float(psi[i]), "ks": float(ks[i])} for i in order],
         }
 

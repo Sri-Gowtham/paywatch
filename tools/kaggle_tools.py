@@ -40,7 +40,9 @@ def status(name):
     return out.split("status ")[-1].strip('"') if out else "UNKNOWN"
 
 
-def push(name, wait=False):
+def push(name, wait=False, max_wait_s=7200):
+    if name not in KERNELS:
+        sys.exit(f"unknown kernel '{name}'. Known: {', '.join(KERNELS)}")
     spec = KERNELS[name]
     script = os.path.join(ROOT, spec["script"])
     with tempfile.TemporaryDirectory() as tmp:
@@ -51,12 +53,15 @@ def push(name, wait=False):
     if r.returncode or not wait:
         return r.returncode
     time.sleep(60)                                    # status can still show the previous run for a moment
-    while True:
+    deadline = time.time() + max_wait_s
+    while time.time() < deadline:
         s = status(name)
         if "COMPLETE" in s or "ERROR" in s or "CANCEL" in s:
             print(name, "->", s)
             return 0 if "COMPLETE" in s else 1
         time.sleep(20)
+    print(f"{name}: still running after {max_wait_s}s; stopped waiting (the kernel keeps running on Kaggle)")
+    return 2
 
 
 def fetch(name, pattern, out):
@@ -95,6 +100,7 @@ def main():
     p = sub.add_parser("push")
     p.add_argument("kernel")
     p.add_argument("--wait", action="store_true")
+    p.add_argument("--max-wait", type=int, default=7200, help="seconds to wait with --wait (default 7200)")
     p = sub.add_parser("status")
     p.add_argument("kernels", nargs="*")
     p = sub.add_parser("fetch")
@@ -112,7 +118,7 @@ def main():
         for k, v in DATASETS.items():
             print(f"dataset {k:<12} {v['id']:<36} {v['path']}")
     elif a.cmd == "push":
-        sys.exit(push(a.kernel, a.wait))
+        sys.exit(push(a.kernel, a.wait, a.max_wait))
     elif a.cmd == "status":
         for k in a.kernels or KERNELS:
             print(f"{k:<18} {status(k)}")

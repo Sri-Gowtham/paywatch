@@ -74,6 +74,10 @@ QUESTIONS = [
 usable = [q for q in QUESTIONS if any(c["source_id"] in q[1] for c in chunks)]
 log(f"evaluation questions usable (their source was fetched): {len(usable)} of {len(QUESTIONS)}")
 
+if not chunks:                                   # every fetch failed: keep the failure report instead of crashing
+    json.dump({"sources": report, "n_chunks": 0, "error": "no source could be fetched"},
+              open(f"{OUT}/results.json", "w"), indent=1)
+    raise SystemExit("no source could be fetched; see results.json for the per-source report")
 bm25 = BM25Retriever(chunks)
 retrievers = {"bm25": bm25}
 try:
@@ -108,7 +112,7 @@ for name, ret in retrievers.items():
             stats[f"phrase_hit@{k}"] += any(h["source_id"] in sources and any(p in h["text"].lower() for p in phrases) for h in top)
         if not any(h["source_id"] in sources and any(p in h["text"].lower() for p in phrases) for h in hits):
             misses.append(question)
-    results["retrieval"][name] = {k: v / len(usable) for k, v in stats.items()} | {"misses_at_5": misses}
+    results["retrieval"][name] = {k: v / max(len(usable), 1) for k, v in stats.items()} | {"misses_at_5": misses}
     if name == "bm25":
         answered = abstained = answer_hits = 0
         for question, sources, phrases in usable:
@@ -126,7 +130,7 @@ for name, ret in retrievers.items():
         refused = sum(answer(q, ret)["mode"] == "none" for q in off_topic)
         results["off_topic_refusals"] = {"questions": len(off_topic), "refused": refused}
         log(f"extractive answers: {results['extractive_answers']}; off-topic refused {refused}/{len(off_topic)}")
-    log(f"{name}: " + " ".join(f"{k}={v / len(usable):.2f}" for k, v in stats.items()))
+    log(f"{name}: " + " ".join(f"{k}={v / max(len(usable), 1):.2f}" for k, v in stats.items()))
 
 demo_q = ["Within how many working days must a customer report an unauthorised transaction?",
           "What does the framework say about explainability of AI decisions?"]

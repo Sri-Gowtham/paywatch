@@ -1,3 +1,4 @@
+import gzip
 import json
 import os
 
@@ -65,3 +66,44 @@ def test_feedback_updates_entity_history(client, sample_fields):
     if sample_fields.get("D1") is not None:
         assert second["flags"]["uid_has_labeled_history"] is True and second["flags"]["uid_has_prior_fraud"] is True
         assert second["score"] > first["score"], "a confirmed prior fraud on the same user must raise the score"
+
+
+def _state(client):
+    info = client.get("/model-info").json()
+    return info["users_tracked"], info["pending_labels"]
+
+
+def test_non_numeric_required_field_is_422_and_changes_nothing(client, sample_fields):
+    before = _state(client)
+    bad = dict(sample_fields)
+    bad["TransactionAmt"] = "abc"
+    assert client.post("/predict", json={"transaction_id": "n1", "fields": bad}).status_code == 422
+    assert _state(client) == before
+
+
+def test_rejected_request_does_not_commit_state(client, sample_fields):
+    before = _state(client)
+    bad = dict(sample_fields)
+    bad["D1"] = "xyz"                              # non-numeric optional field the state code uses
+    assert client.post("/predict", json={"transaction_id": "n2", "fields": bad}).status_code == 422
+    assert _state(client) == before
+
+
+def test_retry_of_the_same_transaction_id_is_idempotent(client, sample_fields):
+    body = {"transaction_id": "r1", "fields": sample_fields, "explain": False}
+    first = client.post("/predict", json=body).json()
+    state = _state(client)
+    second = client.post("/predict", json=body).json()
+    assert second["score"] == first["score"] and second["flags"] == first["flags"]
+    assert _state(client) == state
+
+
+def test_bad_snapshot_leaves_live_state_untouched(client, sample_fields, tmp_path):
+    client.post("/predict", json={"transaction_id": "s1", "fields": sample_fields})
+    before = _state(client)
+    path = tmp_path / "bad.json.gz"
+    with gzip.open(path, "wt") as f:
+        json.dump({"version": 99, "users": {}, "entity_tables": {}, "pending": {}}, f)
+    with pytest.raises(ValueError):
+        client.app.state.predictor.load_state(str(path))
+    assert _state(client) == before

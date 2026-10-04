@@ -167,9 +167,9 @@ mlflow/*
 !mlflow/.gitkeep
 mlruns/
 
-# small simulation stream is tracked
+# simulation results are tracked; the raw-row stream sample is NOT (competition data, lives on Kaggle only)
 !data/sim/
-!data/sim/*.parquet
+data/sim/*.parquet
 
 # downloaded kernel outputs (large / regenerable)
 **/output/

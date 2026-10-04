@@ -87,3 +87,22 @@ def test_single_severe_feature_warns_but_below_control_levels_is_quiet():
     assert [(a["signal"], a["severity"]) for a in evaluate_window(16, one_severe, 0.01, 0.045, 0.045)] == [("feature_drift", "WARN")]
     four_mild = {"n_joint_significant": 4, "n_joint_severe": 0, "share_joint_significant": 0.05, "joint_features": ["a"] * 4}
     assert evaluate_window(21, four_mild, 0.01, 0.045, 0.045) == []
+
+
+def test_field_that_disappears_entirely_is_flagged():
+    ref, cur = _data(0), _data(1)
+    cur[:, 2] = MISSING
+    rep = DriftDetector(ref, ["a", "b", "c"]).evaluate(cur)
+    assert rep["joint_features"] == ["c"] and rep["n_joint_severe"] == 1 and rep["missing_shift_max"] == 1.0
+
+
+def test_mostly_missing_field_is_flagged_even_if_present_values_look_normal():
+    ref, cur = _data(0), _data(1)
+    cur[:4500, 2] = MISSING
+    assert "c" in DriftDetector(ref, ["a", "b", "c"]).evaluate(cur)["joint_features"]
+
+
+def test_small_missing_share_change_is_not_flagged():
+    ref, cur = _data(0), _data(1)
+    cur[:300, 2] = MISSING                        # 5% of rows
+    assert DriftDetector(ref, ["a", "b", "c"]).evaluate(cur)["joint_features"] == []
