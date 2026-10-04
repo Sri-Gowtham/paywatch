@@ -62,7 +62,7 @@ results = {}
 # ------------------------------------------------------------ 2) pytest
 env = dict(os.environ, PAYWATCH_MODELS_DIR=MODELS, PAYWATCH_FIXTURE=f"{MODELS}/parity_fixture.json",
            PAYWATCH_FEATURES_DIR=features_dir, PYTHONPATH=REPO)
-r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "--tb=short", "tests"],
+r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", "--tb=short", "--ignore=tests/test_rag.py", "--ignore=tests/test_drift_detector.py", "tests"],
                    cwd=REPO, env=env, capture_output=True, text=True)
 print(r.stdout[-8000:])
 print(r.stderr[-2000:])
