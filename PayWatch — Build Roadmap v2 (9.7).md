@@ -28,4 +28,4 @@ Stack
 
 XGBoost · FastAPI · Docker · MLflow · Evidently · RAG
 
-BUILD PROGRESS 22 / 26 checklist steps (20 done, 2 done differently: SMOTE replaced, LLM explanation optional/template); 2 written, not yet seen passing on GitHub (Docker, CI/CD), 2 rejected on evidence; 0 skipped, 0 pending (2026-10-03)
+BUILD PROGRESS 22 / 26 checklist steps (20 done, 2 done differently: SMOTE replaced, LLM explanation optional/template); Docker and CI/CD seen passing on GitHub (2026-10-04; image build + container smoke test; live deploy not set up), 2 rejected on evidence; 0 skipped

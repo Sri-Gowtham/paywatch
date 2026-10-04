@@ -2,7 +2,7 @@
 
 UPI-style transaction fraud scoring: causal feature pipeline, calibrated XGBoost scorer, SHAP explanations, precision-target alert tiers. Built and evaluated honestly on the IEEE-CIS Fraud Detection data (time-ordered split, no look-ahead).
 
-> Status: model, MLOps registry, serving API, drift monitoring, dashboard, adversarial stress test and a retrieval-grounded explanation layer are **built and tested** (on Kaggle). Docker and GitHub CI are written; the CI failure found on the first push is fixed locally but not yet pushed, so neither has been seen passing on GitHub (see Roadmap status).
+> Status: model, MLOps registry, serving API, drift monitoring, dashboard, adversarial stress test and a retrieval-grounded explanation layer are **built and tested** (on Kaggle). Docker and GitHub CI pass on GitHub (tests, image build and a container `/health` smoke test); the Render deploy step is wired but has no deploy-hook secret, so nothing is deployed yet (see Roadmap status).
 
 ## Results (held-out latest 15% of time, 88,581 transactions, 3,083 fraud)
 
@@ -111,7 +111,7 @@ Isolation Forest second layer and score fusion (alone PR-AUC 0.097; validation g
 
 Done: scaffold, data, feature engineering, UPI fingerprint (causal proxy), XGBoost, SHAP, compact serving model, calibration + tiers, MLflow + registry, FastAPI, production simulation, drift detection, Streamlit dashboard (the threshold-tuning tab covers the calibration dashboard).
 Also done: adversarial stress test, RAG ingestion and query (BM25), retrieval-grounded explanations. The LLM explanation step is optional and only template mode has run against real data (done differently).
-Written but not yet seen passing on GitHub: Dockerfile, GitHub Actions CI/CD. The first CI run failed on a pandas 3 incompatibility in the feature code; it is fixed and committed locally (42 of 42 tests pass in a CI-style environment on Kaggle, and a stand-in for the image's runtime passes: with only `requirements-api.txt` installed and every other package hidden, the API starts with the image's startup command and serves `/health` and `/predict`) but not pushed.
+Seen passing on GitHub (2026-10-04, run on the cleaned history): GitHub Actions `test` (all tests), `build` (Docker image) with a container `/health` smoke test. The first CI run (2026-10-03) had failed on a pandas 3 incompatibility in the feature code, which was fixed. Not done: the `deploy` job exits without deploying because no `RENDER_DEPLOY_HOOK_URL` secret or Render service exists.
 Rejected on evidence: Isolation Forest, score fusion. The EDA notebook is done (`notebooks/01_eda.ipynb`).
 
 ## Kaggle setup
