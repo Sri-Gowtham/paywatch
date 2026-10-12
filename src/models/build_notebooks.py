@@ -24,7 +24,7 @@ from nbclient import NotebookClient  # noqa: E402
 OUT = "/kaggle/working"
 md, code = nbformat.v4.new_markdown_cell, nbformat.v4.new_code_cell
 
-PRELUDE = '''import glob, json, os, re, sys, time, warnings
+PRELUDE = '''import glob, json, os, re, shutil, sys, time, warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -34,6 +34,7 @@ warnings.filterwarnings("ignore")
 %matplotlib inline
 pd.set_option("display.width", 140)
 T0 = time.time()
+DEVICE = "cuda" if shutil.which("nvidia-smi") else "cpu"
 find = lambda p: sorted(glob.glob(p, recursive=True))
 sys.path.insert(0, os.path.dirname(find("/kaggle/input/**/upi_fingerprint.py")[0]))
 sys.path.insert(0, os.path.dirname(find("/kaggle/input/**/evasion.py")[0]))
@@ -96,7 +97,7 @@ def ensemble_score(boosters, X):
     return np.mean([b.predict(d) for b in boosters], axis=0)
 
 
-print(f"pipeline built in {(time.time() - T0) / 60:.1f} min | train {X_tr.shape}, val {X_va.shape}, test {X_te.shape} | compact features: {len(COLS)}")'''
+print(f"device: {DEVICE} | pipeline built in {(time.time() - T0) / 60:.1f} min | train {X_tr.shape}, val {X_va.shape}, test {X_te.shape} | compact features: {len(COLS)}")'''
 
 XGB_PARAMS = '''XGB_PARAMS = dict(max_depth=10, learning_rate=0.0558, subsample=0.935, colsample_bytree=0.678, min_child_weight=1,
                   reg_lambda=1.518, gamma=0.0336, scale_pos_weight=39.3)
@@ -209,8 +210,9 @@ display(t.round(4))'''),
     md("## 4. What do they add? A small ablation\n\nOne seed each, validation early stopping, test PR-AUC. This is indicative, not the production comparison (see `results/pipeline.json` for the 5-seed study)."),
     code('''def fit_eval(cols, seed=42):
     w = np.exp(-(t_tr.max() - t_tr) / (TAU_DAYS * 86400.0))
-    m = xgb.XGBClassifier(n_estimators=3000, tree_method="hist", device="cuda", eval_metric="aucpr", early_stopping_rounds=50,
-                          random_state=seed, **XGB_PARAMS)
+    params = dict(XGB_PARAMS) if DEVICE == "cuda" else {**XGB_PARAMS, "max_depth": 8, "learning_rate": 0.1}
+    m = xgb.XGBClassifier(n_estimators=3000 if DEVICE == "cuda" else 600, tree_method="hist", device=DEVICE, eval_metric="aucpr",
+                          early_stopping_rounds=50, random_state=seed, n_jobs=-1, **params)
     m.fit(X_tr[cols], y_tr, sample_weight=w, eval_set=[(X_va[cols], y_va)], verbose=False)
     p = m.predict_proba(X_te[cols])[:, 1]
     return {"features": len(cols), "best_iter": int(m.best_iteration), "test_pr_auc": round(float(average_precision_score(y_te, p)), 4),
@@ -225,37 +227,53 @@ res = {"compact (all)": fit_eval(COLS), "without UPI behaviour": fit_eval(no_upi
 abl = pd.DataFrame(res).T
 display(abl)
 abl.test_pr_auc.plot(kind="barh", figsize=(7, 2.8), title="test PR-AUC by feature set (1 seed)"); plt.tight_layout(); plt.show()'''),
-    md("## Takeaways\n\n- The behaviour features are causal and reconstructed from a proxy id; their effect is measured above, not assumed.\n"
-       "- First-time users, where none of them can help, are a large share of test fraud, which is why recall on new identities is the known weak spot."),
+    code('''full = abl.test_pr_auc["compact (all)"]
+print(f"removing UPI behaviour features: PR-AUC {abl.test_pr_auc['without UPI behaviour'] - full:+.4f}")
+print(f"removing entity fraud history:   PR-AUC {abl.test_pr_auc['without entity history'] - full:+.4f}")
+print(f"removing both:                   PR-AUC {abl.test_pr_auc['without both'] - full:+.4f}")
+print("single seed, so differences of a few thousandths are noise; the size of each effect is what matters")'''),
+    md("## Reading the results\n\nThe behaviour features are causal and reconstructed from a proxy id, and the ablation above measures what they add instead of assuming it. "
+       "First-time users, where none of them can help, are a large share of test fraud, which is why recall on new identities is the known weak spot."),
 ]
 
 # ------------------------------------------------------------------------------------------------ 03_model_xgb
 NOTEBOOKS["03_model_xgb"] = [
-    md("# PayWatch: the XGBoost model, calibration and tiers\n\nTrains one compact-model seed from scratch with the production settings, compares it with the shipped 3-seed ensemble, "
-       "calibrates probabilities and derives precision-target action tiers. All tuning decisions use validation; test is only read for the numbers reported here."),
+    md("# PayWatch: the XGBoost model, calibration and tiers\n\nTrains three seeds from scratch on the TRAIN split only with the production settings, so every threshold and calibration map below "
+       "comes from validation scores of models that never trained on validation rows. Test is only read for the reported numbers. "
+       "The shipped production model was refit on train + validation, so it is compared on test only and is not used to pick thresholds here."),
     code(PRELUDE),
     code(XGB_PARAMS),
-    md("## 1. Train (GPU, recency weights, early stopping on validation)"),
+    md("## 1. Train three seeds (recency weights, early stopping on validation)"),
     code('''w_tr = np.exp(-(t_tr.max() - t_tr) / (TAU_DAYS * 86400.0))
-m = xgb.XGBClassifier(n_estimators=6000, tree_method="hist", device="cuda", eval_metric="aucpr", early_stopping_rounds=60, random_state=42, **XGB_PARAMS)
-t1 = time.time()
-m.fit(X_tr[COLS], y_tr, sample_weight=w_tr, eval_set=[(X_va[COLS], y_va)], verbose=False)
-print(f"trained in {time.time() - t1:.0f}s, best iteration {m.best_iteration}, scale_pos_weight {XGB_PARAMS['scale_pos_weight']} (class weights instead of SMOTE)")
-p_va = m.predict_proba(X_va[COLS])[:, 1]
-p_te = m.predict_proba(X_te[COLS])[:, 1]
+models = []
+for seed in (42, 1, 2):
+    m = xgb.XGBClassifier(n_estimators=6000, tree_method="hist", device=DEVICE, eval_metric="aucpr", early_stopping_rounds=60,
+                          random_state=seed, n_jobs=-1, **XGB_PARAMS)
+    t1 = time.time()
+    m.fit(X_tr[COLS], y_tr, sample_weight=w_tr, eval_set=[(X_va[COLS], y_va)], verbose=False)
+    models.append(m)
+    print(f"seed {seed}: {time.time() - t1:.0f}s, best iteration {m.best_iteration}")
+print(f"scale_pos_weight {XGB_PARAMS['scale_pos_weight']} (class weights instead of SMOTE), device {DEVICE}")
+pv = [m.predict_proba(X_va[COLS])[:, 1] for m in models]
+pt = [m.predict_proba(X_te[COLS])[:, 1] for m in models]
+s_va, s_te = np.mean(pv, axis=0), np.mean(pt, axis=0)
 ship = shipped_boosters()
-s_te = ensemble_score(ship, X_te[COLS])
-s_va = ensemble_score(ship, X_va[COLS])
-table = []
-for name, p in (("this notebook, 1 seed", p_te), ("shipped 3-seed ensemble", s_te)):
-    table.append({"model": name, "test_pr_auc": round(float(average_precision_score(y_te, p)), 4), "test_roc_auc": round(float(roc_auc_score(y_te, p)), 4),
-                  "recall@0.1%FPR": round(recall_at_fpr(y_te, p, 0.001), 3), "recall@1%FPR": round(recall_at_fpr(y_te, p, 0.01), 3),
-                  "recall@5%FPR": round(recall_at_fpr(y_te, p, 0.05), 3)})
-display(pd.DataFrame(table).set_index("model"))
+ship_te = ensemble_score(ship, X_te[COLS])
+rows = []
+for name, p in [(f"seed {sd} alone", q) for sd, q in zip((42, 1, 2), pt)] + [("3-seed ensemble (train only)", s_te),
+                                                                                ("shipped ensemble (refit on train+val)", ship_te)]:
+    rows.append({"model": name, "test_pr_auc": round(float(average_precision_score(y_te, p)), 4), "test_roc_auc": round(float(roc_auc_score(y_te, p)), 4),
+                 "recall@0.1%FPR": round(recall_at_fpr(y_te, p, 0.001), 3), "recall@1%FPR": round(recall_at_fpr(y_te, p, 0.01), 3),
+                 "recall@5%FPR": round(recall_at_fpr(y_te, p, 0.05), 3)})
+res = pd.DataFrame(rows).set_index("model")
+display(res)
+singles = res.test_pr_auc.iloc[:3]
+print(f"single seeds: PR-AUC {singles.min():.3f} to {singles.max():.3f}; train-only ensemble {res.test_pr_auc.iloc[3]:.3f}; "
+      f"shipped refit ensemble {res.test_pr_auc.iloc[4]:.3f} (refit adds the validation period as training data)")
 print(f"reference: a random scorer has PR-AUC = fraud rate = {y_te.mean():.4f}")'''),
-    md("## 2. Curves"),
+    md("## 2. Curves (train-only ensemble versus the shipped refit)"),
     code('''fig, ax = plt.subplots(1, 2, figsize=(13, 4))
-for name, p in (("1 seed", p_te), ("shipped ensemble", s_te)):
+for name, p in (("train-only 3-seed ensemble", s_te), ("shipped refit ensemble", ship_te)):
     pr, rc, _ = precision_recall_curve(y_te, p)
     ax[0].plot(rc, pr, label=f"{name} (PR-AUC {average_precision_score(y_te, p):.3f})")
     fpr, tpr, _ = roc_curve(y_te, p)
@@ -263,7 +281,7 @@ for name, p in (("1 seed", p_te), ("shipped ensemble", s_te)):
 ax[0].set_xlabel("recall"); ax[0].set_ylabel("precision"); ax[0].set_title("precision-recall, test period"); ax[0].legend()
 ax[1].set_xscale("log"); ax[1].set_xlim(1e-4, 1); ax[1].set_xlabel("false-positive rate (log)"); ax[1].set_ylabel("recall"); ax[1].set_title("ROC, test period"); ax[1].legend()
 plt.tight_layout(); plt.show()'''),
-    md("## 3. Calibration\n\nRaw scores are not probabilities (class weights inflate them). An isotonic map fitted on validation turns them into calibrated probabilities."),
+    md("## 3. Calibration (fitted on validation scores of the train-only ensemble)\n\nRaw scores are not probabilities (class weights inflate them). An isotonic map turns them into calibrated probabilities."),
     code('''from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import brier_score_loss
 iso = IsotonicRegression(out_of_bounds="clip").fit(s_va, y_va)
@@ -277,18 +295,21 @@ for a, r, t in ((ax[0], rel_raw, "raw score"), (ax[1], rel, "isotonic-calibrated
     a.plot([0, 1], [0, 1], "--", c="grey"); a.plot(r.predicted, r.observed, "o-"); a.set_title(f"reliability by score decile: {t}")
     a.set_xlabel("predicted"); a.set_ylabel("observed fraud rate")
 plt.tight_layout(); plt.show()'''),
-    md("## 4. Action tiers by precision target (thresholds chosen on validation, applied to test)"),
+    md("## 4. Action tiers by precision target (thresholds from validation, applied to test)\n\n"
+       "Production picks thresholds on the first half of the test period and reports the second half (`models/compact/serving_spec.json`); this notebook uses the simpler validation-to-test protocol."),
     code('''rows = []
 for tier, target in (("SOFT_FLAG", 0.5), ("CHALLENGE", 0.7), ("HARD_BLOCK", 0.9)):
     thr = op_threshold(s_va, y_va, target)
     flag = s_te >= thr
     rows.append({"tier": tier, "val_precision_target": target, "alert_rate_test": round(float(flag.mean()), 4),
                  "test_precision": round(float(y_te[flag].mean()), 3), "test_recall": round(float(flag[y_te == 1].mean()), 3)})
-display(pd.DataFrame(rows).set_index("tier"))
-print("a tier's measured test precision can differ from its validation target: that gap is the honest estimate of what operators will see")'''),
-    md("## Takeaways\n\n- One freshly trained seed matches the shipped ensemble closely; the ensemble mainly reduces variance.\n"
-       "- Calibration makes scores usable as probabilities, and tiers are set from precision targets rather than arbitrary cut-offs.\n"
-       "- Precision of 0.99 on all alerts is not reachable on this data; only the very top slice is that precise (see README)."),
+tiers = pd.DataFrame(rows).set_index("tier")
+display(tiers)
+gap = (tiers.val_precision_target - tiers.test_precision).round(3)
+print("target minus achieved test precision per tier:", gap.to_dict())
+print("a positive gap means the validation period was easier than the test period; that gap is the honest estimate of what operators will see")'''),
+    md("## Reading the results\n\nEverything above is computed: compare the single-seed rows, the train-only ensemble and the shipped refit model in section 1 to see what seed averaging and the extra training period are each worth. "
+       "Precision of 0.99 on all alerts is not reachable on this data; only the very top slice is that precise (see the README)."),
 ]
 
 # ------------------------------------------------------------------------------------------------ 04_shap
@@ -343,18 +364,22 @@ NOTEBOOKS["04b_adversarial_test"] = [
        "(rotate identity, rotate email, mimic amount or behaviour) and keeps the lowest score. We measure how often a transaction that was flagged "
        "drops below the threshold. The attack code is `src/models/evasion.py`; the adversarial-training counter-measure is in `results/adv_training.json`."),
     code(PRELUDE),
-    md("## 1. Setup: shipped scorer, flag threshold from validation, flagged test frauds"),
+    md("## 1. Setup: shipped scorer, production SOFT_FLAG threshold, flagged test frauds"),
     code('''import evasion
 ship = shipped_boosters()
 Xtr = X_tr[COLS].to_numpy(dtype=np.float32)
 Xva = X_va[COLS].to_numpy(dtype=np.float32)
 Xte = X_te[COLS].to_numpy(dtype=np.float32)
 scorer = lambda Z: ensemble_score(ship, Z)
-thr = op_threshold(scorer(Xva), y_va, 0.60)
+iso = json.load(open(find("/kaggle/input/**/isotonic.json")[0]))
+cal = lambda raw_score: np.interp(raw_score, iso["x"], iso["y"])
+thr_cal = SPEC["tiers"]["0.5"]["calibrated_threshold"]   # production SOFT_FLAG, chosen on the first half of the test period
 sc_te = scorer(Xte)
-flagged = np.where((y_te == 1) & (sc_te >= thr))[0]
-print(f"threshold (deepest validation point with precision >= 0.60): {thr:.4f}")
-print(f"test frauds flagged at that threshold: {len(flagged)} of {int(y_te.sum())} ({len(flagged) / y_te.sum():.1%})")
+flagged = np.where((y_te == 1) & (cal(sc_te) >= thr_cal))[0]
+thr = float(thr_cal)
+scorer_cal = lambda Z: cal(scorer(Z))
+print(f"flag rule: calibrated probability >= {thr_cal:.4f} (the production SOFT_FLAG tier, as in results/stress_test.json)")
+print(f"test frauds flagged by that rule: {len(flagged)} of {int(y_te.sum())} ({len(flagged) / y_te.sum():.1%})")
 GROUPS = evasion.build_groups(COLS)
 rng = np.random.default_rng(0)
 legit = Xtr[y_tr == 0]
@@ -366,7 +391,7 @@ print({k: len(v["copy"]) + len(v["set"]) for k, v in GROUPS.items()}, "<- featur
 res = {}
 for name, moves in (("amount_mimic", ["amount_mimic"]), ("behavior_mimic", ["behavior_mimic"]), ("email_rotation", ["email_rotation"]),
                     ("identity_rotation", ["identity_rotation"]), ("all_moves", list(GROUPS))):
-    best = evasion.attack(scorer, Xte[targets], COLS, GROUPS, moves, donors, np.random.default_rng(1), BUDGETS)
+    best = evasion.attack(scorer_cal, Xte[targets], COLS, GROUPS, moves, donors, np.random.default_rng(1), BUDGETS)
     res[name] = {q: float((b < thr).mean()) for q, b in best.items()}
 df = pd.DataFrame(res).T
 df.columns = [f"{q} queries" for q in df.columns]
