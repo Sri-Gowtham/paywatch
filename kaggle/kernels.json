@@ -388,5 +388,28 @@
         "srigowthamm/paywatch-assets"
       ]
     }
+  },
+  "notebooks": {
+    "script": "src/models/build_notebooks.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-notebooks",
+      "title": "paywatch-notebooks",
+      "code_file": "build_notebooks.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": true,
+      "enable_internet": true,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-models-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2"
+      ]
+    }
   }
 }

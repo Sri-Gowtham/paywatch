@@ -1,9 +1,6 @@
 """Static landing page served at '/': what the service is, honest headline numbers, where to try it."""
 
 import html
-import json
-
-from .schemas import EXAMPLE_REQUEST
 
 PAGE = """<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -30,15 +27,13 @@ main{max-width:860px;margin:0 auto;padding:40px 16px 64px}h1{font-size:2rem;marg
 </div>
 <h2>Try a request</h2>
 <p class="sub">Open <a href="/docs">/docs</a>, expand <b>POST /predict</b>, press <i>Try it out</i> (the example is pre-filled), then <i>Execute</i>. Or from a terminal:</p>
-<pre>curl -X POST __BASE__/predict -H "Content-Type: application/json" -d '__BODY__'</pre>
+<pre>curl -s __BASE__/example | curl -s -X POST __BASE__/predict -H "Content-Type: application/json" -d @-</pre>
 <div class="note">Honest limits: this is a research demo trained on a public e-commerce fraud dataset, not real UPI traffic. User history lives in
 memory and resets when the service restarts or sleeps, so scores start cold. First-time fraud is the hardest case, and fraud labels must
 come back (via <code>/feedback</code>) for history features to help. Not for production decisions.</div>
 </main></body></html>"""
 
 
-def landing_html(model_version: str) -> str:
-    body = json.dumps(EXAMPLE_REQUEST, separators=(",", ":"))
+def landing_html(model_version: str, base_url: str = "https://<this-host>") -> str:
     return (PAGE.replace("__VERSION__", html.escape(str(model_version)))
-            .replace("__BASE__", "https://&lt;this-host&gt;")
-            .replace("__BODY__", html.escape(body, quote=False)))
+            .replace("__BASE__", html.escape(base_url.rstrip("/"), quote=False)))

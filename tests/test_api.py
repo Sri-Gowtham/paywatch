@@ -113,6 +113,7 @@ def test_landing_page_and_prefilled_example_request(client):
     page = client.get("/")
     assert page.status_code == 200 and "PayWatch" in page.text and "/docs" in page.text
     from src.api.schemas import EXAMPLE_REQUEST
-    r = client.post("/predict", json=EXAMPLE_REQUEST)
+    assert client.get("/example").json() == EXAMPLE_REQUEST
+    r = client.post("/predict", json=client.get("/example").json())
     assert r.status_code == 200, r.text
     assert r.json()["action"] in {"ALLOW", "SOFT_FLAG", "CHALLENGE", "HARD_BLOCK"}

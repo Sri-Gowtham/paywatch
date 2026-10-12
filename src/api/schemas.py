@@ -1,3 +1,5 @@
+import json
+import os
 from typing import Any, Dict, List, Optional, Union
 
 from pydantic import BaseModel, Field, field_validator
@@ -5,12 +7,7 @@ from pydantic import BaseModel, Field, field_validator
 REQUIRED_FIELDS = ("TransactionDT", "TransactionAmt", "ProductCD", "card1")
 
 
-EXAMPLE_REQUEST = {
-    "transaction_id": "demo-0001",
-    "fields": {"TransactionDT": 13178040, "TransactionAmt": 118.53, "ProductCD": "W", "card1": 4067, "card2": 387,
-               "card3": 150, "card5": 138, "addr1": 191, "D1": 33, "P_emaildomain": "suddenlink.net"},
-    "explain": True, "commit": False, "top_k": 5,
-}
+EXAMPLE_REQUEST = json.load(open(os.path.join(os.path.dirname(__file__), "example_request.json")))
 
 
 class PredictRequest(BaseModel):

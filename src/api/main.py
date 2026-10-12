@@ -7,12 +7,12 @@ Models/assets directory: env PAYWATCH_MODELS_DIR (default models/compact).
 
 import os
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 
 from .predictor import PredictionError, Predictor
 from .landing import landing_html
-from .schemas import FeedbackRequest, FeedbackResponse, PredictRequest, PredictResponse
+from .schemas import EXAMPLE_REQUEST, FeedbackRequest, FeedbackResponse, PredictRequest, PredictResponse
 
 
 def create_app(models_dir: str = None) -> FastAPI:
@@ -25,8 +25,13 @@ def create_app(models_dir: str = None) -> FastAPI:
     app.state.predictor = predictor
 
     @app.get("/", response_class=HTMLResponse, include_in_schema=False)
-    def landing():
-        return landing_html(predictor.model_version)
+    def landing(request: Request):
+        return landing_html(predictor.model_version, str(request.base_url))
+
+    @app.get("/example")
+    def example():
+        """A complete synthetic request body to feed into POST /predict."""
+        return EXAMPLE_REQUEST
 
     @app.get("/health")
     def health():
