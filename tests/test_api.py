@@ -107,3 +107,12 @@ def test_bad_snapshot_leaves_live_state_untouched(client, sample_fields, tmp_pat
     with pytest.raises(ValueError):
         client.app.state.predictor.load_state(str(path))
     assert _state(client) == before
+
+
+def test_landing_page_and_prefilled_example_request(client):
+    page = client.get("/")
+    assert page.status_code == 200 and "PayWatch" in page.text and "/docs" in page.text
+    from src.api.schemas import EXAMPLE_REQUEST
+    r = client.post("/predict", json=EXAMPLE_REQUEST)
+    assert r.status_code == 200, r.text
+    assert r.json()["action"] in {"ALLOW", "SOFT_FLAG", "CHALLENGE", "HARD_BLOCK"}

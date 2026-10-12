@@ -18,6 +18,6 @@ ENV PAYWATCH_MODELS_DIR=/app/models/compact \
 USER app
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:' + __import__('os').environ.get('PORT', '8000') + '/health')"
 # ONE worker: user-behaviour and entity-history state live in process memory
-CMD ["uvicorn", "--factory", "src.api.main:create_app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1"]
+CMD ["sh", "-c", "exec uvicorn --factory src.api.main:create_app --host 0.0.0.0 --port ${PORT:-8000} --workers 1"]

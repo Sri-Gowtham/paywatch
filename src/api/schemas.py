@@ -5,7 +5,16 @@ from pydantic import BaseModel, Field, field_validator
 REQUIRED_FIELDS = ("TransactionDT", "TransactionAmt", "ProductCD", "card1")
 
 
+EXAMPLE_REQUEST = {
+    "transaction_id": "demo-0001",
+    "fields": {"TransactionDT": 13178040, "TransactionAmt": 118.53, "ProductCD": "W", "card1": 4067, "card2": 387,
+               "card3": 150, "card5": 138, "addr1": 191, "D1": 33, "P_emaildomain": "suddenlink.net"},
+    "explain": True, "commit": False, "top_k": 5,
+}
+
+
 class PredictRequest(BaseModel):
+    model_config = {"json_schema_extra": {"example": EXAMPLE_REQUEST}}
     transaction_id: str = Field(..., min_length=1, description="Caller-side id; used later by /feedback")
     fields: Dict[str, Optional[Union[float, str]]] = Field(
         ..., description="Raw transaction fields (IEEE-CIS names: TransactionDT, TransactionAmt, ProductCD, card1.., addr1, C*, D*, M*, V*, id_*, DeviceInfo ...)"

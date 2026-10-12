@@ -1,0 +1,11 @@
+# Render Blueprint: New > Blueprint > pick this repo. Deploys are triggered by the GitHub Actions deploy hook
+# (after tests and the image smoke test pass), so Render's own auto-deploy stays off.
+services:
+  - type: web
+    name: paywatch-api
+    runtime: docker
+    dockerfilePath: ./docker/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: false
