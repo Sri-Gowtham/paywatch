@@ -2,33 +2,43 @@
  "pytest": {
   "returncode": 0,
   "tail": [
-   "............                                                             [100%]",
-   "12 passed in 7.67s"
+   "",
+   "tests/test_api.py::test_health_and_model_info",
+   "tests/test_api.py::test_health_and_model_info",
+   "tests/test_api.py::test_health_and_model_info",
+   "tests/test_api.py::test_health_and_model_info",
+   "tests/test_api.py::test_health_and_model_info",
+   "tests/test_api.py::test_health_and_model_info",
+   "  /usr/local/lib/python3.13/dist-packages/matplotlib/_fontconfig_pattern.py:89: PyparsingDeprecationWarning: 'resetCache' deprecated - use 'reset_cache'",
+   "    parser.resetCache()",
+   "",
+   "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+   "19 passed, 13 warnings in 9.38s"
   ]
  },
  "stream_replay": {
   "requests": 20000,
   "errors": 0,
-  "wall_seconds": 759.5282978089999,
-  "throughput_rps_with_feedback": 26.33213279570189,
-  "pr_auc": 0.5482718718855671,
-  "roc_auc": 0.8889437928414573,
+  "wall_seconds": 808.729797435,
+  "throughput_rps_with_feedback": 24.730138624090277,
+  "pr_auc": 0.5726769099846942,
+  "roc_auc": 0.9118616652614431,
   "fraud_rate": 0.0348,
   "tiers_cumulative": {
    "SOFT_FLAG": {
-    "alert_rate": 0.04675,
-    "precision": 0.41711229946524064,
-    "recall": 0.5603448275862069
+    "alert_rate": 0.0427,
+    "precision": 0.4613583138173302,
+    "recall": 0.5660919540229885
    },
    "CHALLENGE": {
-    "alert_rate": 0.0261,
-    "precision": 0.632183908045977,
-    "recall": 0.47413793103448276
+    "alert_rate": 0.02405,
+    "precision": 0.6715176715176715,
+    "recall": 0.4640804597701149
    },
    "HARD_BLOCK": {
-    "alert_rate": 0.01335,
-    "precision": 0.8838951310861424,
-    "recall": 0.3390804597701149
+    "alert_rate": 0.01265,
+    "precision": 0.924901185770751,
+    "recall": 0.33620689655172414
    }
   },
   "flag_rates": {
@@ -37,23 +47,23 @@
    "uid_has_prior_fraud": 0.00315
   },
   "latency_server_ms": {
-   "p50": 3.245499000001928,
-   "p95": 3.8988264000153094,
-   "p99": 4.504774380096694
+   "p50": 2.3658799999850544,
+   "p95": 3.0706604499698638,
+   "p99": 3.4892122999906388
   },
   "latency_client_ms_incl_testclient_overhead": {
-   "p50": 21.27345299999206,
-   "p95": 36.341497499944346,
-   "p99": 39.4004517000519
+   "p50": 21.337646000006316,
+   "p95": 37.996448000114924,
+   "p99": 41.19887369995239
   }
  },
  "latency_with_explanations_ms": {
-  "p50": 24.41527550001865,
-  "p95": 26.16211955000267,
-  "p99": 27.681441690128842
+  "p50": 141.03635399999348,
+  "p95": 145.13745054999845,
+  "p99": 149.80870760005473
  },
  "model_info": {
-  "model_version": "paywatch-compact-120f-3seeds",
+  "model_version": "paywatch-compact-lgbm-120f-3seeds",
   "n_features": 120,
   "n_models": 3,
   "required_fields": [
@@ -149,9 +159,9 @@
    "id_31"
   ],
   "tier_thresholds_calibrated": {
-   "0.9": 0.7317073345184326,
-   "0.7": 0.23255814611911774,
-   "0.5": 0.10752688348293304
+   "0.9": 0.7,
+   "0.7": 0.2,
+   "0.5": 0.12554112554112556
   },
   "users_tracked": 15299,
   "pending_labels": 4023
@@ -160,11 +170,11 @@
   "categories.json": 46323,
   "feature_meta.json": 10520,
   "freq_tables.json": 455170,
-  "isotonic.json": 4145,
-  "parity_fixture.json": 738472,
-  "serving_spec.json": 5603,
-  "xgb_seed1.json": 9463319,
-  "xgb_seed2.json": 9259222,
-  "xgb_seed42.json": 9372358
+  "isotonic.json": 3360,
+  "lgbm_seed1.txt": 7401931,
+  "lgbm_seed2.txt": 7401379,
+  "lgbm_seed42.txt": 7400975,
+  "parity_fixture.json": 727929,
+  "serving_spec.json": 6073
  }
 }

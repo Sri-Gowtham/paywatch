@@ -23,7 +23,7 @@ for d in (f"{REPO}/src/api", f"{REPO}/src/monitor", f"{REPO}/src/rag", f"{REPO}/
 for marker, dest in (("snapshot.py", "api"), ("dashboard.py", "monitor"), ("qa_chain.py", "rag")):
     p = find(f"/kaggle/input/**/{marker}")[0]
     for f in os.listdir(os.path.dirname(p)):
-        if f.endswith(".py"):
+        if f.endswith(".py") or f == "example_request.json":
             shutil.copy(os.path.join(os.path.dirname(p), f), f"{REPO}/src/{dest}/{f}")
 open(f"{REPO}/src/__init__.py", "w").close()
 models_src = os.path.dirname(find("/kaggle/input/**/lgbm_seed42.txt")[0])

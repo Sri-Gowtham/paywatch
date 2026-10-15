@@ -57,7 +57,7 @@ meta = json.load(open(f"{MODELS}/feature_meta.json"))
 # (entity counters, user counters, anchored D = absolute day) is excluded: it drifts without anything being wrong.
 monitored = [f for f in pred.features if meta["feature_source"][f] in ("raw_request_field", "frequency_lookup")]
 DRIFT_DAY = 15.0
-WINDOWS = (1, 2, 3)
+WINDOWS = (1, 2, 3, 5, 7)   # 5 and 7 added after the LightGBM switch: no window up to 3 days was alarm-free on the control run
 results = {"config": {"drift_day": DRIFT_DAY, "reference_days": 10, "windows_tested": list(WINDOWS), "label_lag_days": 7,
                       "drift": "amount x1.8; 35% of rows get unseen e-mail domain; C1/C13/C14 x2",
                       "stream_rows": len(records), "warm_state": os.path.basename(warm_path),

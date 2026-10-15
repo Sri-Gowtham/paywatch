@@ -37,7 +37,7 @@ for d in (f"{REPO}/src/api", f"{REPO}/tests", MODELS):
 
 state_py = [p for p in find("/kaggle/input/**/state.py") if os.path.exists(os.path.join(os.path.dirname(p), "predictor.py"))][0]
 for f in os.listdir(os.path.dirname(state_py)):
-    if f.endswith(".py"):
+    if f.endswith(".py") or f == "example_request.json":
         shutil.copy(os.path.join(os.path.dirname(state_py), f), f"{REPO}/src/api/{f}")
 open(f"{REPO}/src/__init__.py", "w").close()
 tests_dir = os.path.dirname(find("/kaggle/input/**/test_api.py")[0])
