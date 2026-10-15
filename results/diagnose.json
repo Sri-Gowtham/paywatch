@@ -1,0 +1,208 @@
+{
+ "verdict_thresholds": {
+  "overfit_gap": 0.25,
+  "underfit_train_pr_auc": 0.8,
+  "data_limited_gain": 0.01
+ },
+ "learning_curve": [
+  {
+   "train_fraction": 0.1,
+   "train_rows": 41337,
+   "train_fraud": 1902,
+   "best_iter": 716,
+   "train_pr_auc": 1.0,
+   "val_pr_auc": 0.7050568399278407,
+   "seconds": 43,
+   "gap": 0.29494316007215926
+  },
+  {
+   "train_fraction": 0.25,
+   "train_rows": 103344,
+   "train_fraud": 4062,
+   "best_iter": 1059,
+   "train_pr_auc": 1.0,
+   "val_pr_auc": 0.7286159691327561,
+   "seconds": 86,
+   "gap": 0.27138403086724394
+  },
+  {
+   "train_fraction": 0.5,
+   "train_rows": 206689,
+   "train_fraud": 8289,
+   "best_iter": 1460,
+   "train_pr_auc": 1.0,
+   "val_pr_auc": 0.736212398721983,
+   "seconds": 169,
+   "gap": 0.26378760127801704
+  },
+  {
+   "train_fraction": 0.75,
+   "train_rows": 310033,
+   "train_fraud": 11923,
+   "best_iter": 2030,
+   "train_pr_auc": 1.0,
+   "val_pr_auc": 0.738544302423957,
+   "seconds": 284,
+   "gap": 0.26145569757604303
+  },
+  {
+   "train_fraction": 1.0,
+   "train_rows": 413378,
+   "train_fraud": 14538,
+   "best_iter": 265,
+   "train_pr_auc": 0.9684717103743199,
+   "val_pr_auc": 0.7202438656690022,
+   "seconds": 59,
+   "gap": 0.24822784470531767
+  }
+ ],
+ "depth_sweep": [
+  {
+   "max_depth": 4,
+   "best_iter": 309,
+   "train_pr_auc": 0.7310968119607224,
+   "val_pr_auc": 0.7038666898754085,
+   "seconds": 31,
+   "gap": 0.027230122085313946
+  },
+  {
+   "max_depth": 6,
+   "best_iter": 226,
+   "train_pr_auc": 0.7868514148425504,
+   "val_pr_auc": 0.7142942110790031,
+   "seconds": 30,
+   "gap": 0.07255720376354724
+  },
+  {
+   "max_depth": 8,
+   "best_iter": 235,
+   "train_pr_auc": 0.8834269099248313,
+   "val_pr_auc": 0.7187160853599686,
+   "seconds": 39,
+   "gap": 0.16471082456486275
+  },
+  {
+   "max_depth": 10,
+   "best_iter": 265,
+   "train_pr_auc": 0.9719270748862493,
+   "val_pr_auc": 0.7202438656690022,
+   "seconds": 57,
+   "gap": 0.2516832092172471
+  },
+  {
+   "max_depth": 12,
+   "best_iter": 2022,
+   "train_pr_auc": 1.0,
+   "val_pr_auc": 0.7473415853881087,
+   "seconds": 363,
+   "gap": 0.2526584146118913
+  }
+ ],
+ "production_config_gap": {
+  "train_pr_auc": 0.9463503729335058,
+  "val_pr_auc": 0.7223470553842664,
+  "test_pr_auc": 0.6674604784505553,
+  "train_roc_auc": 0.9962026403881654,
+  "val_roc_auc": 0.9511065939071788,
+  "test_roc_auc": 0.9405105594653558,
+  "best_iters": [
+   265,
+   153,
+   162
+  ],
+  "note": "3 seeds trained on the train split only; the shipped model is a refit on train+validation (test PR-AUC 0.706)"
+ },
+ "rolling_origin_baseline": {
+  "cuts": [
+   0.6,
+   0.7,
+   0.8,
+   0.9
+  ],
+  "window": 0.1,
+  "folds": [
+   {
+    "train_rows": 301175,
+    "val_rows": 50196,
+    "val_fraud_rate": 0.034425053789146544,
+    "per_seed": [
+     {
+      "seed": 42,
+      "best_iter": 107,
+      "val_pr_auc": 0.6435397867620645
+     },
+     {
+      "seed": 1,
+      "best_iter": 112,
+      "val_pr_auc": 0.6454773777838759
+     }
+    ],
+    "mean_val_pr_auc": 0.6445085822729701
+   },
+   {
+    "train_rows": 351371,
+    "val_rows": 50196,
+    "val_fraud_rate": 0.04211490955454618,
+    "per_seed": [
+     {
+      "seed": 42,
+      "best_iter": 110,
+      "val_pr_auc": 0.7188493233056688
+     },
+     {
+      "seed": 1,
+      "best_iter": 172,
+      "val_pr_auc": 0.7134666251399616
+     }
+    ],
+    "mean_val_pr_auc": 0.7161579742228152
+   },
+   {
+    "train_rows": 401567,
+    "val_rows": 50196,
+    "val_fraud_rate": 0.03799107498605467,
+    "per_seed": [
+     {
+      "seed": 42,
+      "best_iter": 78,
+      "val_pr_auc": 0.7246616105335854
+     },
+     {
+      "seed": 1,
+      "best_iter": 119,
+      "val_pr_auc": 0.7331015307236322
+     }
+    ],
+    "mean_val_pr_auc": 0.7288815706286087
+   },
+   {
+    "train_rows": 451763,
+    "val_rows": 50196,
+    "val_fraud_rate": 0.03330942704597976,
+    "per_seed": [
+     {
+      "seed": 42,
+      "best_iter": 126,
+      "val_pr_auc": 0.690496060363203
+     },
+     {
+      "seed": 1,
+      "best_iter": 159,
+      "val_pr_auc": 0.6957125675866251
+     }
+    ],
+    "mean_val_pr_auc": 0.693104313974914
+   }
+  ],
+  "mean_pr_auc": 0.6956631102748271,
+  "std_pr_auc": 0.03219797637321141
+ },
+ "verdict": {
+  "train_val_gap_at_full_data": 0.24822784470531767,
+  "overfit": false,
+  "underfit": false,
+  "data_limited": false,
+  "val_gain_75_to_100pct": -0.01830043675495474,
+  "best_depth_by_validation": 12
+ }
+}
