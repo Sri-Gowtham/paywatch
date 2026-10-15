@@ -117,3 +117,19 @@ def test_landing_page_and_prefilled_example_request(client):
     r = client.post("/predict", json=client.get("/example").json())
     assert r.status_code == 200, r.text
     assert r.json()["action"] in {"ALLOW", "SOFT_FLAG", "CHALLENGE", "HARD_BLOCK"}
+
+
+def test_reason_text_is_readable():
+    from src.api.predictor import _describe
+    labels = {"card6": {1: "credit", 2: "debit"}}
+    assert _describe("card6", 1.0, labels) == "card type: credit"
+    assert _describe("card6", None, labels) == "card type not provided"
+    assert _describe("uid_secs_since_prev_tx", -1.0) == "no earlier transaction seen for this user"
+    assert _describe("C13", 95.0) == "transaction-count signal C13 = 95"
+    assert _describe("TransactionAmt", 25.5) == "transaction amount = 25.5"
+
+
+def test_live_reasons_have_no_raw_category_codes(client, sample_fields):
+    r = client.post("/predict", json={"transaction_id": "t-text", "fields": sample_fields, "top_k": 15, "commit": False}).json()
+    texts = " | ".join(x["text"] for x in r["reasons"])
+    assert "card6 =" not in texts and "card4 =" not in texts and "ProductCD =" not in texts

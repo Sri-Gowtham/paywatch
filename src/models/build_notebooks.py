@@ -41,9 +41,12 @@ sys.path.insert(0, os.path.dirname(find("/kaggle/input/**/evasion.py")[0]))
 import engineer
 from entity_history import BASE_KEYS
 RAW = os.path.dirname(find("/kaggle/input/**/train_transaction.csv")[0])
-SPEC = json.load(open(find("/kaggle/input/**/prod_compact/serving_spec.json")[0]))
+import lightgbm as lgb
+MODEL_DIR = os.path.dirname(find("/kaggle/input/**/lgbm_seed42.txt")[0])      # production LightGBM model directory (models/compact)
+SPEC = json.load(open(f"{MODEL_DIR}/serving_spec.json"))
 COLS = SPEC["features"]
-SHIPPED = find("/kaggle/input/**/prod_compact/xgb_seed*.json")
+SHIPPED = sorted(glob.glob(f"{MODEL_DIR}/lgbm_seed*.txt"))
+ISO = json.load(open(f"{MODEL_DIR}/isotonic.json"))
 raw = engineer.load_raw(RAW)
 base = engineer.build_base(raw.copy(), lags=(7,), decay_lags=(), velocity=False, key_names=BASE_KEYS)
 (tr, va, te), art = engineer.finalize(base, d_mode="anchor", return_artifacts=True)
@@ -84,17 +87,12 @@ def op_threshold(score, y, target, n_min=100):
 
 
 def shipped_boosters():
-    out = []
-    for p in SHIPPED:
-        b = xgb.Booster()
-        b.load_model(p)
-        out.append(b)
-    return out
+    return [lgb.Booster(model_file=p) for p in SHIPPED]
 
 
 def ensemble_score(boosters, X):
-    d = xgb.DMatrix(pd.DataFrame(np.asarray(X, dtype=np.float32), columns=COLS))
-    return np.mean([b.predict(d) for b in boosters], axis=0)
+    X = np.asarray(X, dtype=np.float32)
+    return np.mean([b.predict(X) for b in boosters], axis=0)
 
 
 print(f"device: {DEVICE} | pipeline built in {(time.time() - T0) / 60:.1f} min | train {X_tr.shape}, val {X_va.shape}, test {X_te.shape} | compact features: {len(COLS)}")'''
@@ -261,7 +259,7 @@ ship = shipped_boosters()
 ship_te = ensemble_score(ship, X_te[COLS])
 rows = []
 for name, p in [(f"seed {sd} alone", q) for sd, q in zip((42, 1, 2), pt)] + [("3-seed ensemble (train only)", s_te),
-                                                                                ("shipped ensemble (refit on train+val)", ship_te)]:
+                                                                                ("shipped LightGBM (refit on train+val)", ship_te)]:
     rows.append({"model": name, "test_pr_auc": round(float(average_precision_score(y_te, p)), 4), "test_roc_auc": round(float(roc_auc_score(y_te, p)), 4),
                  "recall@0.1%FPR": round(recall_at_fpr(y_te, p, 0.001), 3), "recall@1%FPR": round(recall_at_fpr(y_te, p, 0.01), 3),
                  "recall@5%FPR": round(recall_at_fpr(y_te, p, 0.05), 3)})
@@ -269,11 +267,11 @@ res = pd.DataFrame(rows).set_index("model")
 display(res)
 singles = res.test_pr_auc.iloc[:3]
 print(f"single seeds: PR-AUC {singles.min():.3f} to {singles.max():.3f}; train-only ensemble {res.test_pr_auc.iloc[3]:.3f}; "
-      f"shipped refit ensemble {res.test_pr_auc.iloc[4]:.3f} (refit adds the validation period as training data)")
+      f"shipped LightGBM refit {res.test_pr_auc.iloc[4]:.3f} (a different model family, refit on train + validation)")
 print(f"reference: a random scorer has PR-AUC = fraud rate = {y_te.mean():.4f}")'''),
-    md("## 2. Curves (train-only ensemble versus the shipped refit)"),
+    md("## 2. Curves (train-only XGBoost ensemble versus the shipped LightGBM refit)"),
     code('''fig, ax = plt.subplots(1, 2, figsize=(13, 4))
-for name, p in (("train-only 3-seed ensemble", s_te), ("shipped refit ensemble", ship_te)):
+for name, p in (("train-only 3-seed XGBoost ensemble", s_te), ("shipped LightGBM refit", ship_te)):
     pr, rc, _ = precision_recall_curve(y_te, p)
     ax[0].plot(rc, pr, label=f"{name} (PR-AUC {average_precision_score(y_te, p):.3f})")
     fpr, tpr, _ = roc_curve(y_te, p)
@@ -314,8 +312,8 @@ print("a positive gap means the validation period was easier than the test perio
 
 # ------------------------------------------------------------------------------------------------ 04_shap
 NOTEBOOKS["04_shap"] = [
-    md("# PayWatch: SHAP explanations\n\nThe API returns the top reasons for each decision from XGBoost's exact tree SHAP values (`pred_contribs`). "
-       "This notebook checks that the contributions are exact and shows which features and families drive the shipped model. "
+    md("# PayWatch: SHAP explanations\n\nThe API returns the top reasons for each decision from LightGBM's exact tree SHAP values (`pred_contrib`). "
+       "This notebook checks that the contributions are exact and shows which features and families drive the shipped LightGBM model. "
        "Individual rows are never shown, only feature names and contribution sizes."),
     code(PRELUDE),
     md("## 1. Exactness: contributions must sum to the model output"),
@@ -323,9 +321,9 @@ NOTEBOOKS["04_shap"] = [
 rng = np.random.default_rng(0)
 idx = np.sort(rng.choice(len(X_te), 5000, replace=False))
 Xs = pd.DataFrame(X_te[COLS].to_numpy(dtype=np.float32)[idx], columns=COLS)
-d = xgb.DMatrix(Xs)
-contribs = [b.predict(d, pred_contribs=True) for b in ship]
-margins = [b.predict(d, output_margin=True) for b in ship]
+Xv = Xs.to_numpy(dtype=np.float32)
+contribs = [b.predict(Xv, pred_contrib=True) for b in ship]
+margins = [b.predict(Xv, raw_score=True) for b in ship]
 err = max(float(np.abs(c.sum(axis=1) - m_).max()) for c, m_ in zip(contribs, margins))
 print(f"max |sum of SHAP values + bias - model margin| over 3 models x 5000 rows: {err:.2e}")
 assert err < 1e-3
@@ -354,6 +352,23 @@ for k, i in enumerate(flagged, 1):
     order = np.argsort(-shap[i])[:5]
     print(f"flagged fraud {k}: " + ", ".join(f"{COLS[j]} (+{shap[i, j]:.2f})" for j in order))
 print("\\nthe API additionally turns these into plain-language text per feature family")'''),
+    md("## 5. Can the API explain with one seed instead of three?\n\nTree SHAP on three 529-tree models is the slowest part of a request. If one seed's attributions give the same top reasons as the three-seed average, the API can explain from one seed (a third of the cost) without changing what it tells users."),
+    code('''one = contribs[0][:, :-1]
+three = shap
+top = lambda M: np.argsort(-np.abs(M), axis=1)[:, :5]
+t1, t3 = top(one), top(three)
+overlap = np.mean([len(set(a) & set(b)) / 5 for a, b in zip(t1, t3)])
+same_set = np.mean([set(a) == set(b) for a, b in zip(t1, t3)])
+same_first = np.mean(t1[:, 0] == t3[:, 0])
+print(f"top-5 reasons, seed 42 alone vs 3-seed average, {len(idx)} rows: mean overlap {overlap:.3f}, identical set {same_set:.1%}, same top-1 reason {same_first:.1%}")
+import time as _t
+rows = Xv[:300]
+for label, bs in (("1 seed", ship[:1]), ("3 seeds", ship)):
+    t0 = _t.perf_counter()
+    for r in rows:
+        for b in bs:
+            b.predict(r.reshape(1, -1), pred_contrib=True)
+    print(f"{label}: {(_t.perf_counter() - t0) / len(rows) * 1000:.1f} ms per explanation (single row, this machine)")'''),
     md("## Takeaways\n\n- SHAP values add up exactly to the model output, so the reasons shown to users are the model's real arithmetic, not an approximation.\n"
        "- Engineered history and behaviour features account for a large share of total attribution; they are also the features a fresh identity resets, which is the evasion risk tested in `04b`."),
 ]
@@ -371,14 +386,13 @@ Xtr = X_tr[COLS].to_numpy(dtype=np.float32)
 Xva = X_va[COLS].to_numpy(dtype=np.float32)
 Xte = X_te[COLS].to_numpy(dtype=np.float32)
 scorer = lambda Z: ensemble_score(ship, Z)
-iso = json.load(open(find("/kaggle/input/**/isotonic.json")[0]))
-cal = lambda raw_score: np.interp(raw_score, iso["x"], iso["y"])
+cal = lambda raw_score: np.interp(raw_score, ISO["x"], ISO["y"])
 thr_cal = SPEC["tiers"]["0.5"]["calibrated_threshold"]   # production SOFT_FLAG, chosen on the first half of the test period
 sc_te = scorer(Xte)
 flagged = np.where((y_te == 1) & (cal(sc_te) >= thr_cal))[0]
 thr = float(thr_cal)
 scorer_cal = lambda Z: cal(scorer(Z))
-print(f"flag rule: calibrated probability >= {thr_cal:.4f} (the production SOFT_FLAG tier, as in results/stress_test.json)")
+print(f"flag rule: calibrated probability >= {thr_cal:.4f} (the production LightGBM SOFT_FLAG tier)")
 print(f"test frauds flagged by that rule: {len(flagged)} of {int(y_te.sum())} ({len(flagged) / y_te.sum():.1%})")
 GROUPS = evasion.build_groups(COLS)
 rng = np.random.default_rng(0)

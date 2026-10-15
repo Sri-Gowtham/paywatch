@@ -36,8 +36,23 @@ class PredictionError(ValueError):
     pass
 
 
-def _describe(feature: str, value: Optional[float]) -> str:
+CATEGORY_NAMES = {"card4": "card network", "card6": "card type", "ProductCD": "product code", "DeviceType": "device type",
+                  "P_emaildomain": "payer email domain", "R_emaildomain": "recipient email domain", "id_30": "operating system",
+                  "id_31": "browser", "DeviceInfo": "device"}
+NO_HISTORY = {"uid_secs_since_prev_tx": "no earlier transaction seen for this user", "uid_amt_mean": "no spending history for this user yet",
+              "uid_amt_std": "no spending history for this user yet", "days_since_last_large_txn": "no earlier large transaction for this user"}
+
+
+def _describe(feature: str, value: Optional[float], labels: Optional[Dict[str, Dict[int, str]]] = None) -> str:
     v = "missing" if value is None else f"{value:g}"
+    if value is not None and labels and feature in labels:                   # decode a category code back to its name
+        label = labels[feature].get(int(round(value)))
+        if label is not None:
+            return f"{CATEGORY_NAMES.get(feature, feature)}: {label}"
+    if value is not None and value == -1 and feature in NO_HISTORY:           # sentinel for "nothing to compare with yet"
+        return NO_HISTORY[feature]
+    if value is None and feature in CATEGORY_NAMES:
+        return f"{CATEGORY_NAMES[feature]} not provided"
     m = re.fullmatch(r"h7_(\w+?)_(fraud_rate|fraud_n|n)", feature)
     if m and value is not None:
         who = {"uid": "user", "card": "card", "addr": "address", "email": "email domain", "device": "device"}.get(m.group(1), m.group(1))
@@ -55,7 +70,15 @@ def _describe(feature: str, value: Optional[float]) -> str:
         "is_new_merchant": "first time this user pays this payee domain" if value == 1 else "known payee domain",
         "uid_prior_tx_count": f"{v} earlier transactions seen for this user",
     }
-    return names.get(feature, f"{feature} = {v}")
+    if feature in names:
+        return names[feature]
+    if re.fullmatch(r"C\d+", feature):
+        return f"transaction-count signal {feature} = {v}"
+    if re.fullmatch(r"V\d+", feature):
+        return f"Vesta risk signal {feature} = {v}"
+    if re.fullmatch(r"D\d+", feature):
+        return f"time-delta signal {feature}"
+    return f"{feature} = {v}"
 
 
 REQUIRED_NUMERIC = ("TransactionDT", "TransactionAmt")
@@ -96,6 +119,7 @@ class Predictor:
         self._iso_x, self._iso_y = np.asarray(iso["x"]), np.asarray(iso["y"])
         self.thresholds = {k: spec["tiers"][k]["calibrated_threshold"] for _, k in ACTIONS if spec["tiers"].get(k)}
         self.backend, self.boosters = self._load_boosters(models_dir)
+        self._labels = {c: {int(code): label for label, code in m.items()} for c, m in self.categories.items()}
         self.model_version = f"paywatch-compact-{self.backend}-{len(self.features)}f-{len(self.boosters)}seeds"
         self.behavior = UserBehaviorState()
         self.history = EntityHistoryStore()
@@ -186,7 +210,7 @@ class Predictor:
                 "feature": name, "family": FAMILY_TEXT.get(self.family.get(name, ""), self.family.get(name, "")),
                 "value": value, "shap": float(contrib[i]),
                 "direction": "increases_risk" if contrib[i] > 0 else "decreases_risk",
-                "text": _describe(name, value),
+                "text": _describe(name, value, self._labels),
             })
         return reasons
 

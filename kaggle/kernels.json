@@ -403,7 +403,8 @@
       "enable_internet": true,
       "dataset_sources": [
         "srigowthamm/paywatch-src",
-        "srigowthamm/paywatch-models-src"
+        "srigowthamm/paywatch-models-src",
+        "srigowthamm/paywatch-models"
       ],
       "competition_sources": [
         "ieee-fraud-detection"
