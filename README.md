@@ -123,6 +123,26 @@ B over A: +0.076 (95% CI +0.067 to +0.086). C over B: +0.028 (CI +0.024 to +0.03
 
 How much weight this carries: the data is **simulated** (999 active cards, 693 merchants, fraud injected by the generator's rules), so the absolute scores say nothing about real fraud and are not comparable to the IEEE-CIS numbers. The profile fields are constant per user, so with so few users a model can memorise them; this inflates all three sets alike and does not affect the differences. The simulator may also make deviations from a user's habits and bursts of fraud on one card easier to detect than real traffic does. The live API still runs the IEEE-CIS model; nothing here changes it.
 
+## Model improvement study (pre-registered; shipped model not changed yet)
+
+Fit diagnostics (`results/diagnose.json`): the production configuration memorises its training data (train PR-AUC about 0.97 to 1.00 against about 0.72 on validation, gap 0.248, just under the 0.25 limit fixed beforehand) but validation does not degrade and shallower trees score lower, so it is neither under- nor clearly overfitted. Early stopping with patience 60 is unstable: more rounds scored higher on validation, which pointed at under-training rather than over-fitting.
+
+`results/improve.json` (code in `src/models/common_improve.py` and `improve_*.py`, run on Kaggle): five candidates, each with four rolling-origin folds (selection only), a train-only model, and a refit on train + validation with fixed rounds, the same recipe as the shipped model. Test was read once, for the candidate the folds selected, against the shipped model.
+
+| Candidate | Rolling-fold mean PR-AUC | Test PR-AUC (refit) | Recall at 1% FPR (refit) |
+|---|---|---|---|
+| Shipped model (patience 60) | 0.6957 | 0.7062 | 0.637 |
+| XGBoost, patience 300 | 0.6992 | 0.7196 | 0.649 |
+| XGBoost, depth 12 | 0.7128 | 0.7235 | 0.655 |
+| LightGBM | 0.7202 | 0.7238 | 0.653 |
+| CatBoost | 0.6725 | 0.6793 | 0.616 |
+| XGBoost + 20 linkage features | 0.7121 | 0.7176 | 0.643 |
+| **Blend of all five (selected by folds)** | **0.7239** | **0.7277** | **0.652** |
+
+The pre-registered criterion (at least +0.01 PR-AUC and +0.01 recall at 1% FPR, paired-bootstrap CI excluding 0) is **met** by the selected blend: PR-AUC +0.0215 (95% CI +0.017 to +0.026), recall +0.0149 (CI +0.007 to +0.026).
+
+Read this with its limits: the gain is modest, and most of it comes from training longer and from LightGBM; the five-model blend adds only about +0.004 over LightGBM alone (0.7238). Fold-stage early stopping is still noisy (about 80 to 5,000 rounds across folds) and the fold means differ by less than their spread, so the fold ranking is not sharp. The causal linkage features (distinct cards per device, email, address) helped on three of four folds (+0.013 mean) but not on test (-0.002), so there is no evidence they help. LightGBM first ran with an early-stopping bug (it stopped on weighted log-loss after 2 to 3 rounds); it was fixed and re-run, and the corrected run is reported. The deployed API still serves the original model: using any candidate means a refit, new tier thresholds, new fixtures, and LightGBM or much larger XGBoost files in the image.
+
 ## Roadmap status
 
 Done: scaffold, data, feature engineering, UPI fingerprint (causal proxy), XGBoost, SHAP, compact serving model, calibration + tiers, MLflow + registry, FastAPI, production simulation, drift detection, Streamlit dashboard (the threshold-tuning tab covers the calibration dashboard).
