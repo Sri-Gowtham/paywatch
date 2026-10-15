@@ -42,7 +42,7 @@
   },
   "explanation of the last scored transaction": {
    "pass": true,
-   "detail": "[\"This transaction was allowed without friction (calibrated fraud probability 9%).\\nStrongest factors in the model's score (attributions, not proof of intent):\\n- C14 = missing (raises the score)\\n- C13 = missing (raises the score)\\n- seconds since this user's previous transaction = -1 (raises the score)\\n- C1 = missing (raises the score)\\nContext: no earlier transactions have been seen for this user, so there is no behavioural baseline.\"]"
+   "detail": "[\"This transaction was allowed without friction (calibrated fraud probability 2%).\\nStrongest factors in the model's score (attributions, not proof of intent):\\n- transaction-count signal C13 = 95 (lowers the score)\\n- no earlier transaction seen for this user (raises the score)\\n- Vesta risk signal V201 = 3 (raises the score)\\n- card type: credit (raises the score)\\nContext: no earlier transactions have been seen for this user, so there is no behavioural baseline.\"]"
   },
   "explanation shows RBI context": {
    "pass": true,

@@ -20,15 +20,10 @@ if str(ROOT) not in sys.path:
 CHUNKS_PATH = Path(os.environ.get("PAYWATCH_RAG_CHUNKS", ROOT / "data" / "rag" / "chunks.jsonl"))
 SIM_PATH = Path(os.environ.get("PAYWATCH_SIM_RESULTS", ROOT / "data" / "sim" / "sim_results.json"))
 MODELS_DIR = Path(os.environ.get("PAYWATCH_MODELS_DIR", ROOT / "models" / "compact"))
-DEFAULT_API = os.environ.get("PAYWATCH_API_URL", "http://localhost:8000")
+DEFAULT_API = os.environ.get("PAYWATCH_API_URL", "https://paywatch-api-fpq9.onrender.com")   # public demo API; set the env var for a local one
 TIER_NAMES = {"0.5": "SOFT_FLAG (precision target 50%)", "0.7": "CHALLENGE (target 70%)", "0.9": "HARD_BLOCK (target 90%)"}
 
-SAMPLE = {
-    "transaction_id": "demo-1",
-    "fields": {"TransactionDT": 15000000, "TransactionAmt": 120.0, "ProductCD": "W", "card1": 13926, "card2": 111,
-               "card3": 150, "card5": 226, "addr1": 315, "D1": 20, "P_emaildomain": "gmail.com"},
-    "explain": True, "commit": False,
-}
+SAMPLE = json.loads((ROOT / "src" / "api" / "example_request.json").read_text(encoding="utf-8"))   # full synthetic transaction, same as the API /example
 
 
 @st.cache_data
@@ -67,7 +62,7 @@ def vline(x, color="#999"):
 def call_api(url, payload_text):
     req = urllib.request.Request(url.rstrip("/") + "/predict", data=payload_text.encode("utf-8"),
                                  headers={"Content-Type": "application/json"}, method="POST")
-    with urllib.request.urlopen(req, timeout=10) as r:
+    with urllib.request.urlopen(req, timeout=90) as r:   # the free-plan demo API needs up to a minute to wake after idle
         return json.loads(r.read())
 
 

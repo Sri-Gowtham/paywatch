@@ -4,6 +4,17 @@ UPI-style transaction fraud scoring: causal feature pipeline, calibrated LightGB
 
 > Status: model, MLOps registry, serving API, drift monitoring, dashboard, adversarial stress test and a retrieval-grounded explanation layer are **built and tested** (on Kaggle). Docker and GitHub CI pass on GitHub (tests, image build and a container `/health` smoke test) and a push that passes deploys automatically. A live demo of the API runs at https://paywatch-api-fpq9.onrender.com (free plan: the first request after idle takes about a minute, and user history resets on restart). The production model is a 3-seed LightGBM, selected by a pre-registered study (see Model improvement study); it replaced the earlier XGBoost model.
 
+## At a glance
+
+| | |
+|---|---|
+| **Try it** | Live API (free plan, may take a minute to wake): https://paywatch-api-fpq9.onrender.com, interactive docs at `/docs`, a ready-made request at `/example` |
+| **What it does** | Scores a UPI-style transaction in about 2 ms: calibrated fraud probability, one of four actions (allow, soft flag, challenge, hard block) and the top reasons in plain language. Also: drift monitoring, a Streamlit dashboard, and an assistant that answers from RBI documents |
+| **Held-out test** (latest 15% of time, 88,581 transactions, 3.5% fraud) | PR-AUC **0.724** (a random scorer gets 0.035, a model without entity history 0.581), ROC-AUC **0.956**, **65%** of fraud caught at a 1% false-positive rate |
+| **Alert tiers** (second half of the test period) | Soft flag: 62% precision, 69% recall. Challenge: 78%, 62%. Hard block: **92% precision**, 46% recall |
+| **How it was checked** | Time-ordered splits, no look-ahead (the lagged fraud history was re-computed independently, 0 of 400 mismatches); studies pre-registered with their pass criteria fixed before the runs; 52 automated tests; CI and a container smoke test on every push |
+| **Read before quoting** | The data is a public Western e-commerce dataset (IEEE-CIS), not UPI traffic, and the user ids are reconstructed. Recall on first-time fraud is about 57%; the model leans on fraud labels arriving within about 7 days; a fresh identity evades about 31% of flagged fraud with a single probe; 0.99 precision overall is not reachable (the best confident tier measured 97%). Full list in Limitations below |
+
 ## Results (held-out latest 15% of time, 88,581 transactions, 3,083 fraud)
 
 | Model | PR-AUC | ROC-AUC | Recall @1% FPR | Precision, top 1% alerts | Amount-weighted recall |
@@ -61,7 +72,7 @@ Pre-registered test on the previous XGBoost model (`src/models/high_precision_st
 
 ## Retrieval-grounded explanations and analyst assistant (RAG)
 
-`src/rag/` indexes six public RBI documents (FREE-AI report, Digital Payment Security Controls, Limiting Liability circular, Fraud Risk Management Master Directions and FAQs, Payments Vision 2025; 445 passages; list in `src/rag/sources.py`). The index is built on Kaggle (`src/rag/build_index.py`, results in `results/rag.json`) and kept out of the repo (`data/rag/`, gitignored).
+`src/rag/` indexes six public RBI documents (FREE-AI report, Digital Payment Security Controls, Limiting Liability circular, Fraud Risk Management Master Directions and FAQs, Payments Vision 2025; 445 passages; list in `src/rag/sources.py`). The index is built on Kaggle (`src/rag/build_index.py`, results in `results/rag.json`); the resulting passage file `data/rag/chunks.jsonl` (public RBI text only, about 0.5 MB) is committed so the dashboard's assistant tab works when hosted.
 
 - **Retriever: BM25, pure Python.** On 18 hand-labeled questions (a hit means a top-k passage from an expected document contains an accepted key phrase): BM25 finds it in the top 1 / 3 / 5 for 61% / 94% / 100%; a dense MiniLM retriever gets 61% / 78% / 89%; BM25+dense hybrid 67% / 94% / 100%. The dense model is not worth its weight, so serving needs no torch.
 - **Assistant answers are extractive by default** (best matching sentences with numbered citations; no API key needed). 14 of the 18 answers contain the key phrase (78%), and all 4 off-topic questions (GST on gold, biryani, ...) are refused: a question is answered only when the retrieved passage covers at least half of its terms. With `ANTHROPIC_API_KEY` set the answer is composed by an LLM constrained to the excerpts; that path is unit-tested with a stub only, never run against the real API.

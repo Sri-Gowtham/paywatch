@@ -178,5 +178,6 @@ data/sim/*.parquet
 !mlflow/mlflow.db
 !mlflow/artifacts/
 
-# RAG knowledge base (public RBI text, built on Kaggle; not committed)
-data/rag/
+# RAG knowledge base: only the public-RBI-text passage file is committed (the dashboard's assistant tab needs it)
+data/rag/*
+!data/rag/chunks.jsonl
