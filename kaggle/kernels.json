@@ -452,5 +452,142 @@
         "srigowthamm/paywatch-b2"
       ]
     }
+  },
+  "imp_xgb1": {
+    "script": "src/models/improve_xgb1.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-imp-xgb1",
+      "title": "paywatch-imp-xgb1",
+      "code_file": "improve_xgb1.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-models-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2"
+      ]
+    }
+  },
+  "imp_xgb2": {
+    "script": "src/models/improve_xgb2.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-imp-xgb2",
+      "title": "paywatch-imp-xgb2",
+      "code_file": "improve_xgb2.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-models-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2"
+      ]
+    }
+  },
+  "imp_lgbm": {
+    "script": "src/models/improve_lgbm.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-imp-lgbm",
+      "title": "paywatch-imp-lgbm",
+      "code_file": "improve_lgbm.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-models-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2"
+      ]
+    }
+  },
+  "imp_cat": {
+    "script": "src/models/improve_cat.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-imp-cat",
+      "title": "paywatch-imp-cat",
+      "code_file": "improve_cat.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-models-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2"
+      ]
+    }
+  },
+  "imp_link": {
+    "script": "src/models/improve_link.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-imp-link",
+      "title": "paywatch-imp-link",
+      "code_file": "improve_link.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-src",
+        "srigowthamm/paywatch-models-src"
+      ],
+      "competition_sources": [
+        "ieee-fraud-detection"
+      ],
+      "kernel_sources": [
+        "srigowthamm/paywatch-b2"
+      ]
+    }
+  },
+  "imp_blend": {
+    "script": "src/models/improve_blend.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-imp-blend",
+      "title": "paywatch-imp-blend",
+      "code_file": "improve_blend.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [],
+      "competition_sources": [],
+      "kernel_sources": [
+        "srigowthamm/paywatch-imp-xgb1",
+        "srigowthamm/paywatch-imp-xgb2",
+        "srigowthamm/paywatch-imp-lgbm",
+        "srigowthamm/paywatch-imp-cat",
+        "srigowthamm/paywatch-imp-link"
+      ]
+    }
   }
 }
