@@ -26,7 +26,7 @@ for marker, dest in (("snapshot.py", "api"), ("dashboard.py", "monitor"), ("qa_c
         if f.endswith(".py"):
             shutil.copy(os.path.join(os.path.dirname(p), f), f"{REPO}/src/{dest}/{f}")
 open(f"{REPO}/src/__init__.py", "w").close()
-models_src = os.path.dirname(find("/kaggle/input/**/xgb_seed42.json")[0])
+models_src = os.path.dirname(find("/kaggle/input/**/lgbm_seed42.txt")[0])
 for f in os.listdir(models_src):
     shutil.copy(os.path.join(models_src, f), MODELS)
 shutil.copy(find("/kaggle/input/**/sim_results.json")[0], f"{REPO}/data/sim/sim_results.json")

@@ -46,14 +46,12 @@ for f in os.listdir(tests_dir):
         shutil.copy(os.path.join(tests_dir, f), f"{REPO}/tests/{f}")
 features_dir = os.path.dirname(find("/kaggle/input/**/upi_fingerprint.py")[0])
 
-for p in find("/kaggle/input/**/prod_compact/xgb_seed*.json") + find("/kaggle/input/**/prod_compact/serving_spec.json"):
-    shutil.copy(p, MODELS)
-for name in ("categories.json", "freq_tables.json", "isotonic.json", "feature_meta.json"):
-    shutil.copy(find(f"/kaggle/input/**/{name}")[0], MODELS)
-# the repo ships a SYNTHETIC fixture (paywatch-synthfix); the raw-row one from the assets kernel is not used
-fixtures = find("/kaggle/input/**/paywatch-synthfix/parity_fixture.json") or find("/kaggle/input/**/parity_fixture.json")
-assert "synthfix" in fixtures[0], f"synthetic fixture not found among {fixtures}"
-shutil.copy(fixtures[0], f"{MODELS}/parity_fixture.json")
+# model assets exactly as shipped in the repo (the paywatch-models dataset = models/compact): LightGBM seeds, spec, encoders, fixture
+models_dir = os.path.dirname(find("/kaggle/input/**/lgbm_seed42.txt")[0])
+for name in os.listdir(models_dir):
+    if name != "dataset-metadata.json":
+        shutil.copy(os.path.join(models_dir, name), MODELS)
+assert json.load(open(f"{MODELS}/parity_fixture.json")).get("synthetic"), "fixture must be the synthetic one"
 stream_path = find("/kaggle/input/**/stream_sample.parquet")[0]
 log(f"assembled: {sorted(os.listdir(MODELS))}")
 

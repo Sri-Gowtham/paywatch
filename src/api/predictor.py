@@ -1,6 +1,7 @@
 """Scoring engine: raw transaction fields -> feature vector -> calibrated score, tier and reasons.
 
-No pandas / sklearn: only numpy + xgboost. Encoders (categories, frequency tables, calibrator)
+No pandas / sklearn: only numpy + the model library (LightGBM for the production model; XGBoost is still supported
+for older model directories). Encoders (categories, frequency tables, calibrator)
 are loaded from the JSON assets exported by the assets kernel and must match the batch pipeline
 (checked by tests/test_predictor_parity.py).
 """
@@ -16,7 +17,6 @@ from collections import OrderedDict
 from typing import Any, Dict, List, Optional
 
 import numpy as np
-import xgboost as xgb
 
 from .state import EntityHistoryStore, UserBehaviorState, entity_keys, is_missing
 
@@ -95,20 +95,38 @@ class Predictor:
         iso = load("isotonic.json")
         self._iso_x, self._iso_y = np.asarray(iso["x"]), np.asarray(iso["y"])
         self.thresholds = {k: spec["tiers"][k]["calibrated_threshold"] for _, k in ACTIONS if spec["tiers"].get(k)}
-        paths = sorted(glob.glob(os.path.join(models_dir, "xgb_seed*.json")))
-        if not paths:
-            raise FileNotFoundError(f"no xgb_seed*.json in {models_dir}")
-        self.boosters = []
-        for p in paths:
-            b = xgb.Booster()
-            b.load_model(p)
-            self.boosters.append(b)
-        self.model_version = f"paywatch-compact-{len(self.features)}f-{len(self.boosters)}seeds"
+        self.backend, self.boosters = self._load_boosters(models_dir)
+        self.model_version = f"paywatch-compact-{self.backend}-{len(self.features)}f-{len(self.boosters)}seeds"
         self.behavior = UserBehaviorState()
         self.history = EntityHistoryStore()
         self.lock = threading.Lock()
         self._responses: "OrderedDict[str, dict]" = OrderedDict()      # idempotent retries (committed predictions only)
         self._max_cached = 20_000
+
+    @staticmethod
+    def _load_boosters(models_dir: str):
+        lgb_paths = sorted(glob.glob(os.path.join(models_dir, "lgbm_seed*.txt")))
+        if lgb_paths:
+            import lightgbm as lgb
+            return "lgbm", [lgb.Booster(model_file=p) for p in lgb_paths]
+        xgb_paths = sorted(glob.glob(os.path.join(models_dir, "xgb_seed*.json")))
+        if not xgb_paths:
+            raise FileNotFoundError(f"no lgbm_seed*.txt or xgb_seed*.json in {models_dir}")
+        import xgboost as xgb
+        boosters = []
+        for p in xgb_paths:
+            b = xgb.Booster()
+            b.load_model(p)
+            boosters.append(b)
+        return "xgb", boosters
+
+    def _predict_one(self, booster, vec: np.ndarray, contribs: bool = False) -> np.ndarray:
+        """Score (or per-feature contributions, bias last) of one model for one vector."""
+        if self.backend == "lgbm":
+            return booster.predict(vec.reshape(1, -1), pred_contrib=contribs)[0]
+        import xgboost as xgb
+        dm = xgb.DMatrix(vec.reshape(1, -1), feature_names=self.features)
+        return booster.predict(dm, pred_contribs=contribs)[0]
 
     # ------------------------------------------------------------------ encoding
     def _encode(self, col: str, v: Any) -> float:
@@ -146,8 +164,7 @@ class Predictor:
 
     # ------------------------------------------------------------------ scoring
     def _score(self, vec: np.ndarray) -> float:
-        dm = xgb.DMatrix(vec.reshape(1, -1), feature_names=self.features)
-        return float(np.mean([b.predict(dm)[0] for b in self.boosters]))
+        return float(np.mean([self._predict_one(b, vec) for b in self.boosters]))
 
     def calibrate(self, score: float) -> float:
         return float(np.interp(score, self._iso_x, self._iso_y))
@@ -160,8 +177,7 @@ class Predictor:
         return "ALLOW"
 
     def explain(self, vec: np.ndarray, top_k: int) -> List[dict]:
-        dm = xgb.DMatrix(vec.reshape(1, -1), feature_names=self.features)
-        contrib = np.mean([b.predict(dm, pred_contribs=True)[0][:-1] for b in self.boosters], axis=0)
+        contrib = np.mean([self._predict_one(b, vec, contribs=True)[:-1] for b in self.boosters], axis=0)
         reasons = []
         for i in np.argsort(-np.abs(contrib))[:top_k]:
             name = self.features[i]

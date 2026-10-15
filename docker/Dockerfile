@@ -5,7 +5,7 @@ COPY requirements-api.txt .
 RUN pip install --no-cache-dir --prefix=/install -r requirements-api.txt
 
 FROM python:3.11-slim
-# libgomp1: OpenMP runtime required by the xgboost wheel
+# libgomp1: OpenMP runtime required by the lightgbm wheel
 RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --uid 1000 app

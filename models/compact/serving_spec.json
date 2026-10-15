@@ -121,7 +121,7 @@
     "V49",
     "V54"
   ],
-  "n_trees": 224,
+  "n_trees": 529,
   "seeds": [
     42,
     1,
@@ -294,22 +294,44 @@
   },
   "tiers": {
     "0.5": {
-      "calibrated_threshold": 0.10752688348293304,
-      "second_half_precision": 0.6006160164271047,
-      "second_half_recall": 0.6751298326601269,
-      "second_half_alert_rate": 0.04398184732789957
+      "calibrated_threshold": 0.12554112554112556,
+      "second_half_precision": 0.6183127572016461,
+      "second_half_recall": 0.693594922100404,
+      "second_half_alert_rate": 0.043891535526404915
     },
     "0.7": {
-      "calibrated_threshold": 0.23255814611911774,
-      "second_half_precision": 0.7465802735781137,
-      "second_half_recall": 0.5983843046739757,
-      "second_half_alert_rate": 0.0313607730690208
+      "calibrated_threshold": 0.2,
+      "second_half_precision": 0.7833698030634574,
+      "second_half_recall": 0.619734564339296,
+      "second_half_alert_rate": 0.030954369962294823
     },
     "0.9": {
-      "calibrated_threshold": 0.7317073345184326,
-      "second_half_precision": 0.9025755879059351,
-      "second_half_recall": 0.46508944027697635,
-      "second_half_alert_rate": 0.020162109683682917
+      "calibrated_threshold": 0.7,
+      "second_half_precision": 0.9235225955967555,
+      "second_half_recall": 0.4598961338718984,
+      "second_half_alert_rate": 0.019484771172472964
     }
-  }
+  },
+  "model_family": "lightgbm",
+  "prod_seeds": [
+    42,
+    1,
+    2
+  ],
+  "lightgbm_params": {
+    "learning_rate": 0.03,
+    "num_leaves": 127,
+    "min_child_samples": 40,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "colsample_bytree": 0.6,
+    "reg_lambda": 1.0,
+    "scale_pos_weight": 39.3,
+    "n_jobs": -1,
+    "verbose": -1,
+    "metric": "None",
+    "n_estimators": 529
+  },
+  "replaces": "xgboost 3-seed (n_trees 224)",
+  "selection": "results/improve.json (pre-registered study)"
 }
