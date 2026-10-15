@@ -412,5 +412,23 @@
         "srigowthamm/paywatch-assets"
       ]
     }
+  },
+  "sparkov": {
+    "script": "src/models/sparkov_study.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-sparkov",
+      "title": "paywatch-sparkov",
+      "code_file": "sparkov_study.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "kartik2112/fraud-detection"
+      ],
+      "competition_sources": [],
+      "kernel_sources": []
+    }
   }
 }

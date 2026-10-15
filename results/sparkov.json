@@ -1,0 +1,157 @@
+{
+ "dataset": "kartik2112/fraud-detection (Sparkov simulated credit-card transactions, CC0)",
+ "caveat": "simulated data: 1,000 customers, 800 merchants, rule-generated fraud; absolute scores are not real-world evidence",
+ "split_rows": {
+  "train": 1102173,
+  "val": 194502,
+  "test": 555719
+ },
+ "fraud_rate": {
+  "train": 0.0057822138629779534,
+  "val": 0.005825132903517702,
+  "test": 0.0038598644278853163
+ },
+ "feature_names": {
+  "A_profile_plus_transaction": [
+   "amt",
+   "hour",
+   "dow",
+   "category",
+   "dist_km",
+   "age",
+   "gender",
+   "city_pop"
+  ],
+  "B_plus_behaviour": [
+   "amt",
+   "hour",
+   "dow",
+   "category",
+   "dist_km",
+   "age",
+   "gender",
+   "city_pop",
+   "prior_count",
+   "amt_mean",
+   "amt_std",
+   "amt_z",
+   "secs_since_prev",
+   "amt_vs_7d",
+   "new_merchant",
+   "cat_entropy",
+   "hour_dev",
+   "new_category",
+   "tx_24h"
+  ],
+  "C_plus_fraud_history": [
+   "amt",
+   "hour",
+   "dow",
+   "category",
+   "dist_km",
+   "age",
+   "gender",
+   "city_pop",
+   "prior_count",
+   "amt_mean",
+   "amt_std",
+   "amt_z",
+   "secs_since_prev",
+   "amt_vs_7d",
+   "new_merchant",
+   "cat_entropy",
+   "hour_dev",
+   "new_category",
+   "tx_24h",
+   "h7_card_n",
+   "h7_card_fraud_n",
+   "h7_card_rate",
+   "h7_merchant_n",
+   "h7_merchant_fraud_n",
+   "h7_merchant_rate"
+  ]
+ },
+ "sets": {
+  "A_profile_plus_transaction": {
+   "n_features": 8,
+   "best_iters": [
+    167,
+    177,
+    143
+   ],
+   "val_pr_auc": 0.9183193617667612,
+   "test_pr_auc": 0.8752156660564359,
+   "test_roc_auc": 0.9976790623789942,
+   "test_recall_at_fpr_0.1pct": 0.8177156177156177,
+   "test_recall_at_fpr_1pct": 0.9477855477855478,
+   "val_chosen_threshold_precision_target_0.9": {
+    "alert_rate": 0.003501769779330921,
+    "precision": 0.8591983556012333,
+    "recall": 0.7794871794871795
+   }
+  },
+  "B_plus_behaviour": {
+   "n_features": 19,
+   "best_iters": [
+    259,
+    304,
+    220
+   ],
+   "val_pr_auc": 0.9782694591657846,
+   "test_pr_auc": 0.9513822881462444,
+   "test_roc_auc": 0.9987544249753095,
+   "test_recall_at_fpr_0.1pct": 0.9347319347319347,
+   "test_recall_at_fpr_1pct": 0.9827505827505828,
+   "val_chosen_threshold_precision_target_0.9": {
+    "alert_rate": 0.003982228428396366,
+    "precision": 0.8734749209218255,
+    "recall": 0.9011655011655012
+   }
+  },
+  "C_plus_fraud_history": {
+   "n_features": 25,
+   "best_iters": [
+    404,
+    254,
+    346
+   ],
+   "val_pr_auc": 0.9884513395981577,
+   "test_pr_auc": 0.9792286183131454,
+   "test_roc_auc": 0.999790331314572,
+   "test_recall_at_fpr_0.1pct": 0.9715617715617716,
+   "test_recall_at_fpr_1pct": 0.9958041958041958,
+   "val_chosen_threshold_precision_target_0.9": {
+    "alert_rate": 0.003957035840055856,
+    "precision": 0.924056389267849,
+    "recall": 0.9473193473193473
+   }
+  }
+ },
+ "paired_bootstrap_test_pr_auc_diff": {
+  "B_minus_A": {
+   "mean": 0.07611887810140341,
+   "ci95": [
+    0.0671955461783953,
+    0.08594161287066214
+   ]
+  },
+  "C_minus_B": {
+   "mean": 0.0280074767109625,
+   "ci95": [
+    0.024050596841812967,
+    0.031994509836625766
+   ]
+  },
+  "C_minus_A": {
+   "mean": 0.10412635481236591,
+   "ci95": [
+    0.0941619508085785,
+    0.11414068975770639
+   ]
+  }
+ },
+ "criteria": {
+  "C1_behaviour_helps": true,
+  "C2_fraud_history_helps": true
+ }
+}

@@ -109,6 +109,20 @@ Limits of the stress test: random-search attacker in feature space (no gradient 
 
 Isolation Forest second layer and score fusion (alone PR-AUC 0.097; validation gave it zero weight), adversarial feature pruning (cost ~0.04 PR-AUC), velocity features, recency-decayed counts, extra entity keys (tied within seed noise), LightGBM/CatBoost blends, bagging, SMOTE (replaced by `scale_pos_weight`).
 
+## Second dataset: Sparkov (simulated), do real user ids change the picture?
+
+On IEEE-CIS the user id is a reconstruction, and removing the UPI behaviour features cost almost nothing (notebook `02b`). To test whether that is a property of the features or of the proxy id, `src/models/sparkov_study.py` (results in `results/sparkov.json`, run on Kaggle) repeats the ablation on the Sparkov credit-card simulation (CC0, 1.85M transactions, a real card id per row, time-ordered: train, validation and the dataset's own later period as test). Criteria were fixed before the run: a set must beat the previous one by at least 0.01 PR-AUC with a paired-bootstrap 95% CI that excludes 0.
+
+| Feature set (3 seeds, test period) | PR-AUC | ROC-AUC | Recall at 1% FPR |
+|---|---|---|---|
+| A: transaction + profile fields | 0.875 | 0.998 | 0.948 |
+| B: A + causal per-user behaviour state | 0.951 | 0.999 | 0.983 |
+| C: B + lagged (7-day) fraud history per card and merchant | 0.979 | 1.000 | 0.996 |
+
+B over A: +0.076 (95% CI +0.067 to +0.086). C over B: +0.028 (CI +0.024 to +0.032). Both criteria are met. With a real user id the behaviour features help clearly, which supports the explanation that the IEEE-CIS result came from the proxy id and not from the features.
+
+How much weight this carries: the data is **simulated** (999 active cards, 693 merchants, fraud injected by the generator's rules), so the absolute scores say nothing about real fraud and are not comparable to the IEEE-CIS numbers. The profile fields are constant per user, so with so few users a model can memorise them; this inflates all three sets alike and does not affect the differences. The simulator may also make deviations from a user's habits and bursts of fraud on one card easier to detect than real traffic does. The live API still runs the IEEE-CIS model; nothing here changes it.
+
 ## Roadmap status
 
 Done: scaffold, data, feature engineering, UPI fingerprint (causal proxy), XGBoost, SHAP, compact serving model, calibration + tiers, MLflow + registry, FastAPI, production simulation, drift detection, Streamlit dashboard (the threshold-tuning tab covers the calibration dashboard).
