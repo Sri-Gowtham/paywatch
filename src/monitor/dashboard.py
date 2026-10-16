@@ -98,7 +98,7 @@ with tab_live:
             rows.append({"tier": name, "calibrated threshold": round(t["calibrated_threshold"], 3),
                          "precision (replay)": round(p["precision"], 3), "recall (replay)": round(p["recall"], 3),
                          "alert rate": f"{p['alert_rate']:.1%}"})
-        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+        st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
         st.caption("Replay numbers are from the 30-day control simulation (second half, calibrator out-of-sample).")
     if score_clicked:
         try:
@@ -112,7 +112,7 @@ with tab_live:
             c2.metric("Calibrated probability", f"{out['calibrated_probability']:.3f}")
             c3.metric("Action", out["action"])
             st.dataframe(pd.DataFrame(out["reasons"])[["text", "direction", "shap", "family"]], hide_index=True,
-                         use_container_width=True)
+                         width="stretch")
             st.json(out["flags"])
 
 # ------------------------------------------------------------------ 2) drift timeline
@@ -136,12 +136,12 @@ with tab_drift:
     base = alt.Chart(daily).encode(x=alt.X("day:Q", title="day (window end)"))
     left, right = st.columns(2)
     drift_layer = base.mark_bar().encode(y=alt.Y("n_joint_significant:Q", title="features with PSI>0.2 and KS>0.2"))
-    left.altair_chart((drift_layer + vline(cfg["drift_day"])) if scenario == "drift" else drift_layer, use_container_width=True)
+    left.altair_chart((drift_layer + vline(cfg["drift_day"])) if scenario == "drift" else drift_layer, width="stretch")
     score_layer = base.mark_line(point=True).encode(y=alt.Y("score_psi:Q", title="score PSI"))
-    right.altair_chart((score_layer + vline(cfg["drift_day"])) if scenario == "drift" else score_layer, use_container_width=True)
+    right.altair_chart((score_layer + vline(cfg["drift_day"])) if scenario == "drift" else score_layer, width="stretch")
     st.subheader("Alerts")
     st.dataframe(pd.DataFrame(r["alerts"])[["day", "severity", "signal", "message"]] if r["alerts"] else
-                 pd.DataFrame({"result": ["no alerts"]}), hide_index=True, use_container_width=True)
+                 pd.DataFrame({"result": ["no alerts"]}), hide_index=True, width="stretch")
     if r.get("final_window_distributions"):
         st.subheader("Most-drifted inputs (final window vs reference)")
         dist = {d["feature"]: d for d in r["final_window_distributions"]}
@@ -150,7 +150,7 @@ with tab_drift:
         long = pd.DataFrame({"bin": d["bins"] * 2, "share": d["reference"] + d["current"],
                              "period": ["reference"] * len(d["bins"]) + ["current"] * len(d["bins"])})
         st.altair_chart(alt.Chart(long).mark_bar().encode(x=alt.X("bin:N", sort=None), y="share:Q", color="period:N",
-                                                         xOffset="period:N"), use_container_width=True)
+                                                         xOffset="period:N"), width="stretch")
 
 # ------------------------------------------------------------------ 3) performance and calibration
 with tab_perf:
@@ -161,7 +161,7 @@ with tab_perf:
     st.subheader("Label-delayed PR-AUC (rows whose labels have arrived)")
     line = alt.Chart(perf).mark_line(point=True).encode(x="day:Q", y=alt.Y("pr_auc_mature_window:Q", scale=alt.Scale(zero=False)))
     st.altair_chart(line + vline(sim["config"]["drift_day"]) + alt.Chart(pd.DataFrame({"y": [base_pr]})).mark_rule(color="green").encode(y="y:Q"),
-                    use_container_width=True)
+                    width="stretch")
     st.caption(f"Green = baseline PR-AUC {base_pr:.3f} (first {r['baseline']['ref_days']} days). "
                "Labels arrive 7 days late, so performance alerts always lag input-drift alerts.")
     st.subheader("Reliability (second half of the stream, calibrator out-of-sample)")
@@ -170,7 +170,7 @@ with tab_perf:
     pts = alt.Chart(rel).mark_circle(size=90).encode(x=alt.X("mean_predicted:Q", scale=alt.Scale(type="sqrt")),
                                                      y=alt.Y("observed_fraud_rate:Q", scale=alt.Scale(type="sqrt")),
                                                      tooltip=["n", "mean_predicted", "observed_fraud_rate"])
-    st.altair_chart(diag + pts, use_container_width=True)
+    st.altair_chart(diag + pts, width="stretch")
 
 # ------------------------------------------------------------------ 4) threshold slider
 with tab_thr:
@@ -184,7 +184,7 @@ with tab_thr:
     k4.metric("Amount-weighted recall", f"{p['amount_weighted_recall']:.1%}")
     pts = pd.DataFrame(curve["points"]).melt("threshold", ["precision", "recall", "alert_rate"], var_name="metric")
     st.altair_chart(alt.Chart(pts).mark_line().encode(x="threshold:Q", y=alt.Y("value:Q", title=None), color="metric:N")
-                    + vline(thr, "#d62728"), use_container_width=True)
+                    + vline(thr, "#d62728"), width="stretch")
     st.subheader("Cost trade-off")
     cc1, cc2 = st.columns(2)
     cost_missed = cc1.number_input("Cost of a missed fraud", 1.0, 1_000_000.0, 1000.0, 50.0)
@@ -193,7 +193,7 @@ with tab_thr:
     best = ct.loc[ct["expected_cost_per_1000"].idxmin()]
     chosen = ct.loc[(ct["threshold"] - thr).abs().idxmin()]
     st.altair_chart(alt.Chart(ct).mark_line().encode(x="threshold:Q", y=alt.Y("expected_cost_per_1000:Q", title="expected cost per 1,000 transactions"))
-                    + vline(thr, "#d62728") + vline(float(best["threshold"]), "#2ca02c"), use_container_width=True)
+                    + vline(thr, "#d62728") + vline(float(best["threshold"]), "#2ca02c"), width="stretch")
     st.write(f"At {thr:.2f}: cost {chosen['expected_cost_per_1000']:,.0f} per 1,000 "
              f"({chosen['missed_fraud_per_1000']:.1f} missed fraud, {chosen['false_alerts_per_1000']:.1f} false alerts). "
              f"Cheapest threshold: **{best['threshold']:.2f}** (cost {best['expected_cost_per_1000']:,.0f}).")

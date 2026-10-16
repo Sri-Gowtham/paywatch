@@ -1,5 +1,5 @@
 # Dependencies for hosting the dashboard (e.g. Streamlit Community Cloud, entrypoint src/monitor/dashboard.py)
-streamlit>=1.35
+streamlit>=1.50
 altair>=5
 numpy
 pandas
