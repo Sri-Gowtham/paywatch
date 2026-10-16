@@ -2,13 +2,13 @@
 
 UPI-style transaction fraud scoring: causal feature pipeline, calibrated LightGBM scorer, SHAP explanations, precision-target alert tiers. Built and evaluated honestly on the IEEE-CIS Fraud Detection data (time-ordered split, no look-ahead).
 
-> Status: model, MLOps registry, serving API, drift monitoring, dashboard, adversarial stress test and a retrieval-grounded explanation layer are **built and tested** (on Kaggle). Docker and GitHub CI pass on GitHub (tests, image build and a container `/health` smoke test) and a push that passes deploys automatically. A live demo of the API runs at https://paywatch-api-fpq9.onrender.com (free plan: the first request after idle takes about a minute, and user history resets on restart). The production model is a 3-seed LightGBM, selected by a pre-registered study (see Model improvement study); it replaced the earlier XGBoost model.
+> Status: model, MLOps registry, serving API, drift monitoring, dashboard, adversarial stress test and a retrieval-grounded explanation layer are **built and tested** (on Kaggle). Docker and GitHub CI pass on GitHub (tests, image build and a container `/health` smoke test) and a push that passes deploys automatically. The dashboard is hosted at https://paywatch-r4zappjucbtzxfmxkdjstb5.streamlit.app/ and a live demo of the API runs at https://paywatch-api-fpq9.onrender.com (free plan: the first request after idle takes about a minute, and user history resets on restart). The production model is a 3-seed LightGBM, selected by a pre-registered study (see Model improvement study); it replaced the earlier XGBoost model.
 
 ## At a glance
 
 | | |
 |---|---|
-| **Try it** | Live API (free plan, may take a minute to wake): https://paywatch-api-fpq9.onrender.com, interactive docs at `/docs`, a ready-made request at `/example` |
+| **Try it** | Live API (free plan, may take a minute to wake): https://paywatch-api-fpq9.onrender.com, interactive docs at `/docs`, a ready-made request at `/example`. Dashboard (drift monitoring, threshold tuning, live scoring, RBI assistant): https://paywatch-r4zappjucbtzxfmxkdjstb5.streamlit.app/ |
 | **What it does** | Scores a UPI-style transaction in about 2 ms: calibrated fraud probability, one of four actions (allow, soft flag, challenge, hard block) and the top reasons in plain language. Also: drift monitoring, a Streamlit dashboard, and an assistant that answers from RBI documents |
 | **Held-out test** (latest 15% of time, 88,581 transactions, 3.5% fraud) | PR-AUC **0.724** (a random scorer gets 0.035, a model without entity history 0.581), ROC-AUC **0.956**, **65%** of fraud caught at a 1% false-positive rate |
 | **Alert tiers** (second half of the test period) | Soft flag: 62% precision, 69% recall. Challenge: 78%, 62%. Hard block: **92% precision**, 46% recall |
