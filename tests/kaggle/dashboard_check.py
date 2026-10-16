@@ -62,8 +62,8 @@ def check(name, cond, detail=""):
 
 at = AppTest.from_file(f"{REPO}/src/monitor/dashboard.py", default_timeout=120).run()
 check("renders without exception", not at.exception, [e.value for e in at.exception])
-check("five tabs", len(at.tabs) == 5, len(at.tabs))
-check("title present", any("PayWatch" in t.value for t in at.title))
+check("six tabs", len(at.tabs) == 6, len(at.tabs))
+check("title present", any("PayWatch" in m.value for m in at.markdown))
 
 # threshold slider
 slider = next(s for s in at.slider if "threshold" in s.label.lower())

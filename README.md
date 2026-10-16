@@ -15,6 +15,16 @@ UPI-style transaction fraud scoring: causal feature pipeline, calibrated LightGB
 | **How it was checked** | Time-ordered splits, no look-ahead (the lagged fraud history was re-computed independently, 0 of 400 mismatches); studies pre-registered with their pass criteria fixed before the runs; 52 automated tests; CI and a container smoke test on every push |
 | **Read before quoting** | The data is a public Western e-commerce dataset (IEEE-CIS), not UPI traffic, and the user ids are reconstructed. Recall on first-time fraud is about 57%; the model leans on fraud labels arriving within about 7 days; a fresh identity evades about 31% of flagged fraud with a single probe; 0.99 precision overall is not reachable (the best confident tier measured 97%). Full list in Limitations below |
 
+### Screenshots
+
+| Dashboard overview | Live scoring |
+|---|---|
+| ![Dashboard overview](docs/img/dashboard-overview.png) | ![Live scoring with risk gauge and reasons](docs/img/dashboard-live-scoring.png) |
+
+| Drift monitoring | API landing page with a live demo |
+|---|---|
+| ![Drift monitoring](docs/img/dashboard-drift.png) | ![API landing page](docs/img/api-landing.png) |
+
 ## Results (held-out latest 15% of time, 88,581 transactions, 3,083 fraud)
 
 | Model | PR-AUC | ROC-AUC | Recall @1% FPR | Precision, top 1% alerts | Amount-weighted recall |
