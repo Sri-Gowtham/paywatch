@@ -5,8 +5,9 @@ Runs
     tagged source=session_log, `leaky=true` where the split was random (invalid for fraud).
   - kernel results.json files (audited retrain, SHAP/compact, verification, API test): flattened metrics.
 Registry
-  - model `paywatch-fraud-xgb`: v1 full 452-feature refit (stage Staging, alias challenger),
-    v2 compact 120-feature refit (stage Production, alias champion).
+  - model `paywatch-fraud-scorer`: v1 full 452-feature XGBoost refit (Staging, alias challenger),
+    v2 compact 120-feature XGBoost refit (Archived, alias previous_champion),
+    v3 compact 120-feature LightGBM 3-seed refit (Production, alias champion).
   Weights are NOT stored in MLflow (28 MB of JSON live in the repo under models/compact); the registered
   artifact bundle holds the serving spec + SHA-256 hashes of the weight files.
 """
@@ -21,7 +22,7 @@ import mlflow
 from mlflow import MlflowClient
 
 EXPERIMENT = "paywatch-fraud"
-MODEL_NAME = "paywatch-fraud-xgb"
+MODEL_NAME = "paywatch-fraud-scorer"
 SESSION = {"source": "session_log"}
 
 HISTORY: List[dict] = [
@@ -53,6 +54,18 @@ HISTORY: List[dict] = [
     {"name": "h10-phaseA2-12-entity-keys", "tags": {"leaky": "false", "verdict": "tied within seed noise; not adopted"},
      "metrics": {"test_pr_auc": 0.6876, "label_lag7_test_pr_auc": 0.6876, "label_lag14_test_pr_auc": 0.6495,
                  "label_lag30_test_pr_auc": 0.6063}},
+    {"name": "h11-fit-diagnostics-learning-curve-depth-sweep", "tags": {"leaky": "false", "source": "repo results/diagnose.json", "verdict": "memorises train (gap 0.248, just under the 0.25 limit) but validation does not degrade; early stopping with patience 60 is unstable"},
+     "metrics": {"train_pr_auc_full_data": 0.968, "val_pr_auc_full_data": 0.720, "gap_full_data": 0.248, "val_pr_auc_depth4": 0.704,
+                 "val_pr_auc_depth12": 0.747, "rolling_fold_mean_pr_auc_baseline": 0.6957, "rolling_fold_std_pr_auc_baseline": 0.0322}},
+    {"name": "h12-phase1-improvement-study-preregistered", "tags": {"leaky": "false", "source": "repo results/improve.json",
+                                                                     "verdict": "criterion met by the five-model blend; LightGBM alone adopted for serving (post-hoc, size and simplicity)"},
+     "metrics": {"test_pr_auc_refit_shipped_xgb": 0.7062, "test_pr_auc_refit_xgb_patience300": 0.7196, "test_pr_auc_refit_xgb_depth12": 0.7235,
+                 "test_pr_auc_refit_lgbm": 0.7238, "test_pr_auc_refit_catboost": 0.6793, "test_pr_auc_refit_xgb_linkage": 0.7176,
+                 "test_pr_auc_refit_blend_all": 0.7277, "blend_pr_auc_diff_vs_shipped": 0.0215, "blend_recall_diff_vs_shipped": 0.0149}},
+    {"name": "h13-sparkov-second-dataset-ablation", "tags": {"leaky": "false", "source": "repo results/sparkov.json",
+                                                              "verdict": "simulated data: behaviour and fraud-history features help once user ids are real (both pre-registered criteria met)"},
+     "metrics": {"test_pr_auc_profile_only": 0.875, "test_pr_auc_plus_behaviour": 0.951, "test_pr_auc_plus_fraud_history": 0.979,
+                 "pr_auc_gain_behaviour": 0.076, "pr_auc_gain_history": 0.028}},
 ]
 
 
@@ -119,7 +132,7 @@ def register_version(client: MlflowClient, run_name: str, files: List[str], weig
             mlflow.log_artifact(f, artifact_path="model")
         run_id, uri = run.info.run_id, run.info.artifact_uri
     try:
-        client.create_registered_model(MODEL_NAME, description="PayWatch XGBoost fraud scorer (seed-averaged, calibrated)")
+        client.create_registered_model(MODEL_NAME, description="PayWatch fraud scorer (seed-averaged, calibrated): XGBoost v1-v2, LightGBM v3")
     except mlflow.exceptions.MlflowException:
         pass
     mv = client.create_model_version(MODEL_NAME, source=f"{uri}/model", run_id=run_id, description=description)

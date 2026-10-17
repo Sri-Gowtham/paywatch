@@ -210,7 +210,8 @@
         "srigowthamm/paywatch-b2",
         "srigowthamm/paywatch-verify",
         "srigowthamm/paywatch-apitest",
-        "srigowthamm/paywatch-assets"
+        "srigowthamm/paywatch-assets",
+        "srigowthamm/paywatch-prod-lgbm"
       ]
     }
   },

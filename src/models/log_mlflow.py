@@ -73,13 +73,27 @@ v_full = registry.register_version(
     metrics={"test_pr_auc": verify["full_v5"]["full_test"]["pr_auc"], "test_roc_auc": verify["full_v5"]["full_test"]["roc_auc"],
              "test_recall_at_fpr_1pct": verify["full_v5"]["full_test"]["recall_at_fpr_1pct"]},
     stage="Staging", alias="challenger", description="Full 452-feature refit; slightly higher PR-AUC, heavier to serve")
+prod_lgbm, _ = results_of("paywatch-prod-lgbm")
+lgbm_dir = os.path.dirname(find("/kaggle/input/**/paywatch-prod-lgbm/**/lgbm_seed42.txt")[0])
 v_cmp = registry.register_version(
     client, "register-compact-120f-refit", *bundles["compact"],
     params={"features": 120, "seeds": "42,1,2", "train_data": "train+val", "recency_tau_days": 120, "label_lag_days": 7},
     metrics={"test_pr_auc": verify["compact_b2"]["full_test"]["pr_auc"], "test_roc_auc": verify["compact_b2"]["full_test"]["roc_auc"],
              "test_recall_at_fpr_1pct": verify["compact_b2"]["full_test"]["recall_at_fpr_1pct"]},
-    stage="Production", alias="champion", description="Compact 120-feature refit served by the API (models/compact)")
-print("registered versions:", v_full, v_cmp)
+    stage="Archived", alias="previous_champion", description="Compact 120-feature XGBoost refit, served by the API until the LightGBM switch")
+v_lgbm = registry.register_version(
+    client, "register-compact-120f-lightgbm-refit",
+    [f"{lgbm_dir}/serving_spec.json", f"{lgbm_dir}/isotonic.json", assets["feature_meta.json"]],
+    sorted(glob.glob(f"{lgbm_dir}/lgbm_seed*.txt")),
+    params={"features": 120, "seeds": "42,1,2", "train_data": "train+val", "recency_tau_days": 120, "label_lag_days": 7,
+            "model_family": "lightgbm", "n_trees": prod_lgbm["n_trees"], "selected_by": "pre-registered study (results/improve.json), LightGBM alone chosen post hoc"},
+    metrics={"test_pr_auc": prod_lgbm["test_full"]["pr_auc"], "test_roc_auc": prod_lgbm["test_full"]["roc_auc"],
+             "test_recall_at_fpr_1pct": prod_lgbm["test_full"]["recall_at_fpr_1pct"],
+             "second_half_pr_auc": prod_lgbm["test_second_half_lgbm"]["pr_auc"], "second_half_pr_auc_previous_xgb": prod_lgbm["test_second_half_shipped_xgb"]["pr_auc"],
+             "hard_block_precision": prod_lgbm["precision_target_tiers"]["0.9"]["second_half_precision"],
+             "hard_block_recall": prod_lgbm["precision_target_tiers"]["0.9"]["second_half_recall"]},
+    stage="Production", alias="champion", description="Compact 120-feature LightGBM 3-seed refit served by the API (models/compact)")
+print("registered versions:", v_full, v_cmp, v_lgbm)
 
 changed = registry.rebase_artifact_paths(f"{OUT}/mlflow.db", OUT, "mlflow")
 print("artifact paths rebased to repo-relative 'mlflow/':", changed)
