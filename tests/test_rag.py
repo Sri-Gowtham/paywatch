@@ -240,3 +240,48 @@ def test_best_flash_prefers_the_newest_plain_flash_model():
     import src.rag.qa_chain as qa
     names = ["gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-flash-image", "gemini-1.5-pro", "gemini-2.5-flash-preview-05-20"]
     assert qa._best_flash(names) == "gemini-2.5-flash" and qa._best_flash(["gemini-1.5-pro"]) is None
+
+
+def test_openai_compatible_provider_needs_all_three_settings_and_sends_a_bearer_request(monkeypatch):
+    import src.rag.qa_chain as qa
+    for k in ("LLM_API_KEY", "LLM_BASE_URL", "LLM_MODEL", "ANTHROPIC_API_KEY", "GEMINI_API_KEY", "GOOGLE_API_KEY"):
+        monkeypatch.delenv(k, raising=False)
+    assert qa.openai_compatible_llm() is None and qa.default_llm() is None and qa.provider_name() == "none"
+    monkeypatch.setenv("LLM_API_KEY", "k-123")
+    monkeypatch.setenv("LLM_BASE_URL", "https://api.example.test/openai/v1/")
+    assert qa.openai_compatible_llm() is None                      # model still missing
+    monkeypatch.setenv("LLM_MODEL", "tiny-model")
+    seen = {}
+
+    class Resp:
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def read(self): return b'{"choices": [{"message": {"content": "Three working days [1]."}}]}'
+
+    def fake_urlopen(req, timeout=0):
+        seen["url"], seen["auth"], seen["body"] = req.full_url, req.headers.get("Authorization"), req.data.decode()
+        return Resp()
+
+    monkeypatch.setattr(qa.urllib.request, "urlopen", fake_urlopen)
+    llm = qa.default_llm()
+    assert llm("Excerpts ... Question ?") == "Three working days [1]."
+    assert seen["url"] == "https://api.example.test/openai/v1/chat/completions" and seen["auth"] == "Bearer k-123"
+    assert "tiny-model" in seen["body"] and "Never add facts" in seen["body"]
+    assert "tiny-model via https://api.example.test/openai/v1/" == qa.provider_name()
+
+
+def test_openai_compatible_http_error_is_reported_without_the_key(monkeypatch):
+    import io
+    import urllib.error
+    import src.rag.qa_chain as qa
+    monkeypatch.setenv("LLM_API_KEY", "k-secret-999")
+    monkeypatch.setenv("LLM_BASE_URL", "https://api.example.test/v1")
+    monkeypatch.setenv("LLM_MODEL", "m")
+
+    def raising(req, timeout=0):
+        raise urllib.error.HTTPError(req.full_url, 429, "Too Many Requests", {}, io.BytesIO(b'{"error": "rate limit reached"}'))
+
+    monkeypatch.setattr(qa.urllib.request, "urlopen", raising)
+    out = answer("zero liability reporting window", BM25Retriever(CHUNKS), llm=qa.openai_compatible_llm())
+    assert out["mode"] == "extractive" and "LLM HTTP 429" in out["llm_error"] and "rate limit reached" in out["llm_error"]
+    assert "k-secret-999" not in out["llm_error"]

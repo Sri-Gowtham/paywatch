@@ -1,8 +1,8 @@
 """Question answering over the retrieved RBI passages.
 
 Default mode is EXTRACTIVE (best matching sentences with numbered citations): it needs no API key and cannot
-invent text. If ANTHROPIC_API_KEY is set (and the `anthropic` package is installed), or GEMINI_API_KEY (a free
-Google AI Studio key), an LLM can compose the answer, constrained to the retrieved excerpts. If the LLM call fails (rate limit,
+invent text. If ANTHROPIC_API_KEY is set (and the `anthropic` package is installed), or GEMINI_API_KEY, or the three
+settings of any OpenAI-compatible service (LLM_API_KEY, LLM_BASE_URL, LLM_MODEL), an LLM can compose the answer, constrained to the retrieved excerpts. If the LLM call fails (rate limit,
 network) the answer falls back to the extractive one.
 """
 
@@ -97,15 +97,44 @@ def gemini_llm(model: Optional[str] = None, max_tokens: int = 500) -> Optional[C
     return call
 
 
+def openai_compatible_llm(max_tokens: int = 500) -> Optional[Callable[[str], str]]:
+    """Any OpenAI-compatible chat endpoint (Groq, OpenRouter, Mistral, GitHub Models, a local Ollama, ...), configured with three
+    environment variables: LLM_API_KEY, LLM_BASE_URL (for example https://api.groq.com/openai/v1) and LLM_MODEL.
+    Returns a prompt->text callable, or None unless all three are set."""
+    key, base, model = (os.environ.get(k) for k in ("LLM_API_KEY", "LLM_BASE_URL", "LLM_MODEL"))
+    if not (key and base and model):
+        return None
+    url = base.rstrip("/") + "/chat/completions"
+
+    def call(prompt: str) -> str:
+        body = json.dumps({"model": model, "max_tokens": max_tokens, "temperature": 0.2,
+                           "messages": [{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": prompt}]}).encode("utf-8")
+        req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json", "Authorization": f"Bearer {key}"}, method="POST")
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                data = json.loads(r.read())
+        except urllib.error.HTTPError as e:   # the provider's own message (bad key, unknown model, rate limit); it does not echo the key
+            detail = " ".join(e.read().decode("utf-8", "replace")[:240].split())
+            raise RuntimeError(f"LLM HTTP {e.code} at {base} for model {model}: {detail}") from None
+        return data["choices"][0]["message"]["content"]
+
+    return call
+
+
 def default_llm() -> Optional[Callable[[str], str]]:
-    """The first configured provider: Anthropic (ANTHROPIC_API_KEY), else Gemini (GEMINI_API_KEY); None means extractive mode."""
-    return anthropic_llm() or gemini_llm()
+    """The first configured provider: Anthropic (ANTHROPIC_API_KEY), Gemini (GEMINI_API_KEY), then any OpenAI-compatible service
+    (LLM_API_KEY + LLM_BASE_URL + LLM_MODEL); None means extractive mode."""
+    return anthropic_llm() or gemini_llm() or openai_compatible_llm()
 
 
 def provider_name() -> str:
     if os.environ.get("ANTHROPIC_API_KEY") and anthropic_llm() is not None:
         return "Anthropic"
-    return "Gemini" if gemini_llm() is not None else "none"
+    if gemini_llm() is not None:
+        return "Gemini"
+    if openai_compatible_llm() is not None:
+        return f"{os.environ.get('LLM_MODEL')} via {os.environ.get('LLM_BASE_URL')}"
+    return "none"
 
 
 def _tidy(piece: str, cut_end: bool) -> str:
