@@ -36,16 +36,29 @@ def anthropic_llm(model: str = DEFAULT_MODEL, max_tokens: int = 500) -> Optional
     return call
 
 
+def _tidy(piece: str, cut_end: bool) -> str:
+    """Passages are cut at fixed character offsets, so a slice can start or stop inside a word. Drop a leading fragment such as
+    'ion. (b) Limited...' (a lowercase stub ending at a sentence boundary) and, when the slice stops mid-text, a trailing partial word."""
+    m = re.match(r"[a-z][^.]{0,38}\.\s+(?=[A-Z(])", piece)
+    if m:
+        piece = piece[m.end():]
+    if cut_end and not re.search(r"[.!?;:)\]]$", piece):
+        cut = piece.rfind(" ")
+        if cut > len(piece) * 0.6:
+            piece = piece[:cut] + "…"
+    return piece
+
+
 def excerpt(text: str, focus: Optional[List[str]] = None, width: int = 300) -> str:
-    """First `width` chars, or a window around the first occurrence of a focus substring."""
+    """First `width` chars, or a window around the first occurrence of a focus substring (tidied to whole words)."""
     flat = text.replace("\n", " ")
     if focus:
         low = flat.lower()
         positions = [low.find(f) for f in focus if low.find(f) >= 0]
         if positions:
             start = max(0, min(positions) - width // 3)
-            return ("..." if start else "") + flat[start:start + width]
-    return flat[:width]
+            return ("..." if start else "") + _tidy(flat[start:start + width], start + width < len(flat))
+    return _tidy(flat[:width], len(flat) > width)
 
 
 def citation(hit: Dict, n: int, focus: Optional[List[str]] = None) -> Dict:
@@ -67,7 +80,7 @@ def best_sentences(question: str, hits: List[Dict], n: int = 3, idf: Optional[Di
     for rank, hit in enumerate(hits):
         for sent in re.split(r"(?<=[.!?;])\s+|\n+", hit["text"]):
             sent = sent.strip()
-            if len(sent) < 40:
+            if len(sent) < 40 or re.match(r"(?i)dear\s+sir", sent):   # skip letter salutations
                 continue
             toks = set(tokenize(sent))
             if anchor and anchor not in toks:
@@ -75,7 +88,8 @@ def best_sentences(question: str, hits: List[Dict], n: int = 3, idf: Optional[Di
             matched = q & toks
             overlap = sum((idf or {}).get(t, 1.0) for t in matched) if idf else len(matched)
             if overlap:
-                scored.append((overlap - 0.15 * rank, rank, sent))
+                truncated = not re.search(r"[.!?;:)\]\"]$", sent)        # a passage's last sentence may be cut off
+                scored.append((overlap - 0.15 * rank - (1.5 if truncated else 0.0), rank, sent))
     if not scored and anchor:
         return best_sentences(question, hits, n, idf, use_anchor=False)
     scored.sort(key=lambda t: -t[0])

@@ -141,3 +141,17 @@ def test_excerpt_windows_around_the_focus_term():
     out = excerpt(text, ["authenticat"], width=200)
     assert "authentication" in out and out.startswith("...") and len(out) <= 205
     assert excerpt("short text", None).startswith("short")
+
+
+def test_salutation_and_cut_off_sentences_are_not_chosen_as_answers():
+    hits = [{"text": "Dear Sir/ Madam, Customer Protection - Limiting Liability of Customers in Unauthorised Electronic Banking Transactions. "
+                     "A customer has zero liability when the unauthorised transaction is reported within three working days. "
+                     "In cases where the responsibility lies elsewhere and there is a delay (of"}]
+    out = best_sentences("limiting liability of customers", hits, n=1)
+    assert out and "Dear" not in out[0]["sentence"] and not out[0]["sentence"].endswith("(of")
+
+
+def test_excerpt_drops_leading_fragment_and_trailing_partial_word():
+    text = "ion. (b) Limited Liability of a Customer 7. A customer shall be liable for the loss when it is due to negligence, " + "word " * 80
+    out = excerpt(text, None, width=140)
+    assert out.startswith("(b) Limited") and (out.endswith("…") or out.endswith("."))
