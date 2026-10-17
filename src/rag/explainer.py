@@ -75,5 +75,8 @@ def explain_decision(prediction: Dict, retriever=None, llm: Optional[Callable[[s
     if llm is not None:
         prompt = ("Rewrite the following facts as a short explanation (3 sentences max) for a fraud analyst. "
                   "Use only these facts; do not add or infer anything.\n\n" + base)
-        text, mode = llm(prompt).strip(), "llm"
+        try:
+            text, mode = llm(prompt).strip(), "llm"
+        except Exception:  # rate limit / network: keep the fact-only template
+            text, mode = base, "template"
     return {"explanation": text, "template_explanation": base, "regulatory_context": context, "mode": mode}

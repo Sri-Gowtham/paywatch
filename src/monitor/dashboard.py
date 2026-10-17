@@ -282,16 +282,16 @@ with tab_thr:
 # ------------------------------------------------------------------ 5) analyst assistant (RAG over RBI documents)
 with tab_rag:
     from src.rag.explainer import explain_decision
-    from src.rag.qa_chain import anthropic_llm, answer
+    from src.rag.qa_chain import answer, default_llm, provider_name
 
     retriever = load_retriever(str(CHUNKS_PATH))
     if retriever is None:
         st.info(f"No knowledge base at {CHUNKS_PATH}. Build it with `python tools/kaggle_tools.py push rag --wait`, then `fetch rag --pattern chunks.jsonl --out data/rag/chunks.jsonl`.")
     else:
-        llm = anthropic_llm()
+        llm = default_llm()
         sources = sorted({c["title"] for c in retriever.chunks})
         st.caption(f"{len(retriever.chunks)} passages from {len(sources)} RBI documents. Mode: "
-                   + ("LLM (ANTHROPIC_API_KEY set), constrained to the retrieved excerpts" if llm else
+                   + (f"LLM ({provider_name()} key set), constrained to the retrieved excerpts; falls back to extractive on errors" if llm else
                       "extractive (no API key): returns the best matching sentences with citations and refuses when the "
                       "documents do not cover the question"))
         st.session_state.setdefault("rag_q", SUGGESTIONS[0])

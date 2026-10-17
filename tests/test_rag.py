@@ -155,3 +155,33 @@ def test_excerpt_drops_leading_fragment_and_trailing_partial_word():
     text = "ion. (b) Limited Liability of a Customer 7. A customer shall be liable for the loss when it is due to negligence, " + "word " * 80
     out = excerpt(text, None, width=140)
     assert out.startswith("(b) Limited") and (out.endswith("…") or out.endswith("."))
+
+
+def test_llm_failure_falls_back_to_the_extractive_answer():
+    def broken_llm(prompt):
+        raise RuntimeError("429 rate limited")
+    out = answer("zero liability reporting window", BM25Retriever(CHUNKS), llm=broken_llm)
+    assert out["mode"] == "extractive" and out["answer"] and "RuntimeError" in out["llm_error"]
+
+
+def test_gemini_is_off_without_a_key_and_builds_a_request_with_one(monkeypatch):
+    import src.rag.qa_chain as qa
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    monkeypatch.delenv("GOOGLE_API_KEY", raising=False)
+    assert qa.gemini_llm() is None
+    monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+    seen = {}
+
+    class FakeResp:
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def read(self): return b'{"candidates": [{"content": {"parts": [{"text": "Three working days [1]."}]}}]}'
+
+    def fake_urlopen(req, timeout=0):
+        seen["url"], seen["key"], seen["body"] = req.full_url, req.headers.get("X-goog-api-key"), req.data.decode()
+        return FakeResp()
+
+    monkeypatch.setattr(qa.urllib.request, "urlopen", fake_urlopen)
+    llm = qa.gemini_llm()
+    assert llm("Excerpts: [1] ... Question: ?") == "Three working days [1]."
+    assert "generateContent" in seen["url"] and seen["key"] == "test-key" and "Never add facts" in seen["body"]
