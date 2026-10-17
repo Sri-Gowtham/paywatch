@@ -282,7 +282,10 @@ with tab_thr:
 # ------------------------------------------------------------------ 5) analyst assistant (RAG over RBI documents)
 with tab_rag:
     from src.rag.explainer import explain_decision
-    from src.rag.qa_chain import answer, default_llm, provider_name
+    import src.rag.qa_chain as qa_chain   # module access, so a stale module after a hot redeploy degrades instead of crashing
+    answer = qa_chain.answer
+    default_llm = getattr(qa_chain, "default_llm", lambda: None)
+    provider_name = getattr(qa_chain, "provider_name", lambda: "LLM")
 
     retriever = load_retriever(str(CHUNKS_PATH))
     if retriever is None:
