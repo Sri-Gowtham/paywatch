@@ -43,28 +43,56 @@ def anthropic_llm(model: str = DEFAULT_MODEL, max_tokens: int = 500) -> Optional
 DEFAULT_GEMINI_MODEL = "gemini-2.5-flash"   # override with the GEMINI_MODEL env var if Google renames or retires it
 
 
+def _gemini_models(key: str) -> List[str]:
+    """Names of the models this key may call with generateContent (empty list if the listing itself fails)."""
+    req = urllib.request.Request("https://generativelanguage.googleapis.com/v1beta/models?pageSize=200", headers={"x-goog-api-key": key})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            data = json.loads(r.read())
+    except Exception:
+        return []
+    return [m["name"].split("/", 1)[-1] for m in data.get("models", []) if "generateContent" in m.get("supportedGenerationMethods", [])]
+
+
+def _best_flash(names: List[str]) -> Optional[str]:
+    """Newest plain Flash model, e.g. gemini-2.5-flash (skips -lite, -image, -live, -tts and dated or preview variants)."""
+    found = [(float(m.group(1)), n) for n in names for m in [re.fullmatch(r"gemini-(\d+(?:\.\d+)?)-flash", n)] if m]
+    return max(found)[1] if found else None
+
+
 def gemini_llm(model: Optional[str] = None, max_tokens: int = 500) -> Optional[Callable[[str], str]]:
     """Free-tier alternative: Google AI Studio key in GEMINI_API_KEY (or GOOGLE_API_KEY). Plain HTTPS, no extra package.
-    Returns a prompt->text callable, or None when no key is set."""
+    If the model name gives a 404 (Google retires models), it asks Google which models the key can use, switches to the newest
+    plain Flash model and retries once. Returns a prompt->text callable, or None when no key is set."""
     key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
     if not key:
         return None
-    name = model or os.environ.get("GEMINI_MODEL", DEFAULT_GEMINI_MODEL)
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{name}:generateContent"
+    state = {"model": model or os.environ.get("GEMINI_MODEL", DEFAULT_GEMINI_MODEL)}
 
-    def call(prompt: str) -> str:
+    def generate(name: str, prompt: str) -> str:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{name}:generateContent"
         body = json.dumps({"system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
                            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
                            "generationConfig": {"maxOutputTokens": max_tokens, "temperature": 0.2}}).encode("utf-8")
         req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json", "x-goog-api-key": key}, method="POST")
+        with urllib.request.urlopen(req, timeout=60) as r:
+            data = json.loads(r.read())
+        return "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"])
+
+    def call(prompt: str) -> str:
         try:
-            with urllib.request.urlopen(req, timeout=60) as r:
-                data = json.loads(r.read())
-        except urllib.error.HTTPError as e:   # surface Google's own message (bad key, unknown model, rate limit); it never echoes the key
+            return generate(state["model"], prompt)
+        except urllib.error.HTTPError as e:   # Google's own message (bad key, unknown model, rate limit); it never echoes the key
             detail = " ".join(e.read().decode("utf-8", "replace")[:240].split())
-            raise RuntimeError(f"Gemini HTTP {e.code} for model {name}: {detail}") from None
-        parts = data["candidates"][0]["content"]["parts"]
-        return "".join(p.get("text", "") for p in parts)
+            if e.code == 404:
+                names = _gemini_models(key)
+                pick = _best_flash(names)
+                if pick and pick != state["model"]:
+                    state["model"] = pick
+                    return generate(pick, prompt)
+                raise RuntimeError(f"Gemini HTTP 404 for model {state['model']}: {detail}. Models available to this key: "
+                                   f"{', '.join(names[:10]) or 'could not list them'}. Set GEMINI_MODEL to one of them.") from None
+            raise RuntimeError(f"Gemini HTTP {e.code} for model {state['model']}: {detail}") from None
 
     return call
 

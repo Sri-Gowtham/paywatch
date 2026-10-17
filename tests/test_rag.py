@@ -200,3 +200,43 @@ def test_gemini_http_error_is_reported_with_googles_message(monkeypatch):
     out = answer("zero liability reporting window", BM25Retriever(CHUNKS), llm=qa.gemini_llm())
     assert out["mode"] == "extractive" and "Gemini HTTP 404" in out["llm_error"] and "is not found" in out["llm_error"]
     assert "secret-test-key" not in out["llm_error"]
+
+
+def test_gemini_switches_model_after_a_404_and_remembers_it(monkeypatch):
+    import io
+    import urllib.error
+    import src.rag.qa_chain as qa
+    monkeypatch.setenv("GEMINI_API_KEY", "secret-test-key")
+    monkeypatch.setenv("GEMINI_MODEL", "gemini-1.0-retired")
+    calls = []
+
+    class Resp:
+        def __init__(self, payload): self.payload = payload
+        def __enter__(self): return self
+        def __exit__(self, *a): return False
+        def read(self): return self.payload
+
+    listing = (b'{"models": [{"name": "models/gemini-2.5-flash-lite", "supportedGenerationMethods": ["generateContent"]},'
+               b' {"name": "models/gemini-9.9-flash", "supportedGenerationMethods": ["generateContent"]},'
+               b' {"name": "models/gemini-3.0-flash", "supportedGenerationMethods": ["generateContent"]},'
+               b' {"name": "models/embedding-001", "supportedGenerationMethods": ["embedContent"]}]}')
+
+    def fake_urlopen(req, timeout=0):
+        calls.append(req.full_url)
+        if req.full_url.endswith("/models?pageSize=200"):
+            return Resp(listing)
+        if "gemini-1.0-retired" in req.full_url:
+            raise urllib.error.HTTPError(req.full_url, 404, "Not Found", {}, io.BytesIO(b'{"error": {"message": "model not found"}}'))
+        return Resp(b'{"candidates": [{"content": {"parts": [{"text": "ok"}]}}]}')
+
+    monkeypatch.setattr(qa.urllib.request, "urlopen", fake_urlopen)
+    llm = qa.gemini_llm()
+    assert llm("q") == "ok" and any("gemini-9.9-flash:generateContent" in c for c in calls)
+    n = len(calls)
+    assert llm("q") == "ok" and len(calls) == n + 1          # the working model is remembered: one request, no new listing
+
+
+def test_best_flash_prefers_the_newest_plain_flash_model():
+    import src.rag.qa_chain as qa
+    names = ["gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-flash", "gemini-2.5-flash-image", "gemini-1.5-pro", "gemini-2.5-flash-preview-05-20"]
+    assert qa._best_flash(names) == "gemini-2.5-flash" and qa._best_flash(["gemini-1.5-pro"]) is None
