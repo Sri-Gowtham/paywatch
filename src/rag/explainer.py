@@ -71,12 +71,15 @@ def regulatory_context(prediction: Dict, retriever, max_items: int = 3, min_cove
 def explain_decision(prediction: Dict, retriever=None, llm: Optional[Callable[[str], str]] = None) -> Dict:
     base = template_explanation(prediction)
     context = regulatory_context(prediction, retriever) if retriever is not None else []
-    text, mode = base, "template"
+    text, mode, llm_error = base, "template", None
     if llm is not None:
         prompt = ("Rewrite the following facts as a short explanation (3 sentences max) for a fraud analyst. "
                   "Use only these facts; do not add or infer anything.\n\n" + base)
         try:
             text, mode = llm(prompt).strip(), "llm"
-        except Exception:  # rate limit / network: keep the fact-only template
-            text, mode = base, "template"
-    return {"explanation": text, "template_explanation": base, "regulatory_context": context, "mode": mode}
+        except Exception as e:  # rate limit / network: keep the fact-only template
+            text, mode, llm_error = base, "template", f"{type(e).__name__}: {str(e)[:200]}"
+    out = {"explanation": text, "template_explanation": base, "regulatory_context": context, "mode": mode}
+    if llm_error:
+        out["llm_error"] = llm_error
+    return out

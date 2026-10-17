@@ -304,6 +304,8 @@ with tab_rag:
         question = st.text_input("Ask about RBI fraud, liability or AI rules", key="rag_q")
         if question.strip():
             res = answer(question, retriever, llm=llm)
+            if res.get("llm_error"):
+                st.warning(f"The LLM call failed, so this is the extractive answer instead. Reason: {res['llm_error']}")
             if "not covered" in res["answer"].lower() and not res["citations"]:
                 ui.banner("info", res["answer"])
             else:
@@ -318,6 +320,8 @@ with tab_rag:
             st.write("Score a transaction in the Live scoring tab, then come back here.")
         else:
             ex = explain_decision(last, retriever, llm=llm)
+            if ex.get("llm_error"):
+                st.warning(f"The LLM call failed, so this is the fixed template. Reason: {ex['llm_error']}")
             st.text(ex["explanation"])
             if ex["regulatory_context"]:
                 st.write("Relevant RBI passages:")

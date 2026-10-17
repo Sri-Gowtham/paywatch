@@ -9,6 +9,7 @@ network) the answer falls back to the extractive one.
 import json
 import os
 import re
+import urllib.error
 import urllib.request
 from typing import Callable, Dict, List, Optional
 
@@ -56,8 +57,12 @@ def gemini_llm(model: Optional[str] = None, max_tokens: int = 500) -> Optional[C
                            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
                            "generationConfig": {"maxOutputTokens": max_tokens, "temperature": 0.2}}).encode("utf-8")
         req = urllib.request.Request(url, data=body, headers={"Content-Type": "application/json", "x-goog-api-key": key}, method="POST")
-        with urllib.request.urlopen(req, timeout=60) as r:
-            data = json.loads(r.read())
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                data = json.loads(r.read())
+        except urllib.error.HTTPError as e:   # surface Google's own message (bad key, unknown model, rate limit); it never echoes the key
+            detail = " ".join(e.read().decode("utf-8", "replace")[:240].split())
+            raise RuntimeError(f"Gemini HTTP {e.code} for model {name}: {detail}") from None
         parts = data["candidates"][0]["content"]["parts"]
         return "".join(p.get("text", "") for p in parts)
 

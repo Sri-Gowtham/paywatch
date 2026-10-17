@@ -185,3 +185,18 @@ def test_gemini_is_off_without_a_key_and_builds_a_request_with_one(monkeypatch):
     llm = qa.gemini_llm()
     assert llm("Excerpts: [1] ... Question: ?") == "Three working days [1]."
     assert "generateContent" in seen["url"] and seen["key"] == "test-key" and "Never add facts" in seen["body"]
+
+
+def test_gemini_http_error_is_reported_with_googles_message(monkeypatch):
+    import io
+    import urllib.error
+    import src.rag.qa_chain as qa
+    monkeypatch.setenv("GEMINI_API_KEY", "secret-test-key")
+
+    def raising_urlopen(req, timeout=0):
+        raise urllib.error.HTTPError(req.full_url, 404, "Not Found", {}, io.BytesIO(b'{"error": {"message": "models/x is not found"}}'))
+
+    monkeypatch.setattr(qa.urllib.request, "urlopen", raising_urlopen)
+    out = answer("zero liability reporting window", BM25Retriever(CHUNKS), llm=qa.gemini_llm())
+    assert out["mode"] == "extractive" and "Gemini HTTP 404" in out["llm_error"] and "is not found" in out["llm_error"]
+    assert "secret-test-key" not in out["llm_error"]
