@@ -1,0 +1,17 @@
+{
+  "columns": {
+    "transaction_id": "txn_id",
+    "timestamp": "txn_epoch",
+    "amount": "amount_inr",
+    "payer_id": "payer_hash",
+    "payee_id": "payee_hash",
+    "device_id": "device_hash",
+    "channel": "channel",
+    "is_fraud": "confirmed_fraud"
+  },
+  "label_lag_days": 7,
+  "seeds": [42, 1, 2],
+  "min_frauds_per_slice": 20,
+  "criteria": {"min_pr_auc": 0.35, "min_recall_at_fpr_1pct": 0.40},
+  "synthetic": false
+}

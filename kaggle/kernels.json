@@ -615,5 +615,24 @@
         "srigowthamm/paywatch-b2"
       ]
     }
+  },
+  "upi_e2e": {
+    "script": "src/upi/e2e_demo.py",
+    "metadata": {
+      "id": "srigowthamm/paywatch-upi-e2e",
+      "title": "paywatch-upi-e2e",
+      "code_file": "e2e_demo.py",
+      "language": "python",
+      "kernel_type": "script",
+      "is_private": true,
+      "enable_gpu": false,
+      "enable_internet": false,
+      "dataset_sources": [
+        "srigowthamm/paywatch-api",
+        "srigowthamm/paywatch-upi"
+      ],
+      "competition_sources": [],
+      "kernel_sources": []
+    }
   }
 }

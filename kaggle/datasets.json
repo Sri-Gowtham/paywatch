@@ -26,5 +26,9 @@
   "models": {
     "id": "srigowthamm/paywatch-models",
     "path": "models/compact"
+  },
+  "upi": {
+    "id": "srigowthamm/paywatch-upi",
+    "path": "src/upi"
   }
 }

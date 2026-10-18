@@ -61,12 +61,18 @@ class UserBehaviorState:
         self._s: Dict[str, dict] = {}
 
     def observe(self, f: dict, uid: str, commit: bool = True) -> Dict[str, float]:
-        a = float(f["TransactionAmt"])
-        t = float(f["TransactionDT"])
+        """IEEE-CIS adapter: pulls the values out of the raw request fields and delegates to `observe_values`."""
+        m = f.get("P_emaildomain")
+        return self.observe_values(
+            float(f["TransactionAmt"]), float(f["TransactionDT"]), "none" if is_missing(m) else m, uid, commit,
+            uid_is_strong=1.0 if (not is_missing(f.get("D1")) and not is_missing(f.get("addr1"))) else 0.0,
+            is_p2p=1.0 if f.get("ProductCD") == "C" else 0.0)
+
+    def observe_values(self, a: float, t: float, m: str, uid: str, commit: bool = True,
+                       uid_is_strong: float = 1.0, is_p2p: float = 0.0) -> Dict[str, float]:
+        """Core: amount `a`, time `t` (seconds), payee/merchant label `m` and user id `uid`. Used directly by the UPI toolkit."""
         h = float(t // 3600 % 24)
         d = t / 86400.0
-        m = f.get("P_emaildomain")
-        m = "none" if is_missing(m) else m
 
         s = self._s.get(uid)
         k = s["n"] if s else 0
@@ -74,9 +80,7 @@ class UserBehaviorState:
             "amount_vs_7day_avg_ratio": 1.0, "merchant_category_entropy": 0.0,
             "hour_deviation_from_user_mean": 0.0, "days_since_last_large_txn": -1.0, "is_new_merchant": 1.0,
             "uid_prior_tx_count": float(k), "uid_amt_mean": -1.0, "uid_amt_std": -1.0, "uid_amt_zscore": 0.0,
-            "uid_secs_since_prev_tx": -1.0,
-            "uid_is_strong": 1.0 if (not is_missing(f.get("D1")) and not is_missing(f.get("addr1"))) else 0.0,
-            "is_p2p": 1.0 if f.get("ProductCD") == "C" else 0.0,
+            "uid_secs_since_prev_tx": -1.0, "uid_is_strong": uid_is_strong, "is_p2p": is_p2p,
         }
         if k > 0:
             window = s["recent"]
@@ -116,13 +120,14 @@ class UserBehaviorState:
 class EntityHistoryStore:
     """Lagged fraud history per entity key; counts only labels that have been recorded."""
 
-    def __init__(self):
-        self.tables: Dict[str, Dict[str, list]] = {k: {} for k in BASE_KEYS}
+    def __init__(self, key_names=BASE_KEYS):
+        self.key_names = tuple(key_names)            # entity kinds tracked; the IEEE-CIS service uses BASE_KEYS, the UPI toolkit its own
+        self.tables: Dict[str, Dict[str, list]] = {k: {} for k in self.key_names}
         self.pending: Dict[str, Dict[str, Optional[str]]] = {}
 
     def features(self, keys: Dict[str, Optional[str]], tag: str = "h7") -> Dict[str, float]:
         out = {}
-        for name in BASE_KEYS:
+        for name in self.key_names:
             key = keys.get(name)
             row = self.tables[name].get(key) if key is not None else None
             if row:
@@ -139,7 +144,7 @@ class EntityHistoryStore:
         self.pending[tx_id] = keys
 
     def add_label_for_keys(self, keys: Dict[str, Optional[str]], is_fraud: bool) -> None:
-        for name in BASE_KEYS:
+        for name in self.key_names:
             key = keys.get(name)
             if key is None:
                 continue

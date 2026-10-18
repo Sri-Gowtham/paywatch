@@ -26,7 +26,7 @@ def export_state(behavior: UserBehaviorState, history: EntityHistoryStore, activ
         users[uid] = [s["n"], list(s["recent"]), s["merchants"], s["hour_sum"], s["amt_sum"], s["amt_sq"],
                       s["last_large_day"], s["last_ts"]]
     tables = {name: {k: v for k, v in history.tables[name].items() if v[0] >= min_entity_n or v[1] > 0}
-              for name in BASE_KEYS}
+              for name in history.key_names}
     return {"version": VERSION, "users": users, "entity_tables": tables, "pending": history.pending}
 
 
@@ -38,7 +38,7 @@ def import_state(obj: dict, behavior: UserBehaviorState, history: EntityHistoryS
     for uid, (n, recent, merchants, hour_sum, amt_sum, amt_sq, last_large_day, last_ts) in obj["users"].items():
         behavior._s[uid] = {"n": n, "recent": deque(recent, maxlen=7), "merchants": merchants, "hour_sum": hour_sum,
                             "amt_sum": amt_sum, "amt_sq": amt_sq, "last_large_day": last_large_day, "last_ts": last_ts}
-    for name in BASE_KEYS:
+    for name in history.key_names:
         history.tables[name] = {k: list(v) for k, v in obj["entity_tables"].get(name, {}).items()}
     history.pending = dict(obj.get("pending", {}))
 
