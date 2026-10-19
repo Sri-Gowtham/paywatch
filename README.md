@@ -12,7 +12,7 @@ UPI-style transaction fraud scoring: causal feature pipeline, calibrated LightGB
 | **What it does** | Scores a UPI-style transaction in about 2 ms: calibrated fraud probability, one of four actions (allow, soft flag, challenge, hard block) and the top reasons in plain language. Also: drift monitoring, a Streamlit dashboard, and an assistant that answers from RBI documents |
 | **Held-out test** (latest 15% of time, 88,581 transactions, 3.5% fraud) | PR-AUC **0.724** (a random scorer gets 0.035, a model without entity history 0.581), ROC-AUC **0.956**, **65%** of fraud caught at a 1% false-positive rate |
 | **Alert tiers** (second half of the test period) | Soft flag: 62% precision, 69% recall. Challenge: 78%, 62%. Hard block: **92% precision**, 46% recall |
-| **How it was checked** | Time-ordered splits, no look-ahead (the lagged fraud history was re-computed independently, 0 of 400 mismatches); studies pre-registered with their pass criteria fixed before the runs; 52 automated tests; CI and a container smoke test on every push |
+| **How it was checked** | Time-ordered splits, no look-ahead (the lagged fraud history was re-computed independently, 0 of 400 mismatches); studies pre-registered with their pass criteria fixed before the runs; 84 automated tests; CI and a container smoke test on every push |
 | **Read before quoting** | The data is a public Western e-commerce dataset (IEEE-CIS), not UPI traffic, and the user ids are reconstructed. Recall on first-time fraud is about 57%; the model leans on fraud labels arriving within about 7 days; a fresh identity evades about 31% of flagged fraud with a single probe; 0.99 precision overall is not reachable (the best confident tier measured 97%). Full list in Limitations below |
 
 ### Screenshots
@@ -187,7 +187,7 @@ Not done: any evaluation on real UPI data or traffic, a dashboard tab for pilot 
 
 Done: scaffold, data, feature engineering, UPI fingerprint (causal proxy), XGBoost then LightGBM, SHAP, compact serving model, calibration + tiers, MLflow + registry, FastAPI, production simulation, drift detection, Streamlit dashboard (the threshold-tuning tab covers the calibration dashboard).
 Also done: adversarial stress test, RAG ingestion and query (BM25), retrieval-grounded explanations. The LLM explanation step is optional and only template mode has run against real data (done differently).
-Seen passing on GitHub (2026-10-04, run on the cleaned history): GitHub Actions `test` (all tests), `build` (Docker image) with a container `/health` smoke test. The first CI run (2026-10-03) had failed on a pandas 3 incompatibility in the feature code, which was fixed. Not done: the `deploy` job exits without deploying because no `RENDER_DEPLOY_HOOK_URL` secret or Render service exists.
+Seen passing on GitHub (latest run 2026-10-19): GitHub Actions `test` (84 tests), `build` (Docker image) with a container `/health` smoke test, and `deploy`, which triggers the Render deploy hook so a passing push redeploys the live API. The first CI run (2026-10-03) had failed on a pandas 3 incompatibility in the feature code, which was fixed. Not done: any evaluation on real UPI data or traffic (see the pilot-readiness section), and the optional LLM answer mode has never run against a real provider.
 Rejected on evidence: Isolation Forest, score fusion. All roadmap notebooks are done and executed (`notebooks/`).
 
 ## Kaggle setup
